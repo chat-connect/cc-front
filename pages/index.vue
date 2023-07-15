@@ -1,3 +1,5 @@
 <template>
-    <h1>Chat Connect</h1>
-</template>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </template>
