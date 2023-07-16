@@ -3,7 +3,7 @@
         <v-container style="position: relative; top: 64px;">
             <v-row align-content="center">
                 <v-col align="center">
-                    <h1>About</h1>
+                    <Carousel />
                 </v-col>
             </v-row>
             <v-row>
