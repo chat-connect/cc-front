@@ -23,6 +23,7 @@ logs
 !.env.example
 
 # file
+/assets/image
 .png
 .jpg
 .jpeg
