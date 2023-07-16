@@ -10,10 +10,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col :cols="4" align="center">
-                    <h1>About</h1>
-                </v-col>
-                <v-col :cols="4" align="center">
+                <v-col :cols="8" align="center">
                     <h1>About</h1>
                 </v-col>
                 <v-col :cols="4" align="center">
