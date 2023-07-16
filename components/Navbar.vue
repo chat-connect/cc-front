@@ -1,5 +1,17 @@
 <template>
     <div>
+        <v-app-bar
+            app
+            flat
+            border
+            class="px-md-6"
+        >
+            <img class="image_circle user_icon" src="~/assets/image/sample_icon.png" @click="drawer = !drawer">
+            <v-app-bar-title class="font-weight-bold">
+                Chat Connect
+            </v-app-bar-title>
+            <v-spacer />
+        </v-app-bar>
         <v-navigation-drawer v-model="drawer" app floating class="px-6 py-4">
             <v-list>
                 <v-list-item v-for="item in items" color="primary" :to="item.path" class="py-3">
@@ -8,13 +20,6 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <v-app-bar app flat border class="px-md-6" >
-            <v-app-bar-nav-icon icon="mdi-account" @click="drawer = !drawer" class="mr-md-4" />
-            <v-app-bar-title class="font-weight-bold">
-                Chat Connect
-            </v-app-bar-title>
-            <v-spacer />
-        </v-app-bar>
     </div>
 </template>
 
@@ -33,3 +38,12 @@ const items = [
 
 const drawer = useState('drawer', () => false)
 </script>
+
+<style>
+img.user_icon {
+	width: 55px;
+	height: 55px;
+	object-fit:cover;
+	border-radius:50%;
+}
+</style>
