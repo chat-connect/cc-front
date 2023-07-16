@@ -12,11 +12,29 @@
             </v-app-bar-title>
             <v-spacer />
         </v-app-bar>
-        <v-navigation-drawer v-model="drawer" app floating class="px-6 py-4">
+        <v-navigation-drawer v-model="drawer" class="px-6 py-4">
+            <v-list class="item-list box">
+                <v-list-item v-for="item in items" :to="item.path" class="py-3">
+                    <v-row align="center">
+                        <v-col cols="2">
+                            <v-icon>{{ item.icon }}</v-icon>
+                        </v-col>
+                        <v-col cols="10">
+                            <v-list-item-title class="font-weight-bold">{{ item.title }}</v-list-item-title>
+                        </v-col>                        
+                    </v-row>
+                </v-list-item>
+            </v-list>
             <v-list>
-                <v-list-item v-for="item in items" color="primary" :to="item.path" class="py-3">
-                    <v-icon :icon="item.icon" class="mr-6" />
-                    <v-list-item-title class="font-weight-bold" v-text="item.title" />
+                <v-list-item to="/login" class="py-3">
+                    <v-row align="center">
+                        <v-col cols="2">
+                            <v-icon>mdi-login</v-icon>
+                        </v-col>
+                        <v-col cols="10">
+                            <v-list-item-title class="font-weight-bold">Login</v-list-item-title>
+                        </v-col>                        
+                    </v-row>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
@@ -28,12 +46,12 @@ const items = [
     {
         title: 'room1',
         path: '/item1',
-        icon: 'mdi-numeric-1'
+        icon: 'mdi-ghost'
     },
     {
         title: 'room2',
         path: '/item2',
-        icon: 'mdi-numeric-2'
+        icon: 'mdi-ghost'
     }]
 
 const drawer = useState('drawer', () => false)
@@ -45,5 +63,24 @@ img.user_icon {
 	height: 55px;
 	object-fit:cover;
 	border-radius:50%;
+}
+
+v-list-item.login {
+    background: #fff;
+}
+
+.item-list {
+    height: 90%;
+    overflow-y: auto;
+}
+
+.box {
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.box::-webkit-scrollbar {
+    display:none;
 }
 </style>
