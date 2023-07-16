@@ -13,7 +13,7 @@
             <v-spacer />
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" class="px-6 py-4">
-            <v-list class="item-list box">
+            <v-list class="item_list box">
                 <v-list-item v-for="item in items" :to="item.path" class="py-3">
                     <v-row align="center">
                         <v-col cols="2">
@@ -71,7 +71,7 @@ v-list-item.login {
     background: #fff;
 }
 
-.item-list {
+.item_list {
     height: 90%;
     overflow-y: auto;
 }
