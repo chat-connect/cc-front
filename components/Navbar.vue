@@ -63,6 +63,8 @@ img.user_icon {
 	height: 55px;
 	object-fit:cover;
 	border-radius:50%;
+    position: relative;
+    left: 5px;
 }
 
 v-list-item.login {
