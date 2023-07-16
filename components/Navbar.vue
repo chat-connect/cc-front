@@ -1,5 +1,5 @@
 <template>
-    <v-app style="background: #e5e8eb;">
+    <div>
         <v-app-bar app flat border class="px-md-6" >
             <v-app-bar-nav-icon @click="drawer = !drawer" class="mr-md-4" />
             <v-app-bar-title class="font-weight-bold">
@@ -17,7 +17,7 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-    </v-app>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -32,5 +32,6 @@ const items = [
         path: '/item2',
         icon: 'mdi-numeric-2'
     }]
+
 const drawer = useState('drawer', () => false)
 </script>

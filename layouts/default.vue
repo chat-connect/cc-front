@@ -1,7 +1,6 @@
 <template>
-    <div style="background: #202122;">
+    <v-app>
         <Navbar />
-        <slot></slot>
-        <Navbar />
-    </div>
+        <slot />        
+    </v-app>
 </template>
