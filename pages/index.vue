@@ -7,13 +7,13 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col :cols="4">
+                <v-col :cols="4" align="center">
                     <h1>About</h1>
                 </v-col>
-                <v-col :cols="4">
+                <v-col :cols="4" align="center">
                     <h1>About</h1>
                 </v-col>
-                <v-col :cols="4">
+                <v-col :cols="4" align="center">
                     <h1>About</h1>
                 </v-col>
             </v-row>
