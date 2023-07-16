@@ -1,6 +1,9 @@
 <template>
     <div>
-        <v-container style="position: relative; top: 64px;">
+        <v-container 
+            style="position: relative;
+            top: 64px;"
+        >
             <v-row align-content="center">
                 <v-col align="center">
                     <Carousel />
