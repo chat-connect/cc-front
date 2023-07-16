@@ -1,5 +1,5 @@
 <template>
-    <v-app style="background: #e9e9f0;">
+    <v-app style="background: #f3efef;">
         <Navbar />
         <slot />        
     </v-app>
