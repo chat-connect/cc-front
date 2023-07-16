@@ -15,9 +15,9 @@
 </template>
 
 <style>
-  .content {
+.content {
     background-color: #ddd;
     text-align: center;
-  }
+}
 </style>
   
