@@ -1,6 +1,6 @@
 <template>
-    <v-app>
-        <v-app-bar app flat border class="px-md-6">
+    <v-app style="background: #e5e8eb;">
+        <v-app-bar app flat border class="px-md-6" >
             <v-app-bar-nav-icon @click="drawer = !drawer" class="mr-md-4" />
             <v-app-bar-title class="font-weight-bold">
                 Chat Connect
@@ -11,7 +11,7 @@
 
         <v-navigation-drawer v-model="drawer" app floating class="px-6 py-4">
             <v-list>
-                <v-list-item v-for="item in items" active-color="primary" :to="item.path" class="py-3">
+                <v-list-item v-for="item in items" color="primary" :to="item.path" class="py-3">
                     <v-icon :icon="item.icon" class="mr-6" />
                     <v-list-item-title class="font-weight-bold" v-text="item.title" />
                 </v-list-item>
