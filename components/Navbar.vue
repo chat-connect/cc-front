@@ -1,14 +1,5 @@
 <template>
     <div>
-        <v-app-bar app flat border class="px-md-6" >
-            <v-app-bar-nav-icon @click="drawer = !drawer" class="mr-md-4" />
-            <v-app-bar-title class="font-weight-bold">
-                Chat Connect
-            </v-app-bar-title>
-            <v-spacer />
-            <v-icon icon="mdi-account" class="mr-1" />
-        </v-app-bar>
-
         <v-navigation-drawer v-model="drawer" app floating class="px-6 py-4">
             <v-list>
                 <v-list-item v-for="item in items" color="primary" :to="item.path" class="py-3">
@@ -17,6 +8,13 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
+        <v-app-bar app flat border class="px-md-6" >
+            <v-app-bar-nav-icon icon="mdi-account" @click="drawer = !drawer" class="mr-md-4" />
+            <v-app-bar-title class="font-weight-bold">
+                Chat Connect
+            </v-app-bar-title>
+            <v-spacer />
+        </v-app-bar>
     </div>
 </template>
 
