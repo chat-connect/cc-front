@@ -26,12 +26,12 @@
 <script setup lang="ts">
 const items = [
     {
-        title: 'item1',
+        title: 'room1',
         path: '/item1',
         icon: 'mdi-numeric-1'
     },
     {
-        title: 'item2',
+        title: 'room2',
         path: '/item2',
         icon: 'mdi-numeric-2'
     }]
