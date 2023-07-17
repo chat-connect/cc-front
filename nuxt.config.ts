@@ -1,5 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: true,
+  target: "server",
+  runtimeConfig: {
+    public:{
+      CcServerUrl: process.env.CC_SERVER_URL,
+      CcFrontUrl: process.env.CC_FRONT_URL,
+    }
+  },
   modules: [
     'nuxt-swiper',
   ],
