@@ -56,12 +56,12 @@ const loginHandler = async () => {
             email: email.value,
             password: password.value,
         },
-    });
+    })
 
     const accessTokenCookie = useCookie("access_token")
     accessTokenCookie.value = result.token
 
-    const { login } = useAuth();
-    const userLogin = await login(result);
+    const { login } = useAuth()
+    const userLogin = await login(result)
 }
 </script>
