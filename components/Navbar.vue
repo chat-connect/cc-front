@@ -36,6 +36,16 @@
                         </v-col>                        
                     </v-row>
                 </v-list-item>
+                <v-list-item @click="logoutHandler" class="py-3">
+                    <v-row align="center">
+                        <v-col cols="2">
+                            <v-icon>mdi-login</v-icon>
+                        </v-col>
+                        <v-col cols="10">
+                            <v-list-item-title class="font-weight-bold">logout</v-list-item-title>
+                        </v-col>                        
+                    </v-row>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
     </div>
@@ -43,6 +53,7 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/store/user";
+import { ref, computed } from "vue"
 
 // user情報
 const userStore = useUserStore();
@@ -60,6 +71,29 @@ const items = [
     }]
 
 const drawer = useState('drawer', () => false)
+
+// logout
+const logoutHandler = async () => {
+    const access_token = useCookie('access_token')
+    const config = useRuntimeConfig()
+    const url: string = config.public.CcFrontUrl + "/api/logout"
+    const result = await $fetch(url, {
+        method: "PUT",
+        headers: {
+            Authorization: "Bearer " + access_token.value,
+        },
+        body: {
+            userKey: userStore.user.userKey,
+        },
+    })
+
+    result.userKey = ref("unknown")
+    result.username = ref("unknown")
+    result.email = ref("unknown")
+    userStore.increment(result)
+    const { logout } = useAuth()
+    const userLogout = await logout(result)
+}
 </script>
 
 <style>
