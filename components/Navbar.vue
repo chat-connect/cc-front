@@ -26,7 +26,7 @@
                 </v-list-item>
             </v-list>
             <v-list>
-                <v-list-item to="/login" class="py-3">
+                <v-list-item v-if="checkUser()" to="/login" class="py-3">
                     <v-row align="center">
                         <v-col cols="2">
                             <v-icon>mdi-login</v-icon>
@@ -36,7 +36,7 @@
                         </v-col>                        
                     </v-row>
                 </v-list-item>
-                <v-list-item @click="logoutHandler" class="py-3">
+                <v-list-item v-else @click="logoutHandler" class="py-3">
                     <v-row align="center">
                         <v-col cols="2">
                             <v-icon>mdi-login</v-icon>
@@ -93,6 +93,16 @@ const logoutHandler = async () => {
     userStore.increment(result)
     const { logout } = useAuth()
     const userLogout = await logout(result)
+}
+
+// user check
+const checkUser = () => {
+    let status: boolean = false
+    if (userStore.user.username == "unknown") {
+        status = true
+    }
+
+    return status
 }
 </script>
 
