@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
   modules: [
     'nuxt-swiper',
-    '@sidebase/nuxt-auth'
   ],
   swiper: {
     // Swiper options
