@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   },
   modules: [
     'nuxt-swiper',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
   swiper: {
     // Swiper options

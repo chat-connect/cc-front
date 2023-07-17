@@ -8,7 +8,7 @@
         >
             <img class="image_circle user_icon" src="~/assets/image/sample_icon.png" @click="drawer = !drawer">
             <v-app-bar-title class="font-weight-bold">
-                Chat Connect
+                {{ userStore.user.username }}
             </v-app-bar-title>
             <v-spacer />
         </v-app-bar>
@@ -42,6 +42,11 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "~/store/user";
+
+// user情報
+const userStore = useUserStore();
+
 const items = [
     {
         title: 'room1',

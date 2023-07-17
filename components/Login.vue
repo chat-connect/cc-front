@@ -44,6 +44,9 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "~/store/user";
+import { storeToRefs } from "pinia";
+
 const email = ref("")
 const password = ref("")
 
@@ -57,9 +60,12 @@ const loginHandler = async () => {
             password: password.value,
         },
     })
-
     const accessTokenCookie = useCookie("access_token")
     accessTokenCookie.value = result.token
+
+    // user情報
+    const userStore = useUserStore();
+    userStore.increment(result)
 
     const { login } = useAuth()
     const userLogin = await login(result)
