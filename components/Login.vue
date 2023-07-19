@@ -45,7 +45,6 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/store/user";
-import { storeToRefs } from "pinia";
 
 const email = ref("")
 const password = ref("")
