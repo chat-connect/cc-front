@@ -1,10 +1,7 @@
-FROM node:18.12.0 AS development
+FROM node:18.12.0-alpine AS development
 
 WORKDIR /nuxt
 
-RUN apt-get update \
-    && apt-get install -y \
-    git \
-    vim
+RUN apk upgrade --update && apk add bash && apk --no-cache add git
 
 EXPOSE 3000
