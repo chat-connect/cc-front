@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { useUserStore } from "~/store/user";
-import { ref, computed } from "vue"
+import { ref } from "vue"
 
 // user情報
 const userStore = useUserStore();
@@ -87,9 +87,9 @@ const logoutHandler = async () => {
         },
     })
 
-    result.userKey = ref("unknown")
-    result.username = ref("unknown")
-    result.email = ref("unknown")
+    result.userKey = ref("")
+    result.username = ref("")
+    result.email = ref("")
     userStore.increment(result)
     const { logout } = useAuth()
     const userLogout = await logout(result)
@@ -98,7 +98,7 @@ const logoutHandler = async () => {
 // user check
 const checkUser = () => {
     let status: boolean = false
-    if (userStore.user.username == "unknown") {
+    if (userStore.user.username == "") {
         status = true
     }
 
