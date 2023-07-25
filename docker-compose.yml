@@ -12,7 +12,8 @@ services:
       - "24678:24678"
     tty: true
     environment:
-      CC_SERVER: ${CC_SERVER}
+      CC_SERVER_URL: ${CC_SERVER_URL}
+      CC_FRONT_URL: ${CC_FRONT_URL}
       HOST: 0.0.0.0
       port: 3000
       CHOKIDAR_USEPOLLING: true
