@@ -60,13 +60,13 @@ const loginHandler = async () => {
         },
     })
     const accessTokenCookie = useCookie("access_token")
-    accessTokenCookie.value = result.token
+    accessTokenCookie.value = result.items.token
 
     // user情報
     const userStore = useUserStore();
-    userStore.increment(result)
+    userStore.increment(result.items)
 
     const { login } = useAuth()
-    const userLogin = await login(result)
+    const userLogin = await login(result.items)
 }
 </script>

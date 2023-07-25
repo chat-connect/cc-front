@@ -87,12 +87,12 @@ const logoutHandler = async () => {
         },
     })
 
-    result.userKey = ref("")
-    result.username = ref("")
-    result.email = ref("")
+    result.items.userKey = ref("")
+    result.items.username = ref("")
+    result.items.email = ref("")
     userStore.increment(result)
     const { logout } = useAuth()
-    const userLogout = await logout(result)
+    const userLogout = await logout(result.items)
 }
 
 // user check

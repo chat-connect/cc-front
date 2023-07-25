@@ -65,6 +65,6 @@ const registerHandler = async () => {
     })
 
     const { register } = useAuth()
-    const userregister = await register(result)
+    const userregister = await register(result.items)
 }
 </script>
