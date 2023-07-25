@@ -1,4 +1,4 @@
-# cc-front
+# cc-web
 chat-connectのフロントエンド。
 
 ## 環境構築
