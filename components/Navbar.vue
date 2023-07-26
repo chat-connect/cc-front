@@ -26,7 +26,7 @@
                 </v-list-item>
             </v-list>
             <v-list>
-                <v-list-item v-if="checkUser()" to="/login" class="py-3">
+                <v-list-item v-if="checkUser" to="/login" class="py-3">
                     <v-row align="center">
                         <v-col cols="2">
                             <v-icon>mdi-login</v-icon>
