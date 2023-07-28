@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { defineStore } from "pinia"
-import { User } from "@/domain/entity/User"
+import { User } from "@/domain/entity/user"
 
 export const useUserStore = defineStore("user", {
     state: () => {

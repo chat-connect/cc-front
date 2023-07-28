@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { FetchUser } from "@/domain/usecase/FetchUser"
-import { User } from "@/domain/entity/User"
+import { User } from "@/domain/entity/user"
 import ApiClient from "@/infrastructure/api/ApiClient"
 
 // body
