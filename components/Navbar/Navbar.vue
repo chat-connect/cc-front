@@ -8,7 +8,7 @@
         >
             <img class="image_circle user_icon" src="~/assets/images/sample_icon.png" @click="drawer = !drawer">
             <v-app-bar-title class="font-weight-bold">
-                {{ userStore.user.items.username }}
+                {{ userStore.user.items.name }}
             </v-app-bar-title>
             <v-spacer />
         </v-app-bar>
@@ -82,7 +82,7 @@ const drawer = useState('drawer', () => false)
 
 const checkUser = () => {
     let status: boolean = false
-    if (userStore.user.items.username == "") {
+    if (userStore.user.items.name == "") {
         status = true
     }
 
@@ -99,7 +99,7 @@ const logoutHandler = async () => {
     user.value = await fetchUser.logout(request)
 
     user.value.items.userKey = ref("")
-    user.value.items.username = ref("")
+    user.value.items.name = ref("")
     user.value.items.email = ref("")
     userStore.increment(user.value)
 

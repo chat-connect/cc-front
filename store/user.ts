@@ -18,10 +18,10 @@ export const useUserStore = defineStore("user", {
         increment(user) {
             this.user = {
                 items: {
-                    userKey:  user.items.user_key,
-                    username: user.items.username,
-                    email:    user.items.email,
-                    message:  user.items.message,                    
+                    userKey: user.items.user_key,
+                    name:    user.items.name,
+                    email:   user.items.email,
+                    message: user.items.message,                    
                 }
             }
         },

@@ -10,7 +10,7 @@
                     ></v-text-field>
                     <v-text-field
                         label="username"
-                        v-model="username"
+                        v-model="name"
                     ></v-text-field>
                     <v-text-field
                         type="password"
@@ -54,12 +54,12 @@ import ApiClient from "@/infrastructure/api/ApiClient"
 
 // body
 const email = ref("")
-const username = ref("")
+const name = ref("")
 const password = ref("")
 
 const registerHandler = async () => {
     const request = {
-        username: username.value,
+        name:  name.value,
         email: email.value,
         password: password.value,
     }
