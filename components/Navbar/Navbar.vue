@@ -6,9 +6,9 @@
             border
             class="px-md-6"
         >
-            <img class="image_circle user_icon" src="~/assets/image/sample_icon.png" @click="drawer = !drawer">
+            <img class="image_circle user_icon" src="~/assets/images/sample_icon.png" @click="drawer = !drawer">
             <v-app-bar-title class="font-weight-bold">
-                {{ userStore.user.username }}
+                {{ userStore.user.items.username }}
             </v-app-bar-title>
             <v-spacer />
         </v-app-bar>
@@ -26,7 +26,7 @@
                 </v-list-item>
             </v-list>
             <v-list>
-                <v-list-item v-if="checkUser" to="/login" class="py-3">
+                <v-list-item v-if="checkUser()" to="/login" class="py-3">
                     <v-row align="center">
                         <v-col cols="2">
                             <v-icon>mdi-login</v-icon>
@@ -36,7 +36,7 @@
                         </v-col>                        
                     </v-row>
                 </v-list-item>
-                <v-list-item v-else @click="logoutHandler" class="py-3">
+                <v-list-item v-else @click="logoutHandler()" class="py-3">
                     <v-row align="center">
                         <v-col cols="2">
                             <v-icon>mdi-login</v-icon>
@@ -52,8 +52,10 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from "~/store/user";
-import { ref } from "vue"
+import { FetchUser } from "@/domain/usecase/FetchUser"
+import { User } from "@/domain/entity/User"
+import { useUserStore } from "~/store/User";
+import ApiClient from "@/infrastructure/api/ApiClient"
 
 // user情報
 const userStore = useUserStore();
@@ -72,37 +74,30 @@ const items = [
 
 const drawer = useState('drawer', () => false)
 
-// logout
-const logoutHandler = async () => {
-    const access_token = useCookie('access_token')
-    const config = useRuntimeConfig()
-    const url: string = config.public.CcFrontUrl + "/api/logout"
-    const result = await $fetch(url, {
-        method: "PUT",
-        headers: {
-            Authorization: "Bearer " + access_token.value,
-        },
-        body: {
-            userKey: userStore.user.userKey,
-        },
-    })
-
-    result.items.userKey = ref("")
-    result.items.username = ref("")
-    result.items.email = ref("")
-    userStore.increment(result)
-    const { logout } = useAuth()
-    const userLogout = await logout(result.items)
-}
-
-// user check
 const checkUser = () => {
     let status: boolean = false
-    if (userStore.user.username == "") {
+    if (userStore.user.items.username == "") {
         status = true
     }
 
     return status
+}
+
+const logoutHandler = async () => {
+    const request = {
+        userKey: userStore.user.items.userKey,
+    }
+
+    const fetchUser = new FetchUser(ApiClient)
+    const user = ref<User | null>(null)
+    user.value = await fetchUser.userLogout(request)
+
+    user.value.items.userKey = ref("")
+    user.value.items.username = ref("")
+    user.value.items.email = ref("")
+    userStore.increment(user.value)
+
+    useRouter().push('/login')
 }
 </script>
 

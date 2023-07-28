@@ -6,7 +6,7 @@
         >
             <v-row>
                 <v-col :cols="12" align="center">
-                    <Register />
+                    <UserRegister />
                 </v-col>
             </v-row>
         </v-container>

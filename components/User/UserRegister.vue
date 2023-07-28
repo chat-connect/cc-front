@@ -2,11 +2,15 @@
     <v-container>
         <v-card style="background: #ffffff;" flat>
             <v-col cols="12">
-                <h2>Login</h2>
+                <h2>Register</h2>
                 <v-form>
                     <v-text-field
                         label="email"
                         v-model="email"
+                    ></v-text-field>
+                    <v-text-field
+                        label="username"
+                        v-model="username"
                     ></v-text-field>
                     <v-text-field
                         type="password"
@@ -21,9 +25,9 @@
                             block
                             variant="tonal"
                             color="#00E5FF"
-                            @click="loginHandler"
+                            @click="registerHandler"
                         >
-                            Login
+                            Register
                         </v-btn>
                     </v-col>
                     <v-col cols="4">
@@ -32,9 +36,9 @@
                             block
                             variant="outlined"
                             color="#00E5FF"
-                            to="/register"
+                            to="/login"
                         >
-                            Register
+                            Login
                         </v-btn>                          
                     </v-col>
                 </v-row>
@@ -44,29 +48,26 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from "~/store/user";
+import { FetchUser } from "@/domain/usecase/FetchUser"
+import { User } from "@/domain/entity/User"
+import ApiClient from "@/infrastructure/api/ApiClient"
 
+// body
 const email = ref("")
+const username = ref("")
 const password = ref("")
 
-const loginHandler = async () => {
-    const config = useRuntimeConfig()
-    const url: string = config.public.CcFrontUrl + "/api/login"
-    const result = await $fetch(url, {
-        method: "POST",
-        body: {
-            email: email.value,
-            password: password.value,
-        },
-    })
-    const accessTokenCookie = useCookie("access_token")
-    accessTokenCookie.value = result.items.token
+const registerHandler = async () => {
+    const request = {
+        username: username.value,
+        email: email.value,
+        password: password.value,
+    }
 
-    // user情報
-    const userStore = useUserStore();
-    userStore.increment(result.items)
+    const fetchUser = new FetchUser(ApiClient)
+    const user = ref<User | null>(null)
+    user.value = await fetchUser.userRegister(request)
 
-    const { login } = useAuth()
-    const userLogin = await login(result.items)
+    useRouter().push('/login')
 }
 </script>

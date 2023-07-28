@@ -20,6 +20,10 @@ export default defineNuxtConfig({
     // styleLang: 'css',
     // modules: ['navigation', 'pagination'], // all modules are imported by default
   },
+  components: [{
+    path: '~/components/',
+    pathPrefix: false,
+  }],
   css: [
     "vuetify/lib/styles/main.sass",
     "mdi/css/materialdesignicons.css"
