@@ -1,5 +1,5 @@
 import { User } from "@/domain/entity/User"
-import { ApiClient } from "@/infrastructure/api/apiClient"
+import { ApiClient } from "@/infra/api/apiClient"
 
 export class FetchUser {
     private apiClient: ApiClient

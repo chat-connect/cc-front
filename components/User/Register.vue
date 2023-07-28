@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { FetchUser } from "@/domain/usecase/FetchUser"
 import { User } from "@/domain/entity/user"
-import ApiClient from "@/infrastructure/api/ApiClient"
+import ApiClient from "@/infra/api/ApiClient"
 
 // body
 const email = ref("")

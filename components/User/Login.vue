@@ -47,7 +47,7 @@
 import { FetchUser } from "@/domain/usecase/fetchUser"
 import { User } from "@/domain/entity/user"
 import { useUserStore } from "~/store/user";
-import ApiClient from "@/infrastructure/api/apiClient"
+import ApiClient from "@/infra/api/apiClient"
 
 // body
 const email = ref("")
