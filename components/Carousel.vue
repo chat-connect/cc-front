@@ -1,23 +1,25 @@
 <template>
     <div>
-        <Swiper
-            :slidesPerView="1"
-            :loop="true"
-            :speed="3000"
-            :autoplay="{ delay: 2000 }"
-            :modules="[SwiperAutoplay, SwiperEffectCreative]"
-        >
-            <SwiperSlide v-for="item in items">
-                <v-card flat style="margin: 0px 10px 0px 10px;">
-                    <v-card-item>
-                        <v-card-title class="headline">{{ item.title }}</v-card-title>
-                        <div style="height: 100px;">
-                            {{ item.content }}
-                        </div>
-                    </v-card-item>
-                </v-card>
-            </SwiperSlide>
-        </Swiper>
+        <v-card flat style="margin: 0px 10px 0px 10px;">
+            <Swiper
+                :slidesPerView="1"
+                :loop="true"
+                :speed="3000"
+                :autoplay="{ delay: 2000 }"
+                :modules="[SwiperAutoplay, SwiperEffectCreative]"
+            >
+                <SwiperSlide v-for="item in items">
+                    <v-card flat style="margin: 0px 0px 0px 0px;">
+                        <v-card-item>
+                            <v-card-title class="headline">{{ item.title }}</v-card-title>
+                            <div style="height: 100px;">
+                                {{ item.content }}
+                            </div>
+                        </v-card-item>
+                    </v-card>
+                </SwiperSlide>
+            </Swiper>    
+        </v-card>
     </div>
 </template>
 
