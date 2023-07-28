@@ -52,10 +52,10 @@
 </template>
 
 <script setup lang="ts">
-import { FetchUser } from "@/domain/usecase/FetchUser"
-import { User } from "@/domain/entity/User"
-import { useUserStore } from "~/store/User";
-import ApiClient from "@/infrastructure/api/ApiClient"
+import { FetchUser } from "@/domain/usecase/fetchUser"
+import { User } from "@/domain/entity/user"
+import { useUserStore } from "~/store/user";
+import ApiClient from "@/infrastructure/api/apiClient"
 
 // user情報
 const userStore = useUserStore();
