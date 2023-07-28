@@ -73,7 +73,7 @@ const items = [
     },
     {
         title: 'New!',
-        path: '/room/createRoom',
+        path: '/room/create',
         icon: 'mdi-plus-box'
     }
 ]
