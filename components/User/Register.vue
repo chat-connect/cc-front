@@ -48,9 +48,9 @@
 </template>
 
 <script setup lang="ts">
-import { FetchUser } from "@/domain/usecase/FetchUser"
+import { FetchUser } from "@/domain/usecase/fetchUser"
 import { User } from "@/domain/entity/user"
-import ApiClient from "@/infra/api/ApiClient"
+import ApiClient from "@/infra/api/apiClient"
 
 // body
 const email = ref("")
