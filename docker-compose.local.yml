@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  web:
+    container_name: cc-web
+    env_file:
+      - .env.local
+    build:
+      target: ${APP_ENV}
+      context: .
+      dockerfile: .docker/web/Dockerfile
+    volumes:
+      - .:/web:cached
+      - nuxt_node_modules:/web/node_modules
+    ports:
+      - "3000:3000"
+      - "24678:24678"
+    tty: true
+
+volumes:
+  nuxt_node_modules:
