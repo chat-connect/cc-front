@@ -66,7 +66,7 @@ const registerHandler = async () => {
 
     const fetchUser = new FetchUser(ApiClient)
     const user = ref<User | null>(null)
-    user.value = await fetchUser.userRegister(request)
+    user.value = await fetchUser.register(request)
 
     useRouter().push('/login')
 }

@@ -9,21 +9,21 @@ export class FetchUser {
     }
 
     // userRegister ユーザー登録
-    async userRegister(request: any): Promise<User> {
+    async register(request: any): Promise<User> {
         const response = await this.apiClient.post("/api/register", request, null)
 
         return response as User
     }
 
     // userLogin ログイン
-    async userLogin(request: any): Promise<User> {
+    async login(request: any): Promise<User> {
         const response = await this.apiClient.post("/api/login", request, null)
 
         return response as User
     }
 
     // userLogin ログアウト
-    async userLogout(request: any): Promise<User> {
+    async logout(request: any): Promise<User> {
         const access_token = useCookie('access_token')
         const response = await this.apiClient.put("/api/logout", request, access_token.value)
 

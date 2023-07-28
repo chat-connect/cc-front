@@ -70,7 +70,13 @@ const items = [
         title: 'room2',
         path: '/item2',
         icon: 'mdi-ghost'
-    }]
+    },
+    {
+        title: 'New!',
+        path: '/room/createRoom',
+        icon: 'mdi-plus-box'
+    }
+]
 
 const drawer = useState('drawer', () => false)
 
@@ -90,7 +96,7 @@ const logoutHandler = async () => {
 
     const fetchUser = new FetchUser(ApiClient)
     const user = ref<User | null>(null)
-    user.value = await fetchUser.userLogout(request)
+    user.value = await fetchUser.logout(request)
 
     user.value.items.userKey = ref("")
     user.value.items.username = ref("")

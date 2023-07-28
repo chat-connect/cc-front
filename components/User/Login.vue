@@ -61,7 +61,7 @@ const loginHandler = async () => {
 
     const fetchUser = new FetchUser(ApiClient)
     const user = ref<User | null>(null)
-    user.value = await fetchUser.userLogin(request)
+    user.value = await fetchUser.login(request)
 
     const accessTokenCookie = useCookie("access_token")
     accessTokenCookie.value = user.value.items.token

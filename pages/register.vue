@@ -3,7 +3,7 @@
         <v-container class="main_container">
             <v-row>
                 <v-col :cols="12" align="center">
-                    <UserRegister />
+                    <Register />
                 </v-col>
             </v-row>
         </v-container>
