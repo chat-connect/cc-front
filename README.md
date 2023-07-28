@@ -4,13 +4,13 @@ chat-connectのフロントエンド。
 ## 環境構築
 1.コンテナを起動
 ```
-docker compose up -d --build
+docker compose -f docker-compose.local.yml up -d --build
 ```
 2.モジュールのインストール
 ```
-docker container exec -it cc-front-nuxt-1 yarn install
+docker compose -f docker-compose.local.yml exec web yarn install
 ```
 3.Nuxtサーバーを起動
 ```
-docker container exec -it cc-front-nuxt-1 yarn dev
+docker compose -f docker-compose.local.yml exec web yarn dev
 ```
