@@ -1,9 +1,6 @@
 <template>
     <div>
-        <v-container 
-            style="position: relative;
-            top: 64px;"
-        >
+        <v-container class="main_container">
             <v-row align-content="center">
                 <v-col align="center">
                     <Carousel />
@@ -17,3 +14,10 @@
         </v-container>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.main_container {
+    position: relative;
+    top: 64px;
+}
+</style>
