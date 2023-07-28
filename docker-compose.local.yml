@@ -1,5 +1,7 @@
 version: '3.9'
 
+name: cc-web-local
+
 services:
   web:
     container_name: cc-web
