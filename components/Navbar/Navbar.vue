@@ -101,12 +101,12 @@ const logoutHandler = async () => {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 img.user_icon {
-	width: 55px;
-	height: 55px;
-	object-fit:cover;
-	border-radius:50%;
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 50%;
     position: relative;
     left: 5px;
 }
@@ -124,9 +124,9 @@ v-list-item.login {
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
-}
 
-.box::-webkit-scrollbar {
-    display:none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 </style>

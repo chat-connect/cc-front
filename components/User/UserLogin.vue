@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-card style="background: #ffffff;" flat>
+        <v-card class="base_card" flat>
             <v-col cols="12">
                 <h2>Login</h2>
                 <v-form>
@@ -72,3 +72,9 @@ const loginHandler = async () => {
     useRouter().push('/')
 }
 </script>
+
+<style lang="scss" scoped>
+.base_card {
+    background: #ffffff;
+}
+</style>
