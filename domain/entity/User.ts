@@ -1,5 +1,5 @@
 export interface User {
-    types: string,
+    types:  string,
     status: number,
     items:{
         user_key: string

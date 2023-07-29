@@ -1,11 +1,20 @@
-import { ref } from "vue"
 import { defineStore } from "pinia"
 import { User } from "@/domain/entity/user"
 
 export const useUserStore = defineStore("user", {
     state: () => {
         return {
-            user: ref<User | null>(null),
+            user: {
+                types: "",
+                status: 0,
+                items: {
+                    user_key: "",
+                    name: "",
+                    email: "",
+                    token: "",
+                    message: "",                    
+                }
+            },
         }
     },
     persist: true,
@@ -15,12 +24,15 @@ export const useUserStore = defineStore("user", {
         },
     },
     actions: {
-        increment(user) {
+        increment(user: User) {
             this.user = {
+                types: user.types,
+                status: user.status,
                 items: {
-                    userKey: user.items.user_key,
-                    name:    user.items.name,
-                    email:   user.items.email,
+                    user_key: user.items.user_key,
+                    name: user.items.name,
+                    email: user.items.email,
+                    token: "",
                     message: user.items.message,                    
                 }
             }

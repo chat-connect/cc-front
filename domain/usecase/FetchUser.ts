@@ -1,4 +1,4 @@
-import { User } from "@/domain/entity/User"
+import { User } from "@/domain/entity/user"
 import { ApiClient } from "@/infra/api/apiClient"
 
 export class FetchUser {
