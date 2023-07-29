@@ -91,7 +91,7 @@ const checkUser = () => {
 
 const logoutHandler = async () => {
     const request = {
-        userKey: userStore.user.items.userKey,
+        userKey: userStore.user.items.user_key,
     }
 
     const fetchUser = new FetchUser(ApiClient)
