@@ -1,10 +1,4 @@
-export interface UserLogout {
-    types: string;
-    status: number;
-    items: {
-        message: string;
-    };
-}
+import { UserLogout } from "@/domain/entity/userLogout"
 
 export default defineEventHandler(async (event) => {
     const req = event.req
