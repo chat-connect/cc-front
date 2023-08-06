@@ -9,9 +9,9 @@ export interface UserLogout {
 export default defineEventHandler(async (event) => {
     const req = event.req
     const authorizationHeader = req.headers.authorization
-    const body = await readBody(event)
     const config = useRuntimeConfig()
-    const url: string = config.public.CcServerUrl + "/auth/user_logout/" + body.userKey
+    const userKey: string | undefined = event.context.params?.userKey;
+    const url: string = config.public.CcServerUrl + "/auth/user_logout/" + userKey
     const result: UserLogout[] = await $fetch(url, {
         method: "PUT",
         headers: {

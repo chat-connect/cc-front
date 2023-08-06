@@ -1,13 +1,4 @@
-export interface UserRegister {
-    types: string;
-    status: number;
-    items: {
-        user_key: string;
-        name: string;
-        email: string;
-        message: string;
-    };
-}
+import { UserRegister } from "@/domain/entity/userRegister"
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)

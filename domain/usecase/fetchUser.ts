@@ -23,9 +23,9 @@ export class FetchUser {
     }
 
     // userLogin ログアウト
-    async logout(request: any): Promise<User> {
+    async logout(userKey: string): Promise<User> {
         const access_token = useCookie('access_token')
-        const response = await this.apiClient.put("/api/auth/logout", request, access_token.value)
+        const response = await this.apiClient.put("/api/auth/logout/" + userKey, null, access_token.value)
 
         return response as User
     }

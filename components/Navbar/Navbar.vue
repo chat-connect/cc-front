@@ -83,13 +83,11 @@ export default {
         };
 
         const logoutHandler = async () => {
-            const request = {
-                userKey: userStore.user.items.user_key,
-            };
+            const userKey: string = userStore.user.items.user_key
 
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
-            user.value = await fetchUser.logout(request);
+            user.value = await fetchUser.logout(userKey);
 
             user.value.items.userKey = '';
             user.value.items.name = '';
