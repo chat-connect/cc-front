@@ -18,7 +18,7 @@
                     </v-row>
                 </v-list-item>
             </v-list>
-            <v-list>
+            <v-list  @click="drawer = !drawer">
                 <v-list-item v-if="checkUser()" to="/login" class="py-3">
                     <v-row align="center">
                         <v-col cols="2">
