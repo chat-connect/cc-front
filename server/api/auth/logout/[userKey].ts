@@ -1,4 +1,4 @@
-import { UserLogout } from "@/domain/entity/userLogout"
+import { User } from "@/domain/entity/user"
 
 export default defineEventHandler(async (event) => {
     const req = event.req
@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig()
     const userKey: string | undefined = event.context.params?.userKey;
     const url: string = config.public.CcServerUrl + "/auth/user_logout/" + userKey
-    const result: UserLogout[] = await $fetch(url, {
+    const result: User[] = await $fetch(url, {
         method: "PUT",
         headers: {
             Authorization: authorizationHeader
