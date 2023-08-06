@@ -10,14 +10,14 @@ export class FetchUser {
 
     // userRegister ユーザー登録
     async register(request: any): Promise<User> {
-        const response = await this.apiClient.post("/api/register", request, null)
+        const response = await this.apiClient.post("/api/auth/register", request, null)
 
         return response as User
     }
 
     // userLogin ログイン
     async login(request: any): Promise<User> {
-        const response = await this.apiClient.post("/api/login", request, null)
+        const response = await this.apiClient.post("/api/auth/login", request, null)
 
         return response as User
     }
@@ -25,7 +25,7 @@ export class FetchUser {
     // userLogin ログアウト
     async logout(request: any): Promise<User> {
         const access_token = useCookie('access_token')
-        const response = await this.apiClient.put("/api/logout", request, access_token.value)
+        const response = await this.apiClient.put("/api/auth/logout", request, access_token.value)
 
         return response as User
     }
