@@ -24,7 +24,7 @@ export const useUserStore = defineStore("user", {
         },
     },
     actions: {
-        increment(user: User) {
+        update(user: User) {
             this.user = {
                 types: user.types,
                 status: user.status,
@@ -36,6 +36,19 @@ export const useUserStore = defineStore("user", {
                     message: user.items.message,                    
                 }
             }
+        },
+        delete() {
+            this.user = {
+                types: "",
+                status: 0,
+                items: {
+                    user_key: "",
+                    name: "",
+                    email: "",
+                    token: "",
+                    message: "",                    
+                }
+            };
         },
     },
 })

@@ -104,13 +104,8 @@ export default {
             user.value = await fetchUser.logout(userKey);
 
             // storeを初期化
-            user.value.items.userKey = '';
-            user.value.items.name = '';
-            user.value.items.email = '';
-            userStore.increment(user.value);
-
-            const roomList = ref<RoomList | null>(null);
-            roomListStore.delete(roomList)
+            userStore.delete();
+            roomListStore.delete()
 
             useRouter().push('/login');
         };

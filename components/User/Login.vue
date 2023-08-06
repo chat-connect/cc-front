@@ -52,7 +52,7 @@ export default {
             accessTokenCookie.value = user.value.items.token;
             await accessTokenCookie;
             const userStore = useUserStore();
-            userStore.increment(user.value);
+            userStore.update(user.value);
 
             // ルーム一覧を取得
             const fetchRoom = new FetchRoom(ApiClient);
