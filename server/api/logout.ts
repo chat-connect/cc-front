@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const authorizationHeader = req.headers.authorization
     const body = await readBody(event)
     const config = useRuntimeConfig()
-    const url: string = config.public.CcServerUrl + "/user/" + body.userKey + "/user_logout"
+    const url: string = config.public.CcServerUrl + "/auth/user_logout/" + body.userKey
     const result: logout[] = await $fetch(url, {
         method: "PUT",
         headers: {
