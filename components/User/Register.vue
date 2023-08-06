@@ -24,7 +24,7 @@
 <script lang="ts">
 import { ref } from 'vue';
 import { FetchUser } from '@/domain/usecase/fetchUser';
-import { User } from '@/domain/entity/user';
+import { User } from '@/domain/entity/user/user';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {

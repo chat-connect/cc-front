@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { User } from "@/domain/entity/user"
+import { User } from "@/domain/entity/user/user"
 
 export const useUserStore = defineStore("user", {
     state: () => {

@@ -1,4 +1,4 @@
-import { User } from "@/domain/entity/user"
+import { User } from "@/domain/entity/user/user"
 
 export default defineEventHandler(async (event) => {
     const req = event.req
