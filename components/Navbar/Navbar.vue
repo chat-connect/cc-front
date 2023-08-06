@@ -7,7 +7,7 @@
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" class="px-6 py-4">
             <v-list class="item_list box">
-                <v-list-item v-for="item in items" :to="item.path" class="py-3" :key="item.title">
+                <v-list-item v-for="item in roomListHandler()" :to="item.path" class="py-3" :key="item.title">
                     <v-row align="center">
                         <v-col cols="2">
                             <v-icon>{{ item.icon }}</v-icon>
@@ -48,7 +48,9 @@
 import { ref } from 'vue';
 import { FetchUser } from '@/domain/usecase/fetchUser';
 import { User } from '@/domain/entity/user';
+import { RoomList } from "@/domain/entity/room/roomList"
 import { useUserStore } from '@/store/user';
+import { useRoomListStore } from '@/store/room/roomList';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {
@@ -59,47 +61,63 @@ export default {
     },
     setup() {
         const userStore = useUserStore();
+        const roomListStore = useRoomListStore();
 
-        const items = [
-            {
-                title: 'room1',
-                path: '/item1',
-                icon: 'mdi-ghost',
-            },
-            {
-                title: 'room2',
-                path: '/item2',
-                icon: 'mdi-ghost',
-            },
-            {
-                title: 'New!',
-                path: '/room/create',
-                icon: 'mdi-plus-box',
-            },
-        ];
-
+        // ログインチェック
         const checkUser = () => {
-            return userStore.user.items.name === '';
+            let status: boolean = false
+            if (userStore.user.items.name == "") {
+                status = true
+            }
+            return status
         };
 
+        // ルーム一覧
+        const roomListHandler = () => {
+            const list = roomListStore.roomList.items.list
+            const roomLists = [
+                {
+                    title: 'New!',
+                    path: '/room/create',
+                    icon: 'mdi-plus-box',
+                }
+            ]
+            for (let i = 0; i < list.length; i++) {
+                const item = {
+                    title: list[i].name,
+                    path: '/room/' + list[i].room_key,
+                    icon: 'mdi-ghost',
+                }
+                roomLists.push(item);
+            }
+
+            return roomLists;
+        }
+
+
+        // ログアウト
         const logoutHandler = async () => {
-            const userKey: string = userStore.user.items.user_key
+            const userKey: string = userStore.user.items.user_key;
 
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
             user.value = await fetchUser.logout(userKey);
 
+            // storeを初期化
             user.value.items.userKey = '';
             user.value.items.name = '';
             user.value.items.email = '';
             userStore.increment(user.value);
+
+            const roomList = ref<RoomList | null>(null);
+            roomListStore.delete(roomList)
 
             useRouter().push('/login');
         };
 
         return {
             userStore,
-            items,
+            roomListHandler,
             checkUser,
             logoutHandler,
         };

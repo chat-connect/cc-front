@@ -29,6 +29,7 @@ export class ApiClient {
 
     async get(path: string, token: string): Promise<any> {
         const config = useRuntimeConfig();
+
         const url: string = config.public.CcFrontUrl + path;
         const response = await $fetch(url, {
             method: "GET",
