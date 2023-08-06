@@ -93,7 +93,6 @@ export default {
             return roomLists;
         }
 
-
         // ログアウト
         const logoutHandler = async () => {
             const userKey: string = userStore.user.items.user_key;
