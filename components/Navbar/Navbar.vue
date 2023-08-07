@@ -5,7 +5,7 @@
             <v-app-bar-title class="font-weight-bold">{{ userStore.user.items.name }}</v-app-bar-title>
             <v-spacer />
         </v-app-bar>
-        <v-navigation-drawer v-model="drawer" class="px-6 py-4">
+        <v-navigation-drawer v-model="drawer" class="px-6 py-4" temporary>
             <v-list class="item_list box">
                 <v-list-item v-for="item in roomListHandler()" :to="item.path" class="py-3" :key="item.title">
                     <v-row align="center">
