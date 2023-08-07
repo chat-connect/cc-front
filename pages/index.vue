@@ -2,8 +2,8 @@
     <div>
         <v-container class="main_container">
             <v-row align-content="center">
-                <v-col align="center">
-                    <Carousel />
+                <v-col :cols="12" align="center">
+                    <SwitchList />
                 </v-col>
                 <v-col :cols="12" align="center">
                     <Timeline />

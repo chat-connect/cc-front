@@ -7,6 +7,6 @@
 
 <style lang="scss" scoped>
 .main {
-    background: #f3efef;
+    background: #eeebeb;
 }
 </style>
