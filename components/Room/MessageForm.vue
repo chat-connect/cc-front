@@ -1,5 +1,5 @@
 <template>
-    <v-bottom-navigation height="83">
+    <v-bottom-navigation class="bottom_nav" height="83">
         <v-col cols="12">
             <v-form class="form-container">
                 <v-textarea
@@ -29,5 +29,9 @@
 
 .send-icon {
     font-size: 30px;
+}
+
+.bottom_nav {
+    box-shadow: none !important;
 }
 </style>
