@@ -114,8 +114,8 @@ export default {
                 { title: 'Times', icon: 'mdi-clock', to: '/' },
             ],
             rooms: [
-                { title: 'Room1', icon: 'mdi-account-group', to: '/room/GUGYBGH+BRsth/room' },
-                { title: 'Room2', icon: 'mdi-account-group', to: '/room/GUGYBfeggRsth/room' },
+                { title: 'Room1', icon: 'mdi-account-group', to: '/room/GUGYBGH+BRsth/main' },
+                { title: 'Room2', icon: 'mdi-account-group', to: '/room/GUGYBfeggRsth/main' },
             ],
         };
     },
