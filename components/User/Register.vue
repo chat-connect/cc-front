@@ -10,10 +10,10 @@
                 </v-form>
                 <v-row>
                     <v-col cols="8">
-                        <v-btn flat block variant="tonal" color="#00E5FF" @click="registerHandler">Register</v-btn>
+                        <v-btn flat block variant="tonal" color="primary" @click="registerHandler">Register</v-btn>
                     </v-col>
                     <v-col cols="4">
-                        <v-btn flat block variant="outlined" color="#00E5FF" to="/login">Login</v-btn>
+                        <v-btn flat block variant="outlined" color="primary" to="/login">Login</v-btn>
                     </v-col>
                 </v-row>
             </v-col>

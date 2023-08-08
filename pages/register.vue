@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-container class="main_container">
+        <v-container>
             <v-row>
                 <v-col :cols="12" align="center">
                     <Register />
@@ -10,9 +10,3 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-.main_container {
-    position: relative;
-    top: 64px;
-}
-</style>
