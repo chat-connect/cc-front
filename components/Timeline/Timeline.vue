@@ -1,8 +1,8 @@
 <template>
     <div>
-        <v-card flat style="margin: 0px 10px 0px 10px;">
+        <v-card flat>
             <v-card-item>
-                <div style="height: 550px;">
+                <div style="height: 1000px;">
                     {{ "Timeline" }}
                 </div>
             </v-card-item>
