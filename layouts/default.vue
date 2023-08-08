@@ -79,7 +79,7 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <v-app-bar app flat border class="px-md-6">
+        <v-app-bar app flat class="px-md-6">
             <v-btn icon @click.stop="drawer = !drawer">
                 <v-icon>mdi-menu</v-icon>
             </v-btn>
