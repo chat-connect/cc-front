@@ -1,5 +1,9 @@
 <template>
-    <v-col :cols="12" align="center">
-        <Timeline :items="timelineItems" />
-    </v-col>
+     <v-container>
+        <v-row align-content="center">
+            <v-col align-content="center">
+                <Timeline :items="timelineItems" />
+            </v-col>
+        </v-row>
+     </v-container>
  </template>

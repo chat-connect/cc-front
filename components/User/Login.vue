@@ -1,23 +1,21 @@
 <template>
-    <v-container>
-        <v-card class="base_card" flat>
-            <v-col cols="12">
-                <h2>Login</h2>
-                <v-form>
-                    <v-text-field label="email" v-model="email"></v-text-field>
-                    <v-text-field type="password" label="password" v-model="password"></v-text-field>
-                </v-form>
-                <v-row>
-                    <v-col cols="8">
-                        <v-btn flat block variant="tonal" color="primary" @click="loginHandler">Login</v-btn>
-                    </v-col>
-                    <v-col cols="4">
-                        <v-btn flat block variant="outlined" color="primary" to="/register">Register</v-btn>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-card>
-    </v-container>
+    <v-card class="base_card" flat>
+        <v-col cols="12">
+            <h2>Login</h2>
+            <v-form>
+                <v-text-field label="email" v-model="email"></v-text-field>
+                <v-text-field type="password" label="password" v-model="password"></v-text-field>
+            </v-form>
+            <v-row>
+                <v-col cols="8">
+                    <v-btn flat block variant="tonal" color="primary" @click="loginHandler">Login</v-btn>
+                </v-col>
+                <v-col cols="4">
+                    <v-btn flat block variant="outlined" color="primary" to="/register">Register</v-btn>
+                </v-col>
+            </v-row>
+        </v-col>
+    </v-card>
 </template>
 
 <script lang="ts">
