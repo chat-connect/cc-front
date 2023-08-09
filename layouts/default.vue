@@ -64,7 +64,7 @@
                     <template v-slot:prepend>
                         <v-icon>mdi-login</v-icon>
                     </template>
-                    <v-list-item-title>Logout</v-list-item-title>
+                    <v-list-item-title>Login</v-list-item-title>
                 </v-list-item>
                 <v-list-item
                     v-else @click="logoutHandler()"
@@ -75,7 +75,7 @@
                 <template v-slot:prepend>
                         <v-icon>mdi-login</v-icon>
                     </template>
-                    <v-list-item-title>Login</v-list-item-title>
+                    <v-list-item-title>Logout</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
@@ -107,6 +107,8 @@ import ApiClient from '@/infra/api/apiClient';
 export default {
     data() {
         return {
+            userStore: useUserStore(),
+            roomListStore : useRoomListStore(),
             drawer: true,
             items: [
                 { title: 'Profile', icon: 'mdi-account', to: '' },
@@ -119,40 +121,29 @@ export default {
             ],
         };
     },
-    setup() {
-        const userStore = useUserStore();
-        const roomListStore = useRoomListStore();
-
-        // ログインチェック
-        const checkUser = () => {
+    methods: {
+        checkUser() {
             let status: boolean = false
-            if (userStore.user.items.name == "") {
+            if (this.userStore.user.items.name == "") {
                 status = true
             }
+            
             return status
-        };
-
-        // ログアウト
-        const logoutHandler = async () => {
-            const userKey: string = userStore.user.items.user_key;
+        },
+        async logoutHandler() {
+            const userKey: string = this.userStore.user.items.user_key;
 
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
             user.value = await fetchUser.logout(userKey);
 
             // storeを初期化
-            userStore.delete();
-            roomListStore.delete()
+            this.userStore.delete();
+            this.roomListStore.delete()
 
             useRouter().push('/login');
-        };
-
-        return {
-            userStore,
-            checkUser,
-            logoutHandler,
-        };
-    },
+        }
+    }
 };
 </script>
 
