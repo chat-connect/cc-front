@@ -112,9 +112,9 @@ export default {
             drawer: true,
             items: [
                 { title: 'Profile', icon: 'mdi-account', to: '' },
+                { title: 'chart', icon: 'mdi-chart-bar-stacked', to: '' },
                 { title: 'Timeline', icon: 'mdi-forum-outline', to: '/' },
                 { title: 'Message', icon: 'mdi-email-outline', to: '' },
-                { title: 'chart', icon: 'mdi-chart-bar-stacked', to: '' },
             ],
         };
     },
