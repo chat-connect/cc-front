@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         async loginHandler() {
-            const request = {
+            const body = {
                 email: this.email,
                 password: this.password,
             };
@@ -47,7 +47,7 @@ export default {
             // ログイン
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
-            user.value = await fetchUser.login(request);
+            user.value = await fetchUser.login(body);
             const accessTokenCookie = useCookie('access_token');
             accessTokenCookie.value = user.value.items.token;
             await accessTokenCookie;
