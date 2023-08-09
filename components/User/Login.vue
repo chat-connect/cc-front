@@ -56,10 +56,9 @@ export default {
 
             // ルーム一覧を取得
             const fetchRoom = new FetchRoom(ApiClient);
-            const roomList = ref<RoomList | null>(null);
-            roomList.value = await fetchRoom.roomList( user.value.items.user_key);
+            const roomList = await fetchRoom.roomList(user.value.items.user_key);
             const roomListStore = useRoomListStore();
-            roomListStore.update(roomList.value);
+            roomListStore.update(roomList);
 
             this.$router.push('/');
         },

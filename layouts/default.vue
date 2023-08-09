@@ -36,7 +36,7 @@
                         ></v-list-item>
                     </template>
                     <v-list-item
-                        v-for="(room, i) in rooms"
+                        v-for="(room, i) in roomListHandler()"
                         :key="i"
                         :title="room.title"
                         :prepend-icon="room.icon"
@@ -115,10 +115,6 @@ export default {
                 { title: 'Message', icon: 'mdi-email-outline', to: '' },
                 { title: 'Times', icon: 'mdi-clock', to: '/' },
             ],
-            rooms: [
-                { title: 'Room1', icon: 'mdi-account-group', to: '/room/GUGYBGH+BRsth/main' },
-                { title: 'Room2', icon: 'mdi-account-group', to: '/room/GUGYBfeggRsth/main' },
-            ],
         };
     },
     methods: {
@@ -130,12 +126,26 @@ export default {
             
             return status
         },
-        async logoutHandler() {
+        roomListHandler() {
+            const list = this.roomListStore.roomList.items.list
+            const roomList = [];
+
+            for (let i = 0; i < list.length; i++) {
+                roomList.push({
+                    title: list[i].name,
+                    icon: 'mdi-account-group',
+                    to: '/room/' + list[i].room_key + '/main',
+                });
+            }
+
+            return roomList;
+        },
+        logoutHandler() {
             const userKey: string = this.userStore.user.items.user_key;
 
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
-            user.value = await fetchUser.logout(userKey);
+            user.value = fetchUser.logout(userKey);
 
             // storeを初期化
             this.userStore.delete();
