@@ -1,5 +1,6 @@
 <template>
     <div>
+        <NuxtLink ref="scrollLink" to="#scroll" href="#scroll"><!-- scrollで使用するダミー要素 --></NuxtLink>
         <div class="timeline">
             <v-card flat v-for="item in items" :key="item.id" class="timeline-item">
                 <v-row>
@@ -18,6 +19,7 @@
                 <div class="timeline-time">{{ item.time }}</div>
             </v-card>
         </div>
+        <div id="scroll"><!-- scrollで使用するダミー要素 --></div>
         <v-footer app class="bottom_nav">
             <v-row>
                 <v-col cols="12">
@@ -55,11 +57,16 @@ export default {
             ],
         };
     },
+    mounted() {
+        // 最新投稿にスクロールする
+        this.$refs.scrollLink.$el.click();
+    },
 };
 </script>
 
 <style lang="scss" scoped>
 .timeline {
+    overflow: scroll;
     display: flex;
     flex-direction: column-reverse;
 }
@@ -115,7 +122,7 @@ export default {
 
 .send_button {
     align-self: flex-start;
-    height: 58px;
+    height: 56px;
 }
 
 .send-icon {
