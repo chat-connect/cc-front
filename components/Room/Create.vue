@@ -37,6 +37,7 @@ export default {
                 name: this.name,
                 explanation: this.explanation,
             }
+            
             // ルーム登録
             const fetchRoom = new FetchRoom(ApiClient);
             const newRoom = await fetchRoom.roomCreate(body, this.userStore.user.items.user_key);
