@@ -1,9 +1,9 @@
 <template>
-    <v-container>
+     <v-container>
         <v-row align-content="center">
             <v-col align-content="center">
-                <Create />
+                <RoomTimeline :items="timelineItems" />
             </v-col>
         </v-row>
-    </v-container>
-</template>
+     </v-container>
+ </template>

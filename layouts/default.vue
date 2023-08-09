@@ -88,7 +88,7 @@
                     <v-icon>mdi-vuejs</v-icon>
                 </v-btn>
             </div>
-            <div></div> <!-- Flexbox の中央寄せを行うためのダミー要素 -->
+            <div><!-- Flexbox の中央寄せを行うためのダミー要素 --></div>
         </v-app-bar>
         <v-main>
             <slot /> 
@@ -112,8 +112,9 @@ export default {
             drawer: true,
             items: [
                 { title: 'Profile', icon: 'mdi-account', to: '' },
+                { title: 'Timeline', icon: 'mdi-forum-outline', to: '/' },
                 { title: 'Message', icon: 'mdi-email-outline', to: '' },
-                { title: 'Times', icon: 'mdi-clock', to: '/' },
+                { title: 'chart', icon: 'mdi-chart-bar-stacked', to: '' },
             ],
         };
     },

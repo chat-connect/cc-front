@@ -1,20 +1,18 @@
 <template>
-    <v-container>
-        <v-card class="base_card" flat>
-            <v-col cols="12">
-                <h2>New Room</h2>
-                <v-form>
-                    <v-text-field label="Name" v-model="name"></v-text-field>
-                    <v-textarea label="Explanation" v-model="explanation" rows="5"></v-textarea>
-                </v-form>
-                <v-row justify="end">
-                    <v-col cols="4">
-                        <v-btn flat block variant="tonal" color="primary" class="text-right" @click="createHandler()">Create</v-btn>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-card>
-    </v-container>
+    <v-card class="base_card" flat>
+        <v-col cols="12">
+            <h2>New Room</h2>
+            <v-form>
+                <v-text-field label="Name" v-model="name"></v-text-field>
+                <v-textarea label="Explanation" v-model="explanation" rows="5"></v-textarea>
+            </v-form>
+            <v-row justify="end">
+                <v-col cols="4">
+                    <v-btn flat block variant="tonal" color="primary" class="text-right" @click="createHandler()">Create</v-btn>
+                </v-col>
+            </v-row>
+        </v-col>
+    </v-card>
 </template>
 
 <script lang="ts">
@@ -37,7 +35,7 @@ export default {
                 name: this.name,
                 explanation: this.explanation,
             }
-            
+
             // ルーム登録
             const fetchRoom = new FetchRoom(ApiClient);
             const newRoom = await fetchRoom.roomCreate(body, this.userStore.user.items.user_key);
