@@ -1,5 +1,5 @@
 <template>
     <div class="main">
-        <MessageForm />
+        <Timeline />
     </div>
 </template>

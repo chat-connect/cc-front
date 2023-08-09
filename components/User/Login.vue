@@ -25,7 +25,6 @@ import { ref } from 'vue';
 import { FetchUser } from '@/domain/usecase/fetchUser';
 import { FetchRoom } from '@/domain/usecase/fetchRoom';
 import { User } from '@/domain/entity/user';
-import { RoomList } from "@/domain/entity/room/roomList"
 import { useUserStore } from '@/store/user/user';
 import { useRoomListStore } from '@/store/room/roomList';
 import ApiClient from '@/infra/api/apiClient';
