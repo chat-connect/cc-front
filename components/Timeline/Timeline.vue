@@ -79,8 +79,8 @@ export default {
 }
 
 .user-icon {
-    width: 50px; /* Adjust the width */
-    height: 50px; /* Adjust the height */
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -123,6 +123,6 @@ export default {
 }
 
 .custom-textarea {
-    height: 30px; /* Adjust the height as needed */
+    height: 30px;
 }
 </style>
