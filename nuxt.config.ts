@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-swiper',
     '@pinia/nuxt',
+    '@nuxtjs/device',
     '@pinia-plugin-persistedstate/nuxt',
   ],
   swiper: {
