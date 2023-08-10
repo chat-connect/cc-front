@@ -115,7 +115,7 @@
                         value="New"
                         color="primary"
                         rounded="xl"
-                        to="/channel/create"
+                        :to="'/channel/' + activeRoomKey + '/create'"
                     ></v-list-item>
                 </v-list-group>
                 <v-list-group
@@ -213,7 +213,7 @@ export default {
 
             const userKey = this.userStore.user.items.user_key
             const fetchChannel = new FetchChannel(ApiClient);
-            const channelList = await fetchChannel.channelList(userKey, roomKey);
+            const channelList = await fetchChannel.listChannel(userKey, roomKey);
             this.channelListStore.update(channelList);
         },
         // textチャンネル一覧を表示
@@ -297,7 +297,7 @@ export default {
 
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
-            user.value = fetchUser.logout(userKey);
+            user.value = fetchUser.logoutUser(userKey);
 
             // storeを初期化
             this.userStore.delete();

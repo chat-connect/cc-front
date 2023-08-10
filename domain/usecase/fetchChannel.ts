@@ -9,8 +9,8 @@ export class FetchChannel {
         this.apiClient = apiClient
     }
 
-    // channelList チャンネル一覧
-    async channelList(userKey: string, roomKey: string): ChannelList {
+    // listChannel チャンネル一覧
+    async listChannel(userKey: string, roomKey: string): ChannelList {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
         const response: ChannelList = await this.apiClient.get(config.public.CcFrontUrl + "/api/channel/" + userKey + "/list_channel/" + roomKey, access_token.value)
@@ -18,8 +18,8 @@ export class FetchChannel {
         return response
     }
 
-    // channelCreate チャンネル作成
-    async channelCreate(body: any, userKey: string, roomKey: string): ChannelCreate {
+    // createChannel チャンネル作成
+    async createChannel(body: any, userKey: string, roomKey: string): ChannelCreate {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
         const response: ChannelCreate = await this.apiClient.post(config.public.CcFrontUrl + "/api/channel/" + userKey + "/create_channel/" + roomKey, body, access_token.value)
