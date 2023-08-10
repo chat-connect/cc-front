@@ -2,7 +2,7 @@
     <v-app class="main">
         <v-navigation-drawer v-model="drawer" class="px-6 py-4 scrollbar navbar">
             <div app style="display: flex; align-items: center;">
-                <img class="image_circle user_icon" src="~/assets/images/sample_icon.png" @click="drawer = !drawer">
+                <img class="image_circle user_icon" src="~/assets/images/sample_icon.png" @click="draw(drawer)">
                 <v-app-bar-title class="font-weight-bold sidevar_name">{{ userStore.user.items.name }}</v-app-bar-title>
             </div>
             <div style="display: flex; align-items: center;">
@@ -17,6 +17,7 @@
                     color="primary"
                     rounded="xl"
                     :to="item.to"
+                    @click.stop="drawChannel(false)"
                 >
                     <template v-slot:prepend>
                         <v-icon :icon="item.icon"></v-icon>
@@ -33,6 +34,7 @@
                         title="Room"
                         rounded="xl"
                         prepend-icon="mdi-comment-text-outline"
+                        @click.stop="drawChannel(true)"
                         ></v-list-item>
                     </template>
                     <v-list-item
@@ -44,6 +46,7 @@
                         color="primary"
                         rounded="xl"
                         :to="room.to"
+                        @click.stop="getChannelList(room.roomKey)"
                     ></v-list-item>
                     <v-list-item
                         title="New"
@@ -52,6 +55,7 @@
                         color="primary"
                         rounded="xl"
                         to="/room/create"
+                        @click.stop="drawChannel(false)"
                     ></v-list-item>
                 </v-list-group>
                 <v-list-item
@@ -67,28 +71,95 @@
                     <v-list-item-title>Login</v-list-item-title>
                 </v-list-item>
                 <v-list-item
-                    v-else @click="logoutHandler()"
+                    v-else
+                    @click="logoutHandler()"
                     class="py-3"
                     color="primary"
                     rounded="xl"
                 >
-                <template v-slot:prepend>
+                    <template v-slot:prepend>
                         <v-icon>mdi-login</v-icon>
                     </template>
                     <v-list-item-title>Logout</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <v-app-bar app flat class="px-md-6">
-            <v-btn icon @click.stop="drawer = !drawer">
-                <v-icon>mdi-menu</v-icon>
-            </v-btn>
+        <!-- channel -->
+        <v-navigation-drawer v-model="channelDrawer" class="px-6 py-4 scrollbar navbar" :location="channelNavPosition()">
+            <v-list>
+                <v-list-group
+                    color="primary"
+                    value="Text"
+                >
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                        v-bind="props"
+                        title="Text"
+                        rounded="xl"
+                        prepend-icon="mdi-message-reply-text"
+                        ></v-list-item>
+                    </template>
+                    <v-list-item
+                        v-for="(room, i) in textChannelListHandler()"
+                        :key="i"
+                        :title="room.title"
+                        :prepend-icon="room.icon"
+                        :value="room.title"
+                        color="primary"
+                        rounded="xl"
+                        :to="room.to"
+                    ></v-list-item>
+                    <v-list-item
+                        title="New"
+                        prepend-icon="mdi-plus-box"
+                        value="New"
+                        color="primary"
+                        rounded="xl"
+                        to="/channel/create"
+                    ></v-list-item>
+                </v-list-group>
+                <v-list-group
+                    color="primary"
+                    value="Voice"
+                >
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                        v-bind="props"
+                        title="Voice"
+                        rounded="xl"
+                        prepend-icon="mdi-microphone-settings"
+                        ></v-list-item>
+                    </template>
+                    <v-list-item
+                        v-for="(room, i) in voiceChannelListHandler()"
+                        :key="i"
+                        :title="room.title"
+                        :prepend-icon="room.icon"
+                        :value="room.title"
+                        color="primary"
+                        rounded="xl"
+                        :to="room.to"
+                    ></v-list-item>
+                    <v-list-item
+                        title="New"
+                        prepend-icon="mdi-plus-box"
+                        value="New"
+                        color="primary"
+                        rounded="xl"
+                        :to="'/channel/' + activeRoomKey + '/create'"
+                    ></v-list-item>
+                </v-list-group>
+            </v-list>
+        </v-navigation-drawer>
+        <v-app-bar app flat>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
             <div class="center_icon">
                 <v-btn icon class="center_icon_size">
                     <v-icon>mdi-vuejs</v-icon>
                 </v-btn>
             </div>
-            <div><!-- Flexbox の中央寄せを行うためのダミー要素 --></div>
+            <v-toolbar-title>{{ title }}</v-toolbar-title>
+            <v-app-bar-nav-icon v-if="!$device.isDesktop" @click.stop="channelDrawer = !channelDrawer" />
         </v-app-bar>
         <v-main>
             <slot /> 
@@ -98,18 +169,26 @@
 
 <script lang="ts">
 import { ref } from 'vue';
-import { FetchUser } from '@/domain/usecase/fetchUser';
-import { User } from '@/domain/entity/user/user';
-import { useUserStore } from '@/store/user/user';
-import { useRoomListStore } from '@/store/room/roomList';
 import ApiClient from '@/infra/api/apiClient';
+
+import { User } from '@/domain/entity/user/user';
+import { FetchUser } from '@/domain/usecase/fetchUser';
+import { useUserStore } from '@/store/user/user';
+
+import { useRoomListStore } from '@/store/room/roomList';
+
+import { FetchChannel } from '@/domain/usecase/fetchChannel';
+import { useChannelListStore } from '@/store/channel/channelList';
 
 export default {
     data() {
         return {
             userStore: useUserStore(),
             roomListStore : useRoomListStore(),
+            channelListStore : useChannelListStore(),
             drawer: true,
+            channelDrawer: false,
+            activeRoomKey: "",
             items: [
                 { title: 'Profile', icon: 'mdi-account', to: '' },
                 { title: 'chart', icon: 'mdi-chart-bar-stacked', to: '' },
@@ -119,6 +198,69 @@ export default {
         };
     },
     methods: {
+        // チャンネルメニュー表示
+        channelNavPosition() {
+            if (this.$device.isDesktop) {
+                return "left"
+            } else {
+                return "right"
+            }
+        },
+        // チャンネル一覧を取得する
+        async getChannelList(roomKey: string) {
+            this.activeRoomKey = roomKey
+            this.drawChannel(true)
+
+            const userKey = this.userStore.user.items.user_key
+            const fetchChannel = new FetchChannel(ApiClient);
+            const channelList = await fetchChannel.channelList(userKey, roomKey);
+            this.channelListStore.update(channelList);
+        },
+        // textチャンネル一覧を表示
+        textChannelListHandler() {
+            const channel = this.channelListStore.channelList.items.list
+            const channelList = [];
+
+            for (let i = 0; i < channel.length; i++) {
+                channelList.push({
+                    title: channel[i].name,
+                    icon: 'mdi-account-group',
+                    to: '/room/' + channel[i].channel_key + '/main',
+                });
+            }
+
+            return channelList;
+        },
+        // voiceチャンネル一覧を表示
+        voiceChannelListHandler() {
+            const channel = this.channelListStore.channelList.items.list
+            const channelList = [];
+
+            for (let i = 0; i < channel.length; i++) {
+                channelList.push({
+                    title: channel[i].name,
+                    icon: 'mdi-account-group',
+                    to: '/room/' + channel[i].channel_key + '/main',
+                });
+            }
+
+            return channelList;
+        },
+        draw() {
+            this.channelDrawer = false
+            this.drawer = !this.drawer
+        },
+        drawChannel(d: boolean) {
+            // PCの時
+            if (this.$device.isDesktop) {
+                if (d) {
+                    this.channelDrawer = true
+                } else {
+                    this.channelDrawer = false
+                }
+            }
+        },
+        // ログインチェック
         checkUser() {
             let status: boolean = false
             if (this.userStore.user.items.name == "") {
@@ -127,12 +269,14 @@ export default {
             
             return status
         },
+        // ルーム一覧を表示
         roomListHandler() {
             const list = this.roomListStore.roomList.items.list
             const roomList = [];
 
             for (let i = 0; i < list.length; i++) {
                 roomList.push({
+                    roomKey: list[i].room_key,
                     title: list[i].name,
                     icon: 'mdi-account-group',
                     to: '/room/' + list[i].room_key + '/main',
@@ -141,7 +285,10 @@ export default {
 
             return roomList;
         },
+        // ログアウト
         logoutHandler() {
+            this.channelDrawer = false
+
             const userKey: string = this.userStore.user.items.user_key;
 
             const fetchUser = new FetchUser(ApiClient);
