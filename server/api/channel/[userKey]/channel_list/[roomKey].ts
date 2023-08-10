@@ -1,19 +1,16 @@
 import { ChannelList } from "@/domain/entity/channel/channelList"
+import { ApiClient } from "@/infra/api/apiClient";
 
 export default defineEventHandler(async (event) => {
+    const apiClient = new ApiClient(); 
+    const config = useRuntimeConfig();
+
     const req = event.req
     const authorizationHeader = req.headers.authorization
     const userKey: string | undefined = event.context.params?.userKey;
     const roomKey: string | undefined = event.context.params?.roomKey;
     
-    const config = useRuntimeConfig()
-    const url: string = config.public.CcServerUrl + "/channel/" + userKey + "/channel_list/" + roomKey
-    const result: ChannelList[] = await $fetch(url, {
-        method: "GET",
-        headers: {
-            Authorization: authorizationHeader
-        },
-    })
+    const response: ChannelList = await apiClient.get(config.public.CcServerUrl + "/channel/" + userKey + "/channel_list/" + roomKey, authorizationHeader);
 
-    return result
+    return response
 })

@@ -1,21 +1,17 @@
 import { ChannelCreate } from "@/domain/entity/channel/channelCreate"
+import { ApiClient } from "@/infra/api/apiClient";
 
 export default defineEventHandler(async (event) => {
+    const apiClient = new ApiClient(); 
+    const config = useRuntimeConfig();
+
     const req = event.req
     const authorizationHeader = req.headers.authorization
     const userKey: string | undefined = event.context.params?.userKey;
     const roomKey: string | undefined = event.context.params?.roomKey;
     const body = await readBody(event)
     
-    const config = useRuntimeConfig()
-    const url: string = config.public.CcServerUrl + "/channel/" + userKey + "/channel_create/" + roomKey
-    const result: ChannelCreate[] = await $fetch(url, {
-        method: "POST",
-        body: body,
-        headers: {
-            Authorization: authorizationHeader
-        },
-    })
+    const response: ChannelCreate = await apiClient.post(config.public.CcServerUrl + "/channel/" + userKey + "/channel_create/" + roomKey, body, authorizationHeader);
 
-    return result
+    return response
 })
