@@ -11,7 +11,7 @@ export class FetchUser {
     // userRegister ユーザー登録
     async register(request: any): Promise<User> {
         const config = useRuntimeConfig();
-        const response = await this.apiClient.post(config.public.CcFrontUrl + "/api/auth/user_register", request, null)
+        const response = await this.apiClient.post(config.public.CcFrontUrl + "/api/auth/register_user", request, null)
 
         return response as User
     }
@@ -19,7 +19,7 @@ export class FetchUser {
     // userLogin ログイン
     async login(request: any): Promise<User> {
         const config = useRuntimeConfig();
-        const response = await this.apiClient.post(config.public.CcFrontUrl + "/api/auth/user_login", request, null)
+        const response = await this.apiClient.post(config.public.CcFrontUrl + "/api/auth/login_user", request, null)
 
         return response as User
     }
@@ -28,7 +28,7 @@ export class FetchUser {
     async logout(userKey: string): Promise<User> {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
-        const response = await this.apiClient.put(config.public.CcFrontUrl + "/api/auth/user_logout/" + userKey, null, access_token.value)
+        const response = await this.apiClient.put(config.public.CcFrontUrl + "/api/auth/logout_user/" + userKey, null, access_token.value)
 
         return response as User
     }

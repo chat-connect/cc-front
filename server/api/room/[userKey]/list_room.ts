@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const authorizationHeader = req.headers.authorization;
     const userKey: string | undefined = event.context.params?.userKey;
     
-    const response: RoomList = await apiClient.get(config.public.CcServerUrl + "/room/" + userKey + "/room_list", authorizationHeader);
+    const response: RoomList = await apiClient.get(config.public.CcServerUrl + "/room/" + userKey + "/list_room", authorizationHeader);
 
     return response;
 });

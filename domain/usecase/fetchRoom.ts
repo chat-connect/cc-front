@@ -13,7 +13,7 @@ export class FetchRoom {
     async roomList(userKey: string): RoomList {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
-        const response: RoomList = await this.apiClient.get(config.public.CcFrontUrl + "/api/room/" + userKey + "/room_list", access_token.value)
+        const response: RoomList = await this.apiClient.get(config.public.CcFrontUrl + "/api/room/" + userKey + "/list_room", access_token.value)
         
         return response
     }
@@ -22,7 +22,7 @@ export class FetchRoom {
     async roomCreate(body: any, userKey: string): RoomCreate {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
-        const response: RoomCreate = await this.apiClient.post(config.public.CcFrontUrl + "/api/room/" + userKey + "/room_create", body, access_token.value)
+        const response: RoomCreate = await this.apiClient.post(config.public.CcFrontUrl + "/api/room/" + userKey + "/create_room", body, access_token.value)
 
         return response
     }

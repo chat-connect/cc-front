@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const userKey: string | undefined = event.context.params?.userKey;
     const roomKey: string | undefined = event.context.params?.roomKey;
     
-    const response: ChannelList = await apiClient.get(config.public.CcServerUrl + "/channel/" + userKey + "/channel_list/" + roomKey, authorizationHeader);
+    const response: ChannelList = await apiClient.get(config.public.CcServerUrl + "/channel/" + userKey + "/list_channel/" + roomKey, authorizationHeader);
 
     return response
 })
