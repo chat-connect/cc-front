@@ -222,11 +222,13 @@ export default {
             const channelList = [];
 
             for (let i = 0; i < channel.length; i++) {
-                channelList.push({
-                    title: channel[i].name,
-                    icon: 'mdi-account-group',
-                    to: '/room/' + channel[i].channel_key + '/main',
-                });
+                if (channel[i].type == "text") {
+                    channelList.push({
+                        title: channel[i].name,
+                        icon: 'mdi-account-group',
+                        to: '/room/' + channel[i].channel_key + '/main',
+                    });                    
+                }
             }
 
             return channelList;
@@ -237,11 +239,13 @@ export default {
             const channelList = [];
 
             for (let i = 0; i < channel.length; i++) {
-                channelList.push({
-                    title: channel[i].name,
-                    icon: 'mdi-account-group',
-                    to: '/room/' + channel[i].channel_key + '/main',
-                });
+                if (channel[i].type == "voice") {
+                    channelList.push({
+                        title: channel[i].name,
+                        icon: 'mdi-account-group',
+                        to: '/room/' + channel[i].channel_key + '/main',
+                    });                    
+                }
             }
 
             return channelList;
