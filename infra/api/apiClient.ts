@@ -1,7 +1,5 @@
 export class ApiClient {
-    async post(path: string, data: any, token: string): Promise<any> {
-        const config = useRuntimeConfig();
-        const url: string = config.public.CcFrontUrl + path;
+    async post(url: string, data: any, token: string): Promise<any> {
         const response = await $fetch(url, {
             method: "POST",
             headers: {
@@ -13,9 +11,7 @@ export class ApiClient {
         return response;
     }
 
-    async put(path: string, data: any, token: string): Promise<any> {
-        const config = useRuntimeConfig();
-        const url: string = config.public.CcFrontUrl + path;
+    async put(url: string, data: any, token: string): Promise<any> {
         const response = await $fetch(url, {
             method: "PUT",
             headers: {
@@ -27,10 +23,7 @@ export class ApiClient {
         return response;
     }
 
-    async get(path: string, token: string): Promise<any> {
-        const config = useRuntimeConfig();
-
-        const url: string = config.public.CcFrontUrl + path;
+    async get(url: string, token: string): Promise<any> {
         const response = await $fetch(url, {
             method: "GET",
             headers: {
@@ -41,9 +34,7 @@ export class ApiClient {
         return response;
     }
 
-    async delete(path: string, token: string): Promise<any> {
-        const config = useRuntimeConfig();
-        const url: string = config.public.CcFrontUrl + path;
+    async delete(url: string, token: string): Promise<any> {
         const response = await $fetch(url, {
             method: "DELETE",
             headers: {
