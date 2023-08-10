@@ -38,10 +38,10 @@ export default {
 
             // ルーム登録
             const fetchRoom = new FetchRoom(ApiClient);
-            const newRoom = await fetchRoom.roomCreate(body, this.userStore.user.items.user_key);
+            await fetchRoom.createRoom(body, this.userStore.user.items.user_key);
 
             // ルーム一覧を取得
-            const roomList = await fetchRoom.roomList(this.userStore.user.items.user_key);
+            const roomList = await fetchRoom.listRoom(this.userStore.user.items.user_key);
             const roomListStore = useRoomListStore();
             roomListStore.update(roomList);
 

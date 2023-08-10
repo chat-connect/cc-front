@@ -44,7 +44,7 @@ export default {
             // ログイン
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
-            user.value = await fetchUser.login(body);
+            user.value = await fetchUser.loginUser(body);
             const accessTokenCookie = useCookie('access_token');
             accessTokenCookie.value = user.value.items.token;
             await accessTokenCookie;
@@ -53,7 +53,7 @@ export default {
 
             // ルーム一覧を取得
             const fetchRoom = new FetchRoom(ApiClient);
-            const roomList = await fetchRoom.roomList(user.value.items.user_key);
+            const roomList = await fetchRoom.listRoom(user.value.items.user_key);
             const roomListStore = useRoomListStore();
             roomListStore.update(roomList);
 

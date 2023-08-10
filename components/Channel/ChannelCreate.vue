@@ -51,10 +51,10 @@ export default {
 
             // チャンネル登録
             const fetchChannel = new FetchChannel(ApiClient);
-            const newChannel = await fetchChannel.channelCreate(body, userKey, roomKey);
+            const newChannel = await fetchChannel.createChannel(body, userKey, roomKey);
 
             // チャンネル一覧を取得
-            const channelList = await fetchChannel.channelList(userKey, roomKey);
+            const channelList = await fetchChannel.listChannel(userKey, roomKey);
             this.channelListStore.update(channelList);
 
             this.$router.push('/');

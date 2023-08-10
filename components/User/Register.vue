@@ -43,7 +43,7 @@ export default {
 
             const fetchUser = new FetchUser(ApiClient);
             const user = ref<User | null>(null);
-            user.value = await fetchUser.register(request);
+            user.value = await fetchUser.registerUser(request);
 
             this.$router.push('/login');
         },
