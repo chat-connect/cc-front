@@ -1,4 +1,4 @@
-import { User } from "@/domain/entity/user/user"
+import { RoomCreate } from "@/domain/entity/room/roomCreate"
 import { ApiClient } from "@/infra/api/apiClient";
 
 export default defineEventHandler(async (event) => {
@@ -8,8 +8,9 @@ export default defineEventHandler(async (event) => {
     const req = event.req
     const authorizationHeader = req.headers.authorization
     const userKey: string | undefined = event.context.params?.userKey;
+    const body = await readBody(event)
+    
+    const response: RoomCreate = await apiClient.post(config.public.CcServerUrl + "/room/" + userKey + "/create_room", body, authorizationHeader);
 
-    const response: User = await apiClient.put(config.public.CcServerUrl + "/auth/user_logout/" + userKey, null, authorizationHeader);
-
-    return response;
+    return response
 })
