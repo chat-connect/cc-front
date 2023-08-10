@@ -302,6 +302,7 @@ export default {
             // storeを初期化
             this.userStore.delete();
             this.roomListStore.delete()
+            this.channelListStore.delete()
 
             useRouter().push('/login');
         }
