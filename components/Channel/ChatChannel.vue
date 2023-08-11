@@ -62,6 +62,14 @@ export default {
         this.listChatHandler().then(() => {
             this.scrollChat();
         })
+
+        this.startPolling();
+    },
+    watch: {
+        '$route' () {
+        // ポーリングを停止(後でwebsocketに移行する)
+            this.stopPolling();
+        }
     },
     methods: {
         // チャット一覧を表示
@@ -83,13 +91,16 @@ export default {
         },
         // チャット一覧を取得
         async listChatHandler() {
-            const route = useRoute()
-            const channelKey: string = route.params.channelKey;
-            const userKey: string = this.userStore.user.items.user_key
+            try {
+                const route = useRoute();
+                const channelKey: string = route.params.channelKey;
+                const userKey: string = this.userStore.user.items.user_key;
 
-            const fetchChat = new FetchChat(ApiClient);
-            const chatList: ListChat = await fetchChat.listChat(userKey, channelKey);
-            await this.listChatStore.update(chatList);
+                const fetchChat = new FetchChat(ApiClient);
+                const chatList: ListChat = await fetchChat.listChat(userKey, channelKey);
+
+                await this.listChatStore.update(chatList);
+            } catch (error) {}
         },
         // チャットを送信
         async sendHandler() {
@@ -104,13 +115,30 @@ export default {
             await fetchChat.createChat(body, userKey, channelKey);
 
             await this.listChatHandler();
-            await this.getListChat()
+            await this.getListChat();
             
             this.content ="";
             this.scrollChat();
         },
+        // ポーリングを開始(後でwebsocketに移行する)
+        startPolling() {
+            this.pollingInterval = setInterval(async () => {
+                await this.listChatHandler();
+                await this.getListChat();
+                this.$nextTick(() => {
+                    this.scrollChat();
+                });
+                console.log("送信")
+            }, 5000);
+        },
+        // ポーリングを停止(後でwebsocketに移行する)
+        stopPolling() {
+            clearInterval(this.pollingInterval);
+        },
         scrollChat() {
-            this.$refs.scrollLink.$el.click();
+            try {
+                this.$refs.scrollLink.$el.click();
+            } catch (error) {}
         }
     }
 };
