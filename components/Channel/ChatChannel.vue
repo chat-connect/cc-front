@@ -128,7 +128,6 @@ export default {
                 this.$nextTick(() => {
                     this.scrollChat();
                 });
-                console.log("送信")
             }, 5000);
         },
         // ポーリングを停止(後でwebsocketに移行する)
