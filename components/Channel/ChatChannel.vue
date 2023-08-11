@@ -19,6 +19,7 @@
                 <div class="timeline-time">{{ item.time }}</div>
             </v-card>
         </div>
+        <div ref="scrollElement"><!-- scrollで使用するダミー要素 --></div>
         <div id="scroll"><!-- scrollで使用するダミー要素 --></div>
         <v-footer app class="bottom_nav">
             <v-row>
@@ -69,6 +70,7 @@ export default {
         '$route' () {
         // ポーリングを停止(後でwebsocketに移行する)
             this.stopPolling();
+            window.removeEventListener('scroll', this.checkElementVisibility);
         }
     },
     methods: {
@@ -123,11 +125,16 @@ export default {
         // ポーリングを開始(後でwebsocketに移行する)
         startPolling() {
             this.pollingInterval = setInterval(async () => {
-                await this.listChatHandler();
-                await this.getListChat();
-                this.$nextTick(() => {
-                    this.scrollChat();
-                });
+                if (this.checkElementVisibility()) {
+                    await this.listChatHandler();
+                    await this.getListChat();
+                    this.$nextTick(() => {
+                        this.scrollChat();
+                    });
+                } else {
+                    await this.listChatHandler();
+                    await this.getListChat();
+                }
             }, 5000);
         },
         // ポーリングを停止(後でwebsocketに移行する)
@@ -138,7 +145,19 @@ export default {
             try {
                 this.$refs.scrollLink.$el.click();
             } catch (error) {}
-        }
+        },
+        checkElementVisibility() {
+            const element = this.$refs.scrollElement;
+            const rect = element.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+
+            const result: boolean = false
+            if (isVisible) {
+                return true;
+            }
+
+            return result
+        },
     }
 };
 </script>
