@@ -49,6 +49,15 @@
                         @click.stop="getChannelList(room.roomKey)"
                     ></v-list-item>
                     <v-list-item
+                        title="Join"
+                        prepend-icon="mdi-account-check"
+                        value="New"
+                        color="primary"
+                        rounded="xl"
+                        to="/room/join"
+                        @click.stop="drawChannel(false)"
+                    ></v-list-item>
+                    <v-list-item
                         title="New"
                         prepend-icon="mdi-plus-box"
                         value="New"
