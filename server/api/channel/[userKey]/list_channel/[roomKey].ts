@@ -1,4 +1,4 @@
-import { ChannelList } from "@/domain/entity/channel/channelList"
+import { ListChannel } from "@/domain/entity/channel/listChannel"
 import { ApiClient } from "@/infra/api/apiClient";
 
 export default defineEventHandler(async (event) => {
@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const userKey: string = event.context.params?.userKey;
     const roomKey: string = event.context.params?.roomKey;
     
-    const response: ChannelList = await apiClient.get(config.public.GcServerUrl + "/channel/" + userKey + "/list_channel/" + roomKey, authorizationHeader);
+    const response: ListChannel = await apiClient.get(config.public.GcServerUrl + "/channel/" + userKey + "/list_channel/" + roomKey, authorizationHeader);
 
     return response
 })

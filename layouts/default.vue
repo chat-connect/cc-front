@@ -178,14 +178,14 @@ import { useUserStore } from '@/store/user/user';
 import { useRoomListStore } from '@/store/room/roomList';
 
 import { FetchChannel } from '@/domain/usecase/fetchChannel';
-import { useChannelListStore } from '@/store/channel/channelList';
+import { useListChannelStore } from '@/store/channel/listChannel';
 
 export default {
     data() {
         return {
             userStore: useUserStore(),
             roomListStore : useRoomListStore(),
-            channelListStore : useChannelListStore(),
+            listChannelStore : useListChannelStore(),
             drawer: true,
             channelDrawer: false,
             activeRoomKey: "",
@@ -218,7 +218,7 @@ export default {
         },
         // textチャンネル一覧を表示
         textChannelListHandler() {
-            const channel = this.channelListStore.channelList.items.list
+            const channel = this.listChannelStore.listChannel.items.list
             const channelList = [];
 
             for (let i = 0; i < channel.length; i++) {
@@ -236,7 +236,7 @@ export default {
         },
         // voiceチャンネル一覧を表示
         voiceChannelListHandler() {
-            const channel = this.channelListStore.channelList.items.list
+            const channel = this.listChannelStore.listChannel.items.list
             const channelList = [];
 
             for (let i = 0; i < channel.length; i++) {

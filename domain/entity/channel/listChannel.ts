@@ -5,7 +5,7 @@ export interface Channel {
     explanation: string;
 }
 
-export interface ChannelList {
+export interface ListChannel {
     types: string;
     status: number;
     items: {

@@ -1,4 +1,4 @@
-export interface ChannelCreate {
+export interface CreateChannel {
     types:  string;
     status: number;
     items: {

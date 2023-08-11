@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { ChannelList, Channel } from "@/domain/entity/channel/channelList";
+import { ListChannel, Channel } from "@/domain/entity/channel/listChannel";
 
-export const useChannelListStore = defineStore("channelList", {
+export const useListChannelStore = defineStore("listChannel", {
     state: () => {
         return {
-            channelList: {
+            listChannel: {
                 types: "",
                 status: 0,
                 items: {
@@ -18,27 +18,27 @@ export const useChannelListStore = defineStore("channelList", {
     persist: true,
     getters: {
         double: (state) => {
-            return state.channelList;
+            return state.listChannel;
         }
     },
     actions: {
-        update(channelList: ChannelList) {
-            this.channelList = {
-                types: channelList.types,
-                status: channelList.status,
+        update(listChannel: ListChannel) {
+            this.listChannel = {
+                types: listChannel.types,
+                status: listChannel.status,
                 items: {
-                    room_key: channelList.room_key,
+                    room_key: listChannel.room_key,
                     list: [],
-                    message: channelList.message,
+                    message: listChannel.message,
                 }
             };
 
-            for (const channel of channelList.items.list) {
-                this.channelList.items.list.push(channel);
+            for (const channel of listChannel.items.list) {
+                this.listChannel.items.list.push(channel);
             }
         },
         delete() {
-            this.channelList = {
+            this.listChannel = {
                 types: "",
                 status: 0,
                 items: {
