@@ -1,0 +1,19 @@
+import { CreateChat } from "@/domain/entity/channel/createChat"
+import { ApiClient } from "@/infra/api/apiClient"
+
+export class FetchChat {
+    private apiClient: ApiClient
+
+    constructor(apiClient: ApiClient) {
+        this.apiClient = apiClient
+    }
+
+    // createChat チャット投稿
+    async createChat(body: any, userKey: string, channelKey: string): CreateChat {
+        const config = useRuntimeConfig();
+        const access_token = useCookie('access_token')
+        const response: CreateChat = await this.apiClient.post(config.public.GcWebUrl + "/api/chat/" + userKey + "/create_chat/" + channelKey, body, access_token.value)
+
+        return response
+    }
+}

@@ -107,7 +107,7 @@
                         :value="channel.title"
                         color="primary"
                         rounded="xl"
-                        :to="'/channel/' + channel.channelKey + '/main'"
+                        :to="channel.to"
                     ></v-list-item>
                     <v-list-item
                         title="New"
@@ -138,7 +138,7 @@
                         :value="channel.title"
                         color="primary"
                         rounded="xl"
-                        :to="'/channel/' + channel.channelKey + '/main'"
+                        :to="channel.to"
                     ></v-list-item>
                     <v-list-item
                         title="New"
@@ -228,7 +228,7 @@ export default {
                         channelKey: channel[i].channel_key,
                         title: channel[i].name,
                         icon: 'mdi-account-group',
-                        to: '/room/' + channel[i].channel_key + '/main',
+                        to: '/channel/' + channel[i].channel_key + '/main',
                     });                    
                 }
             }
@@ -246,7 +246,7 @@ export default {
                         channelKey: channel[i].channel_key,
                         title: channel[i].name,
                         icon: 'mdi-account-group',
-                        to: '/room/' + channel[i].channel_key + '/main',
+                        to: '/channel/' + channel[i].channel_key + '/main',
                     });                    
                 }
             }

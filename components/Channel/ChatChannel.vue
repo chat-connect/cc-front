@@ -42,10 +42,17 @@
 </template>
 
 <script lang="ts">
+import { CreateChat } from "@/domain/entity/chat/createChat"
+import { FetchChat } from '@/domain/usecase/fetchChat';
+
+import { useUserStore } from '@/store/user/user';
+import ApiClient from '@/infra/api/apiClient';
+
 export default {
     data() {
         return {
             content: "",
+            userStore: useUserStore(),
             items: [
                 { id: 1, text: 'Hello!', time: '10:00 AM', userName: 'User1' },
                 { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
@@ -67,14 +74,15 @@ export default {
         // メッセージを送信
         async sendHandler() {
             const route = useRoute()
-
             const channelKey: string = route.params.channelKey;
+            const userKey: string = this.userStore.user.items.user_key
             const body: { content: string } = {
-                content: this.content
+                content: this.content,
             };
 
-            console.log("送信")
-            console.log(channelKey)
+            // チャンネル登録
+            const fetchChat: CreateChat = new FetchChat(ApiClient);
+            await fetchChat.createChat(body, userKey, channelKey);
         }
     }
 };
