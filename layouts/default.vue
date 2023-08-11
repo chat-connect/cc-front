@@ -34,7 +34,7 @@
                         title="Room"
                         rounded="xl"
                         prepend-icon="mdi-comment-text-outline"
-                        @click.stop="drawChannel(true)"
+                        @click.stop="drawChannel(false)"
                         ></v-list-item>
                     </template>
                     <v-list-item
