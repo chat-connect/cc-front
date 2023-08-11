@@ -1,6 +1,7 @@
+import { ApiClient } from "@/infra/api/apiClient"
 import { ListRoom } from "@/domain/entity/room/listRoom"
 import { CreateRoom } from "@/domain/entity/room/createRoom"
-import { ApiClient } from "@/infra/api/apiClient"
+import { JoinRoom } from "@/domain/entity/room/joinRoom"
 
 export class FetchRoom {
     private apiClient: ApiClient
@@ -23,6 +24,15 @@ export class FetchRoom {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
         const response: CreateRoom = await this.apiClient.post(config.public.GcWebUrl + "/api/room/" + userKey + "/create_room", body, access_token.value)
+
+        return response
+    }
+
+    // joinRoom ルーム参加
+    async joinRoom(userKey: string, roomKey: string): JoinRoom {
+        const config = useRuntimeConfig();
+        const access_token = useCookie('access_token')
+        const response: JoinRoom = await this.apiClient.post(config.public.GcWebUrl + "/api/room/" + userKey + "/join_room/" + roomKey, null, access_token.value)
 
         return response
     }

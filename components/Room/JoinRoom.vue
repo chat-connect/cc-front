@@ -1,17 +1,18 @@
 <template>
     <v-card class="base_card" flat>
-        <v-col cols="12">
+        <v-container>
             <h2>Join Room</h2>
-            <v-form>
-                <v-text-field label="Name" v-model="name"></v-text-field>
-                <v-textarea label="Explanation" v-model="explanation" rows="5"></v-textarea>
-            </v-form>
-            <v-row justify="end">
-                <v-col cols="4">
-                    <v-btn flat block variant="tonal" color="primary" class="text-right" @click="createHandler()">Create</v-btn>
+            <v-row>
+                <v-col cols="9">
+                    <v-form>
+                        <v-text-field label="Room Key" v-model="roomKey"></v-text-field>
+                    </v-form>
                 </v-col>
-            </v-row>
-        </v-col>
+                <v-col cols="3">
+                    <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="createHandler()">Join</v-btn>
+                </v-col>
+            </v-row>            
+        </v-container>
     </v-card>
 </template>
 
@@ -24,24 +25,22 @@ import ApiClient from '@/infra/api/apiClient';
 export default {
     data() {
         return {
-            name: '',
-            explanation: '',                
+            roomKey: "",               
             userStore: useUserStore(),
         };
     },
     methods: {
         async createHandler() {
-            const body = {
-                name: this.name,
-                explanation: this.explanation,
-            }
+            const userkey : string = this.userStore.user.items.user_key
+            console.log(userkey)
+            const roomKey: string = this.roomKey
 
-            // ルーム登録
+            // ルーム参加
             const fetchRoom = new FetchRoom(ApiClient);
-            await fetchRoom.createRoom(body, this.userStore.user.items.user_key);
-
+            await fetchRoom.joinRoom(userkey, roomKey);
+            
             // ルーム一覧を取得
-            const roomList = await fetchRoom.listRoom(this.userStore.user.items.user_key);
+            const roomList = await fetchRoom.listRoom(userkey);
             const listRoomStore = useListRoomStore();
             listRoomStore.update(roomList);
 
@@ -54,5 +53,10 @@ export default {
 <style lang="scss" scoped>
 .base_card {
     background: #ffffff;
+}
+
+.send_button {
+    align-self: flex-start;
+    height: 56px;
 }
 </style>
