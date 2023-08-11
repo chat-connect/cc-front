@@ -51,7 +51,7 @@
                     <v-list-item
                         title="Join"
                         prepend-icon="mdi-account-check"
-                        value="New"
+                        value="Join"
                         color="primary"
                         rounded="xl"
                         to="/room/join"
