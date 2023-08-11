@@ -118,14 +118,6 @@
                         rounded="xl"
                         :to="channel.to"
                     ></v-list-item>
-                    <v-list-item
-                        title="New"
-                        prepend-icon="mdi-plus-box"
-                        value="New"
-                        color="primary"
-                        rounded="xl"
-                        :to="'/channel/' + activeRoomKey + '/create'"
-                    ></v-list-item>
                 </v-list-group>
                 <v-list-group
                     color="primary"
@@ -149,15 +141,15 @@
                         rounded="xl"
                         :to="channel.to"
                     ></v-list-item>
-                    <v-list-item
-                        title="New"
-                        prepend-icon="mdi-plus-box"
-                        value="New"
-                        color="primary"
-                        rounded="xl"
-                        :to="'/channel/' + activeRoomKey + '/create'"
-                    ></v-list-item>
                 </v-list-group>
+                <v-list-item
+                    title="New"
+                    prepend-icon="mdi-plus-box"
+                    value="New"
+                    color="primary"
+                    rounded="xl"
+                    :to="'/channel/' + activeRoomKey + '/create'"
+                ></v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-app-bar app flat>
