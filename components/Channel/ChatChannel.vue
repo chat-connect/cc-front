@@ -100,13 +100,13 @@ export default {
                 content: this.content,
             };
 
-            // チャット登録
             const fetchChat: CreateChat = new FetchChat(ApiClient);
             await fetchChat.createChat(body, userKey, channelKey);
 
             await this.listChatHandler();
             await this.getListChat()
             
+            this.content ="";
             this.scrollChat();
         },
         scrollChat() {
