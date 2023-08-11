@@ -64,15 +64,45 @@ export default {
             this.scrollChat();
         })
 
-        this.startPolling();
+        this.connectWebSocket()
     },
     watch: {
         '$route' () {
-        // ポーリングを停止(後でwebsocketに移行する)
-            this.stopPolling();
+            if (this.websocket) {
+                this.websocket.close();
+            }
         }
     },
     methods: {
+        // WebSocketサーバーに接続
+        connectWebSocket() {
+            const route = useRoute()
+            const channelKey: string = route.params.channelKey;
+            const config = useRuntimeConfig();
+            const url = config.public.GcSocketUrl + "/realtime/" + channelKey + "/send_chat";
+
+            // WebSocketサーバーに接続
+            this.websocket = new WebSocket(url);
+            this.websocket.onopen = () => {
+                this.isConnected = true;
+            };
+
+            // メッセージを受信したときの処理
+            this.websocket.onmessage = (event) => {
+                if (this.checkElementVisibility()) {
+                    this.listChatHandler().then(() => {
+                        this.scrollChat();
+                    })
+                } else {
+                    this.listChatHandler();
+                }
+            };
+
+            // ソケットが閉じられたときの処理
+            this.websocket.onclose = () => {
+                this.isConnected = false;
+            };
+        },
         // チャット一覧を表示
         getListChat() {
             const chat = this.listChatStore.listChat.items.list
@@ -105,15 +135,19 @@ export default {
         },
         // チャットを送信
         async sendHandler() {
-            const route = useRoute()
-            const channelKey: string = route.params.channelKey;
-            const userKey: string = this.userStore.user.items.user_key
-            const body: { content: string } = {
-                content: this.content,
-            };
+            if (this.websocket) {
+                const userKey: string = this.userStore.user.items.user_key
+                const access_token = useCookie('access_token')
 
-            const fetchChat: CreateChat = new FetchChat(ApiClient);
-            await fetchChat.createChat(body, userKey, channelKey);
+                const messageObject = {
+                    user_key: userKey,
+                    token: access_token.value,
+                    content: this.content,
+                };
+                
+                const jsonMessage = JSON.stringify(messageObject);
+                this.websocket.send(jsonMessage);
+            }
 
             await this.listChatHandler();
             await this.getListChat();
@@ -121,30 +155,13 @@ export default {
             this.content ="";
             this.scrollChat();
         },
-        // ポーリングを開始(後でwebsocketに移行する)
-        startPolling() {
-            this.pollingInterval = setInterval(async () => {
-                if (this.checkElementVisibility()) {
-                    await this.listChatHandler();
-                    await this.getListChat();
-                    this.$nextTick(() => {
-                        this.scrollChat();
-                    });
-                } else {
-                    await this.listChatHandler();
-                    await this.getListChat();
-                }
-            }, 5000);
-        },
-        // ポーリングを停止(後でwebsocketに移行する)
-        stopPolling() {
-            clearInterval(this.pollingInterval);
-        },
+        // scroll
         scrollChat() {
             try {
                 this.$refs.scrollLink.$el.click();
             } catch (error) {}
         },
+        // scroll位置を判定
         checkElementVisibility() {
             const element = this.$refs.scrollElement;
             const rect = element.getBoundingClientRect();
