@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { RoomList, Room } from "@/domain/entity/room/roomList";
+import { ListRoom, Room } from "@/domain/entity/room/listRoom";
 
-export const useRoomListStore = defineStore("roomList", {
+export const useListRoomStore = defineStore("listRoom", {
     state: () => {
         return {
-            roomList: {
+            listRoom: {
                 types: "",
                 status: 0,
                 items: {
@@ -17,26 +17,26 @@ export const useRoomListStore = defineStore("roomList", {
     persist: true,
     getters: {
         double: (state) => {
-            return state.roomList;
+            return state.listRoom;
         },
     },
     actions: {
-        update(roomList: RoomList) {
-            this.roomList = {
-                types: roomList.types,
-                status: roomList.status,
+        update(listRoom: ListRoom) {
+            this.listRoom = {
+                types: listRoom.types,
+                status: listRoom.status,
                 items: {
                 list: [],
-                    message: roomList.message
+                    message: listRoom.message
                 },
             };
 
-            for (const room of roomList.items.list) {
-                this.roomList.items.list.push(room);
+            for (const room of listRoom.items.list) {
+                this.listRoom.items.list.push(room);
             }
         },
         delete() {
-            this.roomList = {
+            this.listRoom = {
                 types: "",
                 status: 0,
                 items: {

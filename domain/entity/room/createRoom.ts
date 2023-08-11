@@ -1,4 +1,4 @@
-export interface RoomCreate {
+export interface CreateRoom {
     types: string;
     status: number;
     items: {

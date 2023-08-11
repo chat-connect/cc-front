@@ -1,4 +1,4 @@
-import { RoomCreate } from "@/domain/entity/room/roomCreate"
+import { CreateRoom } from "@/domain/entity/room/createRoom"
 import { ApiClient } from "@/infra/api/apiClient";
 
 export default defineEventHandler(async (event) => {
@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     const userKey: string = event.context.params?.userKey;
     const body = await readBody(event)
     
-    const response: RoomCreate = await apiClient.post(config.public.GcServerUrl + "/room/" + userKey + "/create_room", body, authorizationHeader);
+    const response: CreateRoom = await apiClient.post(config.public.GcServerUrl + "/room/" + userKey + "/create_room", body, authorizationHeader);
 
     return response
 })

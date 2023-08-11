@@ -1,5 +1,5 @@
-import { RoomList } from "@/domain/entity/room/roomList"
-import { RoomCreate } from "@/domain/entity/room/roomCreate"
+import { ListRoom } from "@/domain/entity/room/listRoom"
+import { CreateRoom } from "@/domain/entity/room/createRoom"
 import { ApiClient } from "@/infra/api/apiClient"
 
 export class FetchRoom {
@@ -10,19 +10,19 @@ export class FetchRoom {
     }
 
     // listRoom ルーム一覧
-    async listRoom(userKey: string): RoomList {
+    async listRoom(userKey: string): ListRoom {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
-        const response: RoomList = await this.apiClient.get(config.public.GcWebUrl + "/api/room/" + userKey + "/list_room", access_token.value)
+        const response: ListRoom = await this.apiClient.get(config.public.GcWebUrl + "/api/room/" + userKey + "/list_room", access_token.value)
         
         return response
     }
 
     // createRoom ルーム作成
-    async createRoom(body: any, userKey: string): RoomCreate {
+    async createRoom(body: any, userKey: string): CreateRoom {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
-        const response: RoomCreate = await this.apiClient.post(config.public.GcWebUrl + "/api/room/" + userKey + "/create_room", body, access_token.value)
+        const response: CreateRoom = await this.apiClient.post(config.public.GcWebUrl + "/api/room/" + userKey + "/create_room", body, access_token.value)
 
         return response
     }

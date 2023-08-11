@@ -24,7 +24,7 @@ import { FetchUser } from '@/domain/usecase/fetchUser';
 import { FetchRoom } from '@/domain/usecase/fetchRoom';
 import { User } from '@/domain/entity/user';
 import { useUserStore } from '@/store/user/user';
-import { useRoomListStore } from '@/store/room/roomList';
+import { useListRoomStore } from '@/store/room/listRoom';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {
@@ -53,9 +53,9 @@ export default {
 
             // ルーム一覧を取得
             const fetchRoom = new FetchRoom(ApiClient);
-            const roomList = await fetchRoom.listRoom(user.value.items.user_key);
-            const roomListStore = useRoomListStore();
-            roomListStore.update(roomList);
+            const listRoom = await fetchRoom.listRoom(user.value.items.user_key);
+            const listRoomStore = useListRoomStore();
+            listRoomStore.update(listRoom);
 
             this.$router.push('/');
         },

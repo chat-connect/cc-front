@@ -175,7 +175,7 @@ import { User } from '@/domain/entity/user/user';
 import { FetchUser } from '@/domain/usecase/fetchUser';
 import { useUserStore } from '@/store/user/user';
 
-import { useRoomListStore } from '@/store/room/roomList';
+import { useListRoomStore } from '@/store/room/listRoom';
 
 import { ListChannel } from "@/domain/entity/channel/listChannel"
 import { FetchChannel } from '@/domain/usecase/fetchChannel';
@@ -185,8 +185,8 @@ export default {
     data() {
         return {
             userStore: useUserStore(),
-            roomListStore : useRoomListStore(),
-            listChannelStore : useListChannelStore(),
+            listRoomStore: useListRoomStore(),
+            listChannelStore: useListChannelStore(),
             drawer: true,
             channelDrawer: false,
             activeRoomKey: "",
@@ -278,11 +278,11 @@ export default {
         },
         // ルーム一覧を表示
         roomListHandler() {
-            const list = this.roomListStore.roomList.items.list
-            const roomList = [];
+            const list = this.listRoomStore.listRoom.items.list
+            const listRoom = [];
 
             for (let i = 0; i < list.length; i++) {
-                roomList.push({
+                listRoom.push({
                     roomKey: list[i].room_key,
                     title: list[i].name,
                     icon: 'mdi-account-group',
@@ -290,7 +290,7 @@ export default {
                 });
             }
 
-            return roomList;
+            return listRoom;
         },
         // ログアウト
         logoutHandler() {
@@ -304,8 +304,8 @@ export default {
 
             // storeを初期化
             this.userStore.delete();
-            this.roomListStore.delete()
-            this.channelListStore.delete()
+            this.listRoomStore.delete()
+            this.listChannelStore.delete()
 
             useRouter().push('/login');
         }

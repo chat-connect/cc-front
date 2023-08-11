@@ -4,7 +4,7 @@ export interface Room {
     explanation: string;
 }
 
-export interface RoomList {
+export interface ListRoom {
     types: string;
     status: number;
     items: {

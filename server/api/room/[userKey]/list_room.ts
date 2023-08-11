@@ -1,4 +1,4 @@
-import { RoomList } from "@/domain/entity/room/roomList";
+import { ListRoom } from "@/domain/entity/room/listRoom";
 import { ApiClient } from "@/infra/api/apiClient";
 
 export default defineEventHandler(async (event) => {
@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const authorizationHeader = req.headers.authorization;
     const userKey: string = event.context.params?.userKey;
     
-    const response: RoomList = await apiClient.get(config.public.GcServerUrl + "/room/" + userKey + "/list_room", authorizationHeader);
+    const response: ListRoom = await apiClient.get(config.public.GcServerUrl + "/room/" + userKey + "/list_room", authorizationHeader);
 
     return response;
 });

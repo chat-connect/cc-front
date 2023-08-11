@@ -18,7 +18,7 @@
 <script lang="ts">
 import { FetchRoom } from '@/domain/usecase/fetchRoom';
 import { useUserStore } from '@/store/user/user';
-import { useRoomListStore } from '@/store/room/roomList';
+import { useListRoomStore } from '@/store/room/listRoom';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {
@@ -42,8 +42,8 @@ export default {
 
             // ルーム一覧を取得
             const roomList = await fetchRoom.listRoom(this.userStore.user.items.user_key);
-            const roomListStore = useRoomListStore();
-            roomListStore.update(roomList);
+            const listRoomStore = useListRoomStore();
+            listRoomStore.update(roomList);
 
             this.$router.push('/');
         },
