@@ -21,6 +21,8 @@
 </template>
 
 <script lang="ts">
+import { ChannelCreate } from "@/domain/entity/channel/channelCreate"
+import { ChannelList } from "@/domain/entity/channel/channeList"
 import { FetchChannel } from '@/domain/usecase/fetchChannel';
 import { useUserStore } from '@/store/user/user';
 import ApiClient from '@/infra/api/apiClient';
@@ -40,22 +42,22 @@ export default {
     },
     methods: {
         async createHandler() {
-            const body = {
+            const body: { name: string, explanation: string, type: string } = {
                 name: this.name,
                 explanation: this.explanation,
                 type: this.type,
             }
 
-            const userKey = this.userStore.user.items.user_key
+            const userKey: string = this.userStore.user.items.user_key
             const route = useRoute()
             const roomKey: string = route.params.roomKey;
 
             // チャンネル登録
-            const fetchChannel = new FetchChannel(ApiClient);
-            const newChannel = await fetchChannel.createChannel(body, userKey, roomKey);
+            const fetchChannel: ChannelCreate = new FetchChannel(ApiClient);
+            await fetchChannel.createChannel(body, userKey, roomKey);
 
             // チャンネル一覧を取得
-            const channelList = await fetchChannel.listChannel(userKey, roomKey);
+            const channelList: ChannelList = await fetchChannel.listChannel(userKey, roomKey);
             this.channelListStore.update(channelList);
 
             this.$router.push('/');
