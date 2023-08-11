@@ -177,6 +177,7 @@ import { useUserStore } from '@/store/user/user';
 
 import { useRoomListStore } from '@/store/room/roomList';
 
+import { ListChannel } from "@/domain/entity/channel/listChannel"
 import { FetchChannel } from '@/domain/usecase/fetchChannel';
 import { useListChannelStore } from '@/store/channel/listChannel';
 
@@ -213,8 +214,8 @@ export default {
 
             const userKey = this.userStore.user.items.user_key
             const fetchChannel = new FetchChannel(ApiClient);
-            const channelList = await fetchChannel.listChannel(userKey, roomKey);
-            this.channelListStore.update(channelList);
+            const listChannel: ListChannel = await fetchChannel.listChannel(userKey, roomKey);
+            this.listChannelStore.update(listChannel);
         },
         // textチャンネル一覧を表示
         textChannelListHandler() {

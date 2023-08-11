@@ -28,7 +28,7 @@ export const useListChannelStore = defineStore("listChannel", {
                 status: listChannel.status,
                 items: {
                     room_key: listChannel.room_key,
-                    list: [],
+                    list: [] as Channel[],
                     message: listChannel.message,
                 }
             };
@@ -43,7 +43,7 @@ export const useListChannelStore = defineStore("listChannel", {
                 status: 0,
                 items: {
                     room_key: "",
-                    list: [],
+                    list: [] as Channel[],
                     message: ""
                 }
             }

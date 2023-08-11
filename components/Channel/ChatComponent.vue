@@ -29,6 +29,7 @@
                             label="Message"
                             class="align-end custom-textarea"
                             rows="1"
+                            v-model="content"
                         ></v-textarea>
                         <v-btn color="primary" variant="tonal" class="send_button" @click="sendHandler()">
                             <v-icon class="send-icon">mdi-send</v-icon>
@@ -44,6 +45,7 @@
 export default {
     data() {
         return {
+            content: "",
             items: [
                 { id: 1, text: 'Hello!', time: '10:00 AM', userName: 'User1' },
                 { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
@@ -64,7 +66,15 @@ export default {
     methods: {
         // メッセージを送信
         async sendHandler() {
+            const route = useRoute()
+
+            const channelKey: string = route.params.channelKey;
+            const body: { content: string } = {
+                content: this.content
+            };
+
             console.log("送信")
+            console.log(channelKey)
         }
     }
 };
