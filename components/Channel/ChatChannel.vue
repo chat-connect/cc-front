@@ -70,7 +70,6 @@ export default {
         '$route' () {
         // ポーリングを停止(後でwebsocketに移行する)
             this.stopPolling();
-            window.removeEventListener('scroll', this.checkElementVisibility);
         }
     },
     methods: {
