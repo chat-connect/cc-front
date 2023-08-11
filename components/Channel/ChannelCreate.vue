@@ -48,7 +48,7 @@ export default {
 
             const userKey = this.userStore.user.items.user_key
             const route = useRoute()
-            const roomKey: string | undefined = route.params.roomKey;
+            const roomKey: string = route.params.roomKey;
 
             // チャンネル登録
             const fetchChannel = new FetchChannel(ApiClient);

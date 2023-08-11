@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
 
     const req = event.req
     const authorizationHeader = req.headers.authorization
-    const userKey: string | undefined = event.context.params?.userKey;
-    const roomKey: string | undefined = event.context.params?.roomKey;
+    const userKey: string = event.context.params?.userKey;
+    const roomKey: string = event.context.params?.roomKey;
     const body = await readBody(event)
     
     const response: ChannelCreate = await apiClient.post(config.public.GcServerUrl + "/channel/" + userKey + "/create_channel/" + roomKey, body, authorizationHeader);

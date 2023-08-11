@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     const req = event.req
     const authorizationHeader = req.headers.authorization
-    const userKey: string | undefined = event.context.params?.userKey;
+    const userKey: string = event.context.params?.userKey;
 
     const response: User = await apiClient.put(config.public.GcServerUrl + "/auth/logout_user/" + userKey, null, authorizationHeader);
 

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     const req = event.req
     const authorizationHeader = req.headers.authorization
-    const userKey: string | undefined = event.context.params?.userKey;
+    const userKey: string = event.context.params?.userKey;
     const body = await readBody(event)
     
     const response: RoomCreate = await apiClient.post(config.public.GcServerUrl + "/room/" + userKey + "/create_room", body, authorizationHeader);
