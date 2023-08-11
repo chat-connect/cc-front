@@ -32,7 +32,6 @@ export default {
     methods: {
         async createHandler() {
             const userkey : string = this.userStore.user.items.user_key
-            console.log(userkey)
             const roomKey: string = this.roomKey
 
             // ルーム参加
