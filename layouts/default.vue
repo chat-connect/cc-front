@@ -100,14 +100,14 @@
                         ></v-list-item>
                     </template>
                     <v-list-item
-                        v-for="(room, i) in textChannelListHandler()"
+                        v-for="(channel, i) in textChannelListHandler()"
                         :key="i"
-                        :title="room.title"
-                        :prepend-icon="room.icon"
-                        :value="room.title"
+                        :title="channel.title"
+                        :prepend-icon="channel.icon"
+                        :value="channel.title"
                         color="primary"
                         rounded="xl"
-                        :to="room.to"
+                        :to="'/channel/' + channel.channelKey + '/main'"
                     ></v-list-item>
                     <v-list-item
                         title="New"
@@ -131,14 +131,14 @@
                         ></v-list-item>
                     </template>
                     <v-list-item
-                        v-for="(room, i) in voiceChannelListHandler()"
+                        v-for="(channel, i) in voiceChannelListHandler()"
                         :key="i"
-                        :title="room.title"
-                        :prepend-icon="room.icon"
-                        :value="room.title"
+                        :title="channel.title"
+                        :prepend-icon="channel.icon"
+                        :value="channel.title"
                         color="primary"
                         rounded="xl"
-                        :to="room.to"
+                        :to="'/channel/' + channel.channelKey + '/main'"
                     ></v-list-item>
                     <v-list-item
                         title="New"
@@ -224,6 +224,7 @@ export default {
             for (let i = 0; i < channel.length; i++) {
                 if (channel[i].type == "text") {
                     channelList.push({
+                        channelKey: channel[i].channel_key,
                         title: channel[i].name,
                         icon: 'mdi-account-group',
                         to: '/room/' + channel[i].channel_key + '/main',
@@ -241,6 +242,7 @@ export default {
             for (let i = 0; i < channel.length; i++) {
                 if (channel[i].type == "voice") {
                     channelList.push({
+                        channelKey: channel[i].channel_key,
                         title: channel[i].name,
                         icon: 'mdi-account-group',
                         to: '/room/' + channel[i].channel_key + '/main',

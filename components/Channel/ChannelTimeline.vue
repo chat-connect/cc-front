@@ -30,7 +30,7 @@
                             class="align-end custom-textarea"
                             rows="1"
                         ></v-textarea>
-                        <v-btn color="primary" variant="tonal" class="send_button">
+                        <v-btn color="primary" variant="tonal" class="send_button" @click="sendHandler()">
                             <v-icon class="send-icon">mdi-send</v-icon>
                         </v-btn>
                     </v-form>
@@ -61,6 +61,12 @@ export default {
         // 最新投稿にスクロールする
         this.$refs.scrollLink.$el.click();
     },
+    methods: {
+        // メッセージを送信
+        async sendHandler() {
+            console.log("送信")
+        }
+    }
 };
 </script>
 
