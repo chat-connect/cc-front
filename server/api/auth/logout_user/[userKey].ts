@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     const authorizationHeader = req.headers.authorization
     const userKey: string | undefined = event.context.params?.userKey;
 
-    const response: User = await apiClient.put(config.public.CcServerUrl + "/auth/logout_user/" + userKey, null, authorizationHeader);
+    const response: User = await apiClient.put(config.public.GcServerUrl + "/auth/logout_user/" + userKey, null, authorizationHeader);
 
     return response;
 })

@@ -13,7 +13,7 @@ export class FetchChannel {
     async listChannel(userKey: string, roomKey: string): ChannelList {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
-        const response: ChannelList = await this.apiClient.get(config.public.CcFrontUrl + "/api/channel/" + userKey + "/list_channel/" + roomKey, access_token.value)
+        const response: ChannelList = await this.apiClient.get(config.public.GcWebUrl + "/api/channel/" + userKey + "/list_channel/" + roomKey, access_token.value)
         
         return response
     }
@@ -22,7 +22,7 @@ export class FetchChannel {
     async createChannel(body: any, userKey: string, roomKey: string): ChannelCreate {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
-        const response: ChannelCreate = await this.apiClient.post(config.public.CcFrontUrl + "/api/channel/" + userKey + "/create_channel/" + roomKey, body, access_token.value)
+        const response: ChannelCreate = await this.apiClient.post(config.public.GcWebUrl + "/api/channel/" + userKey + "/create_channel/" + roomKey, body, access_token.value)
 
         return response
     }

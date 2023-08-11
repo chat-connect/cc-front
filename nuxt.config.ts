@@ -4,8 +4,8 @@ export default defineNuxtConfig({
   target: "server",
   runtimeConfig: {
     public:{
-      CcServerUrl: process.env.CC_SERVER_URL,
-      CcFrontUrl: process.env.CC_FRONT_URL,
+      GcServerUrl: process.env.GC_SERVER_URL,
+      GcWebUrl: process.env.GC_WEB_URL,
     }
   },
   modules: [

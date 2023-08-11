@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     const roomKey: string | undefined = event.context.params?.roomKey;
     const body = await readBody(event)
     
-    const response: ChannelCreate = await apiClient.post(config.public.CcServerUrl + "/channel/" + userKey + "/create_channel/" + roomKey, body, authorizationHeader);
+    const response: ChannelCreate = await apiClient.post(config.public.GcServerUrl + "/channel/" + userKey + "/create_channel/" + roomKey, body, authorizationHeader);
 
     return response
 })
