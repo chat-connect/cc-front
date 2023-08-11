@@ -59,8 +59,13 @@ export default {
     },
     mounted() {
         // 最新投稿にスクロールする
-        this.$refs.scrollLink.$el.click();
+        this.scrollChat();
     },
+    methods: {
+        scrollChat() {
+            this.$refs.scrollLink.$el.click();
+        }
+    }
 };
 </script>
 

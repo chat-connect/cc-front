@@ -2,7 +2,7 @@
     <div>
         <NuxtLink ref="scrollLink" to="#scroll" href="#scroll"><!-- scrollで使用するダミー要素 --></NuxtLink>
         <div class="timeline">
-            <v-card flat v-for="item in items" :key="item.id" class="timeline-item">
+            <v-card flat v-for="item in getListChat()" :key="item.chatKey" class="timeline-item">
                 <v-row>
                     <v-col :cols="12" >
                         <div class="user-info">
@@ -12,7 +12,7 @@
                     </v-col>
                     <v-col :cols="12" >
                         <div class="timeline-content">
-                            <div class="content-text">{{ item.text }}</div>
+                            <div class="content-text">{{ item.content }}</div>
                         </div>                        
                     </v-col>
                 </v-row>
@@ -42,8 +42,10 @@
 </template>
 
 <script lang="ts">
-import { CreateChat } from "@/domain/entity/chat/createChat"
 import { FetchChat } from '@/domain/usecase/fetchChat';
+import { useListChatStore } from '@/store/chat/listChat';
+import { CreateChat } from "@/domain/entity/chat/createChat"
+import { ListChat } from "@/domain/entity/chat/listChat"
 
 import { useUserStore } from '@/store/user/user';
 import ApiClient from '@/infra/api/apiClient';
@@ -53,25 +55,43 @@ export default {
         return {
             content: "",
             userStore: useUserStore(),
-            items: [
-                { id: 1, text: 'Hello!', time: '10:00 AM', userName: 'User1' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-                { id: 2, text: 'How are you?', time: '10:15 AM', userName: 'User2' },
-            ],
+            listChatStore: useListChatStore(),
         };
     },
     mounted() {
-        // 最新投稿にスクロールする
-        this.$refs.scrollLink.$el.click();
+        this.listChatHandler().then(() => {
+            this.scrollChat();
+        })
     },
     methods: {
-        // メッセージを送信
+        // チャット一覧を表示
+        getListChat() {
+            const chat = this.listChatStore.listChat.items.list
+            const chatList = [];
+
+            for (let i = 0; i < chat.length; i++) {
+                chatList.push({
+                    chatKey: chat[i].chat_key,
+                    userKey: chat[i].user_key,
+                    userName: chat[i].user_name,
+                    content: chat[i].content,
+                    time: "10:15 AM",
+                });
+            }
+
+            return chatList;
+        },
+        // チャット一覧を取得
+        async listChatHandler() {
+            const route = useRoute()
+            const channelKey: string = route.params.channelKey;
+            const userKey: string = this.userStore.user.items.user_key
+
+            const fetchChat = new FetchChat(ApiClient);
+            const chatList: ListChat = await fetchChat.listChat(userKey, channelKey);
+            await this.listChatStore.update(chatList);
+        },
+        // チャットを送信
         async sendHandler() {
             const route = useRoute()
             const channelKey: string = route.params.channelKey;
@@ -80,9 +100,17 @@ export default {
                 content: this.content,
             };
 
-            // チャンネル登録
+            // チャット登録
             const fetchChat: CreateChat = new FetchChat(ApiClient);
             await fetchChat.createChat(body, userKey, channelKey);
+
+            await this.listChatHandler();
+            await this.getListChat()
+            
+            this.scrollChat();
+        },
+        scrollChat() {
+            this.$refs.scrollLink.$el.click();
         }
     }
 };

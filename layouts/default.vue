@@ -228,7 +228,7 @@ export default {
                         channelKey: channel[i].channel_key,
                         title: channel[i].name,
                         icon: 'mdi-account-group',
-                        to: '/channel/' + channel[i].channel_key + '/main',
+                        to: '/channel/' + channel[i].channel_key + '/main#scroll',
                     });                    
                 }
             }
@@ -246,7 +246,7 @@ export default {
                         channelKey: channel[i].channel_key,
                         title: channel[i].name,
                         icon: 'mdi-account-group',
-                        to: '/channel/' + channel[i].channel_key + '/main',
+                        to: '/channel/' + channel[i].channel_key + '/main#scroll', // scroll: 画面下部にスクロールさせる 
                     });                    
                 }
             }
@@ -286,7 +286,7 @@ export default {
                     roomKey: list[i].room_key,
                     title: list[i].name,
                     icon: 'mdi-account-group',
-                    to: '/room/' + list[i].room_key + '/main',
+                    to: '/room/' + list[i].room_key + '/main#scroll', // scroll: 画面下部にスクロールさせる 
                 });
             }
 
