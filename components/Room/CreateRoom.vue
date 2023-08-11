@@ -5,6 +5,11 @@
             <v-form>
                 <v-text-field label="Name" v-model="name"></v-text-field>
                 <v-textarea label="Explanation" v-model="explanation" rows="5"></v-textarea>
+                <v-select
+                    label="Type"
+                    v-model="status"
+                    :items="options"
+                ></v-select>
             </v-form>
             <v-row justify="end">
                 <v-col cols="4">
@@ -25,7 +30,9 @@ export default {
     data() {
         return {
             name: '',
-            explanation: '',                
+            explanation: '',
+            status: "",
+            options: ["public", "private"],
             userStore: useUserStore(),
         };
     },
@@ -34,6 +41,7 @@ export default {
             const body = {
                 name: this.name,
                 explanation: this.explanation,
+                status: this.status,
             }
 
             // ルーム登録
