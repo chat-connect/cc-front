@@ -6,7 +6,7 @@
                 <v-row>
                     <v-col :cols="12" >
                         <div class="user-info">
-                            <img class="user-icon" src="~/assets/images/sample_icon.png" alt="User Icon">
+                            <img class="user-icon" :src="item.imagePath" alt="User Icon">
                             <div class="user-name">{{ item.userName }}</div>
                         </div>
                     </v-col>
@@ -108,12 +108,15 @@ export default {
             const chat = this.listChatStore.listChat.items.list
             const chatList = [];
 
+            const config = useRuntimeConfig();
+
             for (let i = 0; i < chat.length; i++) {
                 chatList.push({
                     chatKey:   chat[i].chat_key,
                     userKey:   chat[i].user_key,
                     userName:  chat[i].user_name,
                     content:   chat[i].content,
+                    imagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images/user/${chat[i].user_key}.png`,
                     posted_at: this.formatDateTime(chat[i].posted_at),
                 });
             }

@@ -2,7 +2,7 @@
     <v-app class="main">
         <v-navigation-drawer v-model="drawer" class="px-6 py-4 scrollbar navbar">
             <div app style="display: flex; align-items: center;">
-                <img class="image_circle user_icon" src="~/assets/images/sample_icon.png" @click="draw(drawer)">
+                <img class="image_circle user_icon" :src="updateUserImage()" @click="draw(drawer)">
                 <v-app-bar-title class="font-weight-bold sidevar_name">{{ userStore.user.items.name }}</v-app-bar-title>
             </div>
             <div style="display: flex; align-items: center;">
@@ -200,6 +200,17 @@ export default {
         };
     },
     methods: {
+        updateUserImage() {
+            const config = useRuntimeConfig();
+            const userKey = this.userStore.user.items.user_key
+
+            var userImage = `${config.public.GcImageUrl}/image/get?image_path=static/images/user/noimage_icon.png`
+            if (userKey != "") {
+                userImage = `${config.public.GcImageUrl}/image/get?image_path=static/images/user/${userKey}.png`
+            }
+
+            return userImage
+        },
         // チャンネルメニュー表示
         channelNavPosition() {
             if (this.$device.isDesktop) {

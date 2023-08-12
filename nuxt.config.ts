@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     public:{
       GcServerUrl: process.env.GC_SERVER_URL,
       GcSocketUrl: process.env.GC_SOCKET_URL,
-      GcWebUrl: process.env.GC_WEB_URL,
+      GcImageUrl:  process.env.GC_IMAGE_URL,
+      GcWebUrl:    process.env.GC_WEB_URL,
     }
   },
   modules: [
