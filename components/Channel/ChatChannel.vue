@@ -1,26 +1,52 @@
 <template>
     <div>
         <NuxtLink ref="scrollLink" to="#scroll" href="#scroll"><!-- scrollで使用するダミー要素 --></NuxtLink>
-        <div class="timeline">
-            <v-card flat v-for="item in getListChat()" :key="item.chatKey" class="timeline-item">
-                <v-row>
-                    <v-col :cols="12" >
-                        <div class="user-info">
-                            <img class="user-icon" :src="item.imagePath" alt="User Icon">
-                            <div class="user-name">{{ item.userName }}</div>
-                        </div>
-                    </v-col>
-                    <v-col :cols="12" >
-                        <div class="timeline-content">
-                            <div class="content-text">{{ item.content }}</div>
-                        </div>                        
-                    </v-col>
-                </v-row>
-                <div class="timeline-time">{{ item.posted_at }}</div>
-            </v-card>
+        <div v-for="item in getListChat().reverse()" :key="item.chatKey">
+            <v-row v-if="item.myPost" justify="end" class="timeline">
+                <v-card flat :key="item.chatKey" class="timeline_item">
+                    <v-row>
+                        <v-col :cols="12">
+                            <div class="user_info">
+                                <img class="user_icon" :src="item.userImagePath" alt="UserIcon">
+                                <div class="user_name">{{ item.userName }}</div>
+                                <div class="posted_at">{{ item.posted_at }}</div>
+                            </div>
+                        </v-col>
+                        <v-col :cols="12" >
+                            <div class="timeline_content">
+                                <div class="content_text">{{ item.content }}</div>
+                            </div>
+                            <div v-if="item.chatImagePath != null">
+                                <img class="chat_image" :src="item.chatImagePath">
+                            </div>
+                        </v-col>
+                    </v-row>
+                </v-card> 
+            </v-row>
+            <v-row v-else class="timeline">
+                <v-card flat :key="item.chatKey" class="timeline_item">
+                    <v-row>
+                        <v-col :cols="12">
+                            <div class="user_info">
+                                <img class="user_icon" :src="item.userImagePath" alt="UserIcon">
+                                <div class="user_name">{{ item.userName }}</div>
+                                <div class="posted_at">{{ item.posted_at }}</div>
+                            </div>
+                        </v-col>
+                        <v-col :cols="12" >
+                            <div class="timeline_content">
+                                <div class="content_text">{{ item.content }}</div>
+                            </div>
+                            <div v-if="item.chatImagePath != null">
+                                <img class="chat_image" :src="item.chatImagePath">
+                            </div>
+                        </v-col>
+                    </v-row>
+                </v-card> 
+            </v-row>  
         </div>
-        <div ref="scrollElement"><!-- scrollで使用するダミー要素 --></div>
         <div id="scroll"><!-- scrollで使用するダミー要素 --></div>
+        <div ref="scrollElement"><!-- scrollで使用するダミー要素 --></div>
         <v-footer app class="bottom_nav">
             <v-row>
                 <v-col cols="12">
@@ -28,12 +54,15 @@
                         <v-textarea
                             color="primary"
                             label="Message"
-                            class="align-end custom-textarea"
+                            class="align-end custom_textarea send_form"
                             rows="1"
                             v-model="content"
                         ></v-textarea>
+                        <v-btn flat icon class="upload_image_button" @click="openImageUploadDialog">
+                            <v-icon class="send_icon">mdi-paperclip</v-icon>
+                        </v-btn>
                         <v-btn color="primary" variant="tonal" class="send_button" @click="sendHandler()">
-                            <v-icon class="send-icon">mdi-send</v-icon>
+                            <v-icon class="send_icon">mdi-send</v-icon>
                         </v-btn>
                     </v-form>
                 </v-col>  
@@ -45,16 +74,17 @@
 <script lang="ts">
 import { FetchChat } from '@/domain/usecase/fetchChat';
 import { useListChatStore } from '@/store/chat/listChat';
-import { CreateChat } from "@/domain/entity/chat/createChat"
 import { ListChat } from "@/domain/entity/chat/listChat"
 
 import { useUserStore } from '@/store/user/user';
 import ApiClient from '@/infra/api/apiClient';
+import UserKey from '../../server/api/auth/logout_user/[userKey]';
 
 export default {
     data() {
         return {
             content: "",
+            chatImage: null as File | null,
             userStore: useUserStore(),
             listChatStore: useListChatStore(),
         };
@@ -74,9 +104,30 @@ export default {
         }
     },
     methods: {
+        async encodeImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        },
+        async openImageUploadDialog() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.addEventListener('change', this.handleImageUpload);
+            input.click();
+        },
+        // 選択された画像ファイルを処理
+        async handleImageUpload(event) {
+            const file = event.target.files[0];
+            const encodedImage = await this.encodeImage(file);
+            this.chatImage = encodedImage.replace(/^data:image\/\w+;base64,/, '');
+        },
         // WebSocketサーバーに接続
-        connectWebSocket() {
-            const route = useRoute()
+        async connectWebSocket() {
+            const route = useRoute();
             const channelKey: string = route.params.channelKey;
             const config = useRuntimeConfig();
             const url = `${config.public.GcSocketUrl}/realtime/${channelKey}/send_chat`;
@@ -111,13 +162,26 @@ export default {
             const config = useRuntimeConfig();
 
             for (let i = 0; i < chat.length; i++) {
+                var chatImagePath = "";
+                if (chat[i].image_path != "") {
+                    chatImagePath = `${config.public.GcImageUrl}/image/get?image_path=static/images/create_chat/${chat[i].chat_key}.png`
+                }
+
+                var myPost = false;
+                const userKey = this.userStore.user.items.user_key;
+                if (chat[i].user_key == userKey) {
+                    myPost = true
+                }
+
                 chatList.push({
                     chatKey:   chat[i].chat_key,
                     userKey:   chat[i].user_key,
                     userName:  chat[i].user_name,
                     content:   chat[i].content,
-                    imagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images/user/${chat[i].user_key}.png`,
+                    userImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images/user/${chat[i].user_key}.png`,
+                    chatImagePath: chatImagePath,
                     posted_at: this.formatDateTime(chat[i].posted_at),
+                    myPost: myPost,
                 });
             }
 
@@ -145,6 +209,8 @@ export default {
 
                 await this.listChatStore.update(chatList);
             } catch (error) {}
+
+            await new Promise((resolve) => setTimeout(resolve, 500));
         },
         // チャットを送信
         async sendHandler() {
@@ -156,17 +222,15 @@ export default {
                     user_key: userKey,
                     token: access_token.value,
                     content: this.content,
+                    chat_image: this.chatImage,
                 };
                 
                 const jsonMessage = JSON.stringify(messageObject);
                 this.websocket.send(jsonMessage);
             }
 
-            await this.listChatHandler();
-            await this.getListChat();
-            
-            this.content ="";
-            this.scrollChat();
+            this.content = "";
+            this.chatImage = null as File | null;
         },
         // scroll
         scrollChat() {
@@ -194,11 +258,11 @@ export default {
 <style lang="scss" scoped>
 .timeline {
     overflow: scroll;
-    display: flex;
-    flex-direction: column-reverse;
+    margin-top: 20px;
 }
 
-.timeline-item {
+.timeline_item {
+    max-width: 770px;
     background-color: #ffffff;
     border-radius: 8px;
     padding: 10px;
@@ -207,35 +271,35 @@ export default {
     justify-content: space-between;
 }
 
-.user-info {
+.user_info {
     display: flex;
     align-items: center;
 }
 
-.user-icon {
+.user_icon {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
 }
 
-.user-name {
+.user_name {
     font-weight: bold;
 }
 
-.timeline-content {
+.posted_at {
+    margin-left: 20px;
+}
+
+.timeline_content {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.content-text {
+.content_text {
     margin-top: 5px;
-}
-
-.timeline-time {
-    color: #999;
 }
 
 .bottom_nav {
@@ -252,11 +316,23 @@ export default {
     height: 56px;
 }
 
-.send-icon {
+.send_icon {
     font-size: 30px;
 }
 
-.custom-textarea {
+.custom_textarea {
     height: 30px;
+}
+
+.send_form {
+    width: 50%;
+}
+
+.upload_image_button {
+    color: #6200EE;
+}
+
+.chat_image {
+    width: 100%;
 }
 </style>
