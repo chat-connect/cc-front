@@ -6,6 +6,7 @@
                 <v-text-field label="email" v-model="email"></v-text-field>
                 <v-text-field label="username" v-model="name"></v-text-field>
                 <v-text-field type="password" label="password" v-model="password"></v-text-field>
+                <v-file-input label="Upload Profile Picture" v-model="userImage"></v-file-input>
             </v-form>
             <v-row>
                 <v-col cols="8">
@@ -31,14 +32,26 @@ export default {
             email: '',
             name: '',
             password: '',
+            userImage: null as File | null,
         };
     },
     methods: {
+        async encodeImage(file) {
+            return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file[0]);
+            });
+        },
         async registerHandler() {
+            const encodeImage = await this.encodeImage(this.userImage);
+            const userImage = encodeImage.replace(/^data:image\/\w+;base64,/, '');
             const request = {
                 name: this.name,
                 email: this.email,
                 password: this.password,
+                user_image: userImage,
             };
 
             const fetchUser = new FetchUser(ApiClient);
