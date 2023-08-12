@@ -3,6 +3,7 @@ export interface Chat {
     user_key:  string;
     user_name: string;
     content:   string;
+    postet_at: string;
 }
 
 export interface ListChat {

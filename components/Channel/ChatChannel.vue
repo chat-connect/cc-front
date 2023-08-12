@@ -16,7 +16,7 @@
                         </div>                        
                     </v-col>
                 </v-row>
-                <div class="timeline-time">{{ item.time }}</div>
+                <div class="timeline-time">{{ item.posted_at }}</div>
             </v-card>
         </div>
         <div ref="scrollElement"><!-- scrollで使用するダミー要素 --></div>
@@ -79,7 +79,7 @@ export default {
             const route = useRoute()
             const channelKey: string = route.params.channelKey;
             const config = useRuntimeConfig();
-            const url = config.public.GcSocketUrl + "/realtime/" + channelKey + "/send_chat";
+            const url = `${config.public.GcSocketUrl}/realtime/${channelKey}/send_chat`;
 
             // WebSocketサーバーに接続
             this.websocket = new WebSocket(url);
@@ -110,15 +110,25 @@ export default {
 
             for (let i = 0; i < chat.length; i++) {
                 chatList.push({
-                    chatKey: chat[i].chat_key,
-                    userKey: chat[i].user_key,
-                    userName: chat[i].user_name,
-                    content: chat[i].content,
-                    time: "10:15 AM",
+                    chatKey:   chat[i].chat_key,
+                    userKey:   chat[i].user_key,
+                    userName:  chat[i].user_name,
+                    content:   chat[i].content,
+                    posted_at: this.formatDateTime(chat[i].posted_at),
                 });
             }
 
             return chatList;
+        },
+        formatDateTime(inputDateTime: string): string {
+            const dateTime = new Date(inputDateTime);
+            const year = dateTime.getFullYear();
+            const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
+            const day = dateTime.getDate().toString().padStart(2, "0");
+            const hours = dateTime.getHours().toString().padStart(2, "0");
+            const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+
+            return `${year}/${month}/${day}/${hours}:${minutes}`;
         },
         // チャット一覧を取得
         async listChatHandler() {
