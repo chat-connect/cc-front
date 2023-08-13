@@ -2,18 +2,18 @@
      <v-container>
         <v-row align-content="center">
             <v-col align-content="center">
-                <ChatRoom />
+                <RoomChat />
             </v-col>
         </v-row>
      </v-container>
  </template>
 
 <script lang="ts">
-import ChatRoom from "@/components/Room/ChatRoom.vue";
+import RoomChat from "@/components/Room/RoomChat.vue";
 
 export default {
   components: {
-    ChatRoom,
+    RoomChat,
   },
 };
 </script>

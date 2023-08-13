@@ -2,18 +2,18 @@
      <v-container>
         <v-row align-content="center">
             <v-col align-content="center">
-                <ChatChannel />
+                <ChannelChat />
             </v-col>
         </v-row>
      </v-container>
  </template>
 
 <script lang="ts">
-import ChatChannel from "@/components/Channel/ChatChannel.vue";
+import ChannelChat from "@/components/Channel/ChannelChat.vue";
 
 export default {
   components: {
-    ChatChannel,
+    ChannelChat,
   },
 };
 </script>

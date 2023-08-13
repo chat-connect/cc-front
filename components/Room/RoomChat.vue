@@ -38,7 +38,7 @@
                                 <div class="content_text">{{ item.content }}</div>
                             </div>
                             <div v-if="item.roomChatImagePath != null">
-                                <img class="chat_image" :src="item.chatImagePath">
+                                <img class="chat_image" :src="item.roomChatImagePath">
                             </div>
                         </v-col>
                     </v-row>
