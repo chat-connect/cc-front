@@ -191,6 +191,7 @@ export default {
             drawer: true,
             channelDrawer: false,
             activeRoomKey: "",
+            activePath: "",
             items: [
                 { title: 'Profile', icon: 'mdi-account', to: '' },
                 { title: 'chart', icon: 'mdi-chart-bar-stacked', to: '' },
@@ -198,6 +199,11 @@ export default {
                 { title: 'Message', icon: 'mdi-email-outline', to: '' },
             ],
         };
+    },
+    mounted() {
+        if (this.activePath == "room") {
+            this.channelDrawer = true
+        }
     },
     methods: {
         updateUserImage() {

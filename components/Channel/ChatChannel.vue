@@ -1,7 +1,7 @@
 <template>
     <div>
         <NuxtLink ref="scrollLink" to="#scroll" href="#scroll"><!-- scrollで使用するダミー要素 --></NuxtLink>
-        <div v-for="item in getListChat().reverse()" :key="item.chatKey">
+        <div v-for="item in getListChannelChat().reverse()" :key="item.chatKey">
             <v-row v-if="item.myPost" justify="end" class="timeline">
                 <v-card flat :key="item.chatKey" class="timeline_item">
                     <v-row>
@@ -72,13 +72,12 @@
 </template>
 
 <script lang="ts">
-import { FetchChat } from '@/domain/usecase/fetchChat';
-import { useListChatStore } from '@/store/chat/listChat';
-import { ListChat } from "@/domain/entity/chat/listChat"
+import { FetchChannelChat } from '@/domain/usecase/fetchChannelChat';
+import { useListChannelChatStore } from '@/store/channelChat/listChannelChat';
+import { ListChannelChat } from "@/domain/entity/channelChat/listChannelChat"
 
 import { useUserStore } from '@/store/user/user';
 import ApiClient from '@/infra/api/apiClient';
-import UserKey from '../../server/api/auth/logout_user/[userKey]';
 
 export default {
     data() {
@@ -86,11 +85,11 @@ export default {
             content: "",
             chatImage: null as File | null,
             userStore: useUserStore(),
-            listChatStore: useListChatStore(),
+            listChannelChatStore: useListChannelChatStore(),
         };
     },
     mounted() {
-        this.listChatHandler().then(() => {
+        this.listChannelChatHandler().then(() => {
             this.scrollChat();
         })
 
@@ -130,7 +129,7 @@ export default {
             const route = useRoute();
             const channelKey: string = route.params.channelKey;
             const config = useRuntimeConfig();
-            const url = `${config.public.GcSocketUrl}/realtime/${channelKey}/send_chat`;
+            const url = `${config.public.GcSocketUrl}/realtime/${channelKey}/send_channel_chat`;
 
             // WebSocketサーバーに接続
             this.websocket = new WebSocket(url);
@@ -141,11 +140,11 @@ export default {
             // メッセージを受信したときの処理
             this.websocket.onmessage = (event) => {
                 if (this.checkElementVisibility()) {
-                    this.listChatHandler().then(() => {
+                    this.listChannelChatHandler().then(() => {
                         this.scrollChat();
                     })
                 } else {
-                    this.listChatHandler();
+                    this.listChannelChatHandler();
                 }
             };
 
@@ -155,8 +154,8 @@ export default {
             };
         },
         // チャット一覧を表示
-        getListChat() {
-            const chat = this.listChatStore.listChat.items.list
+        getListChannelChat() {
+            const chat = this.listChannelChatStore.listChannelChat.items.list
             const chatList = [];
 
             const config = useRuntimeConfig();
@@ -164,7 +163,7 @@ export default {
             for (let i = 0; i < chat.length; i++) {
                 var chatImagePath = "";
                 if (chat[i].image_path != "") {
-                    chatImagePath = `${config.public.GcImageUrl}/image/get?image_path=static/images/create_chat/${chat[i].chat_key}.png`
+                    chatImagePath = `${config.public.GcImageUrl}/image/get?image_path=static/images/create_channel_chat/${chat[i].channel_chat_key}.png`
                 }
 
                 var myPost = false;
@@ -174,7 +173,7 @@ export default {
                 }
 
                 chatList.push({
-                    chatKey:   chat[i].chat_key,
+                    chatKey:   chat[i].channel_chat_key,
                     userKey:   chat[i].user_key,
                     userName:  chat[i].user_name,
                     content:   chat[i].content,
@@ -198,16 +197,16 @@ export default {
             return `${year}/${month}/${day}/${hours}:${minutes}`;
         },
         // チャット一覧を取得
-        async listChatHandler() {
+        async listChannelChatHandler() {
             try {
                 const route = useRoute();
                 const channelKey: string = route.params.channelKey;
                 const userKey: string = this.userStore.user.items.user_key;
 
-                const fetchChat = new FetchChat(ApiClient);
-                const chatList: ListChat = await fetchChat.listChat(userKey, channelKey);
+                const fetchChannelChat = new FetchChannelChat(ApiClient);
+                const channelChatList: ListChannelChat = await fetchChannelChat.listChannelChat(userKey, channelKey);
 
-                await this.listChatStore.update(chatList);
+                await this.listChannelChatStore.update(channelChatList);
             } catch (error) {}
 
             await new Promise((resolve) => setTimeout(resolve, 500));
@@ -222,7 +221,7 @@ export default {
                     user_key: userKey,
                     token: access_token.value,
                     content: this.content,
-                    chat_image: this.chatImage,
+                    channel_chat_image: this.chatImage,
                 };
                 
                 const jsonMessage = JSON.stringify(messageObject);
