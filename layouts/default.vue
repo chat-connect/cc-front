@@ -199,7 +199,7 @@ export default {
             activeRoomKey: "",
             activePath: "",
             items: [
-                { title: 'Profile', icon: 'mdi-account', to: '' },
+                { title: 'Profile', icon: 'mdi-account', to: '/profile/main' },
                 { title: 'chart', icon: 'mdi-chart-bar-stacked', to: '' },
                 { title: 'Timeline', icon: 'mdi-forum-outline', to: '/' },
                 { title: 'Message', icon: 'mdi-email-outline', to: '' },
