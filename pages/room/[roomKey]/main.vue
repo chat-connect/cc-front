@@ -12,8 +12,8 @@
 import RoomChat from "@/components/Room/RoomChat.vue";
 
 export default {
-  components: {
-    RoomChat,
-  },
+    components: {
+        RoomChat,
+    },
 };
 </script>
