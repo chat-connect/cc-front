@@ -126,6 +126,7 @@ export default {
         },
         // WebSocketサーバーに接続
         async connectWebSocket() {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             const route = useRoute();
             const config = useRuntimeConfig();
             const url = `${config.public.GcSocketUrl}/realtime/send_open_chat`;

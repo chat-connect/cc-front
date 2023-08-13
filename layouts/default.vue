@@ -181,6 +181,9 @@ import { useListRoomStore } from '@/store/room/listRoom';
 import { ListChannel } from "@/domain/entity/channel/listChannel"
 import { FetchChannel } from '@/domain/usecase/fetchChannel';
 import { useListChannelStore } from '@/store/channel/listChannel';
+import { useListOpenChatStore } from '@/store/openChat/listOpenChat';
+import { useListRoomChatStore } from '@/store/roomChat/listRoomChat';
+import { useListChannelChatStore } from '@/store/channelChat/listChannelChat';
 
 export default {
     data() {
@@ -188,6 +191,9 @@ export default {
             userStore: useUserStore(),
             listRoomStore: useListRoomStore(),
             listChannelStore: useListChannelStore(),
+            listOpenChatStore: useListOpenChatStore(),
+            listRoomChatStore: useListRoomChatStore(),
+            listChannelChatStore: useListChannelChatStore(),
             drawer: true,
             channelDrawer: false,
             activeRoomKey: "",
@@ -324,6 +330,9 @@ export default {
             this.userStore.delete();
             this.listRoomStore.delete()
             this.listChannelStore.delete()
+            this.listOpenChatStore.delete()
+            this.listRoomChatStore.delete()            
+            this.listChannelChatStore.delete()
 
             useRouter().push('/login');
         }
