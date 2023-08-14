@@ -4,7 +4,7 @@ export interface CreateRoom {
     items: {
         room_key: string;
         name: string;
-        explanation: string;
+        description: string;
         image_path: string;
         user_count: number;
         status: string;

@@ -4,7 +4,7 @@
             <h2>New Room</h2>
             <v-form>
                 <v-text-field label="Name" v-model="name"></v-text-field>
-                <v-textarea label="Explanation" v-model="explanation" rows="5"></v-textarea>
+                <v-textarea label="Description" v-model="description" rows="5"></v-textarea>
                 <v-select
                     label="Type"
                     v-model="status"
@@ -29,8 +29,8 @@ import ApiClient from '@/infra/api/apiClient';
 export default {
     data() {
         return {
-            name: '',
-            explanation: '',
+            name: "",
+            description: "",
             status: "",
             options: ["public", "private"],
             userStore: useUserStore(),
@@ -40,7 +40,7 @@ export default {
         async createHandler() {
             const body = {
                 name: this.name,
-                explanation: this.explanation,
+                description: this.description,
                 status: this.status,
             }
 

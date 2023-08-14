@@ -5,7 +5,7 @@ export interface CreateChannel {
         channel_key: string;
         room_key:    string;
         name:        string;
-        explanation: string;
+        description: string;
         type:        string;
         message:     string;
     };

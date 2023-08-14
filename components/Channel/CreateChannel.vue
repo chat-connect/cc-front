@@ -4,7 +4,7 @@
             <h2>New Channel</h2>
             <v-form>
                 <v-text-field label="Name" v-model="name"></v-text-field>
-                <v-textarea label="Explanation" v-model="explanation" rows="5"></v-textarea>
+                <v-textarea label="Description" v-model="description" rows="5"></v-textarea>
                 <v-select
                     label="Type"
                     v-model="type"
@@ -33,7 +33,7 @@ export default {
     data() {
         return {
             name: "",
-            explanation: "",
+            description: "",
             type: "",
             options: ["text", "voice"],
             userStore: useUserStore(),
@@ -42,9 +42,9 @@ export default {
     },
     methods: {
         async createHandler() {
-            const body: { name: string, explanation: string, type: string } = {
+            const body: { name: string, description: string, type: string } = {
                 name: this.name,
-                explanation: this.explanation,
+                description: this.description,
                 type: this.type,
             }
 

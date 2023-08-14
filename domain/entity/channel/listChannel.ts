@@ -2,7 +2,7 @@ export interface Channel {
     channel_key: string;
     type: string;
     name: string;
-    explanation: string;
+    description: string;
 }
 
 export interface ListChannel {
