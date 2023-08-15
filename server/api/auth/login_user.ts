@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     const body = await readBody(event)
 
-    const response: User = await apiClient.post(config.public.GcServerUrl + "/auth/login_user", body, null);
+    const response: User = await apiClient.post(config.public.GcAuthUrl + "/auth/login_user", body, null);
 
     return response;
 })
