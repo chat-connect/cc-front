@@ -49,8 +49,18 @@ export default {
             genre:         "",
             game:          "",
             statusOptions: ["public", "private"],
-            genreOptions:  [],
-            gameOptions:   [],
+            genreOptions:  [
+                {
+                    title: "All",
+                    value: "all"
+                }
+            ],
+            gameOptions:   [
+                {
+                    title: "All",
+                    value: "all"
+                }
+            ],
         };
     },
     mounted() {
