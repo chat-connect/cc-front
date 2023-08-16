@@ -58,6 +58,15 @@
                         @click.stop="drawChannel(false)"
                     ></v-list-item>
                     <v-list-item
+                        title="Search"
+                        prepend-icon="mdi-account-check"
+                        value="Search"
+                        color="primary"
+                        rounded="xl"
+                        to="/room/search"
+                        @click.stop="drawChannel(false)"
+                    ></v-list-item>
+                    <v-list-item
                         title="New"
                         prepend-icon="mdi-plus-box"
                         value="New"
