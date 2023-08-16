@@ -8,7 +8,17 @@
                 <v-select
                     label="Type"
                     v-model="status"
-                    :items="options"
+                    :items="statusOptions"
+                ></v-select>
+                <v-select
+                    label="Genre"
+                    v-model="genre"
+                    :items="genreOptions"
+                ></v-select>
+                <v-select
+                    label="Game"
+                    v-model="game"
+                    :items="gameOptions"
                 ></v-select>
             </v-form>
             <v-row justify="end">
@@ -29,20 +39,26 @@ import ApiClient from '@/infra/api/apiClient';
 export default {
     data() {
         return {
-            name: "",
-            description: "",
-            status: "",
-            options: ["public", "private"],
-            userStore: useUserStore(),
+            userStore:     useUserStore(),
+            name:          "",
+            description:   "",
+            status:        "",
+            genre:         "",
+            game:          "",
+            statusOptions: ["public", "private"],
+            genreOptions:  ["FPS", "RPG"],
+            gameOptions:   ["Game1", "Game2"],
         };
     },
     methods: {
         async createHandler() {
             const body = {
-                name: this.name,
+                name:        this.name,
                 description: this.description,
-                status: this.status,
-            }
+                status:      this.status,
+                genre:       this.genre,
+                game:        this.game,
+            };
 
             // ルーム登録
             const fetchRoom = new FetchRoom(ApiClient);

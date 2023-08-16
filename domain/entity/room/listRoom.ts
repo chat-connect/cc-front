@@ -3,6 +3,8 @@ export interface Room {
     name:        string;
     description: string;
     status:      string;
+    genre:       string;
+    game:        string;
 }
 
 export interface ListRoom {

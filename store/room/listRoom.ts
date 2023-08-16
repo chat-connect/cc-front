@@ -8,7 +8,7 @@ export const useListRoomStore = defineStore("listRoom", {
                 types: "",
                 status: 0,
                 items: {
-                    list: [] as Room[],
+                    list:    [] as Room[],
                     message: ""
                 },
             },
@@ -23,10 +23,10 @@ export const useListRoomStore = defineStore("listRoom", {
     actions: {
         update(listRoom: ListRoom) {
             this.listRoom = {
-                types: listRoom.types,
+                types:  listRoom.types,
                 status: listRoom.status,
                 items: {
-                list: [],
+                    list:    [],
                     message: listRoom.message
                 },
             };
@@ -37,10 +37,10 @@ export const useListRoomStore = defineStore("listRoom", {
         },
         delete() {
             this.listRoom = {
-                types: "",
+                types:  "",
                 status: 0,
                 items: {
-                    list: [],
+                    list:    [],
                     message: ""
                 },
             }
