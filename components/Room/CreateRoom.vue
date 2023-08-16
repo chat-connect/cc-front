@@ -11,14 +11,18 @@
                     :items="statusOptions"
                 ></v-select>
                 <v-select
-                    label="Genre"
                     v-model="genre"
                     :items="genreOptions"
+                    item-title="title"
+                    item-value="value"
+                    label="Genre"
                 ></v-select>
                 <v-select
-                    label="Game"
                     v-model="game"
                     :items="gameOptions"
+                    item-title="title"
+                    item-value="value"
+                    label="Game"
                 ></v-select>
             </v-form>
             <v-row justify="end">
@@ -32,6 +36,7 @@
 
 <script lang="ts">
 import { FetchRoom } from '@/domain/usecase/fetchRoom';
+import { FetchGenre } from '@/domain/usecase/fetchGenre';
 import { useUserStore } from '@/store/user/user';
 import { useListRoomStore } from '@/store/room/listRoom';
 import ApiClient from '@/infra/api/apiClient';
@@ -46,11 +51,34 @@ export default {
             genre:         "",
             game:          "",
             statusOptions: ["public", "private"],
-            genreOptions:  ["FPS", "RPG"],
-            gameOptions:   ["Game1", "Game2"],
+            genreOptions:  [],
+            gameOptions:   [],
         };
     },
+    mounted() {
+        this.getGenreAndGameList();
+    },
     methods: {
+        async getGenreAndGameList() {
+            const fetchGenre = new FetchGenre(ApiClient);
+            const listGenreAndGame =  await fetchGenre.listGenreAndGame();
+
+            for (const genre of listGenreAndGame.items.list_genre) {
+                const data = {
+                    title:  genre.name,
+                    value: genre.genre_key
+                };
+                this.genreOptions.push(data);
+            }
+
+            for (const game of listGenreAndGame.items.list_game) {
+                const data = {
+                    title:  game.name,
+                    value: game.game_key
+                };
+                this.gameOptions.push(data);
+            }
+        },
         async createHandler() {
             const body = {
                 name:        this.name,
