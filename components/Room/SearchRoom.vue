@@ -39,10 +39,13 @@
                 <v-col>
                     <v-row>
                         <v-col cols="12">
-                            <h4>{{ room.genre }}</h4>
+                            <h4>Description: {{ room.description }}</h4>
                         </v-col>
                         <v-col cols="12">
-                            <h4>{{ room.game }}</h4>
+                            <h4>Genre: {{ room.genre.name }}</h4>
+                        </v-col>
+                        <v-col cols="12">
+                            <h4>Game: {{ room.game.name }}</h4>
                         </v-col>
                     </v-row>
                     <v-row justify="end">
