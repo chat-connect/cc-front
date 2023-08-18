@@ -1,36 +1,45 @@
 <template>
-    <v-card class="base_card" flat>
-        <v-col cols="12">
-            <h2>Search Room</h2>
-            <v-form>
-                <v-text-field label="Room Key" v-model="roomKey"></v-text-field>
-                <v-select
-                    label="Type"
-                    v-model="status"
-                    :items="statusOptions"
-                ></v-select>
-                <v-select
-                    v-model="genre"
-                    :items="genreOptions"
-                    item-title="title"
-                    item-value="value"
-                    label="Genre"
-                ></v-select>
-                <v-select
-                    v-model="game"
-                    :items="gameOptions"
-                    item-title="title"
-                    item-value="value"
-                    label="Game"
-                ></v-select>
-            </v-form>
-            <v-row justify="end">
-                <v-col cols="4">
-                        <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="createHandler()">Join</v-btn> 
-                </v-col>
-            </v-row>
-        </v-col>
-    </v-card>
+    <v-col cols="12">
+        <v-card class="base_card" flat>
+            <v-col cols="12">
+                <h2>Search Room</h2>
+                <v-form>
+                    <v-text-field label="Room Key" v-model="roomKey"></v-text-field>
+                    <v-select
+                        label="Type"
+                        v-model="status"
+                        :items="statusOptions"
+                    ></v-select>
+                    <v-select
+                        v-model="genre"
+                        :items="genreOptions"
+                        item-title="title"
+                        item-value="value"
+                        label="Genre"
+                    ></v-select>
+                    <v-select
+                        v-model="game"
+                        :items="gameOptions"
+                        item-title="title"
+                        item-value="value"
+                        label="Game"
+                    ></v-select>
+                </v-form>
+                <v-row justify="end">
+                    <v-col cols="4">
+                            <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="createHandler()">Join</v-btn> 
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-card>
+    </v-col>
+    <v-col cols="12">
+        <v-card class="base_card" flat>
+            <v-col cols="12">
+                <h2>Search Room</h2>
+            </v-col>
+        </v-card>
+    </v-col>
 </template>
 
 <script lang="ts">
