@@ -1,23 +1,27 @@
 <template>
-    <v-card class="base_card" flat>
+    <v-row>
         <v-col cols="12">
-            <h2>New Channel</h2>
-            <v-form>
-                <v-text-field label="Name" v-model="name"></v-text-field>
-                <v-textarea label="Description" v-model="description" rows="5"></v-textarea>
-                <v-select
-                    label="Type"
-                    v-model="type"
-                    :items="options"
-                ></v-select>
-            </v-form>
-            <v-row justify="end">
-                <v-col cols="4">
-                    <v-btn flat block variant="tonal" color="primary" class="text-right" @click="createHandler()">Create</v-btn>
+            <v-card class="base_card" flat>
+                <v-col cols="12">
+                    <h2>New Channel</h2>
+                    <v-form>
+                        <v-text-field label="Name" v-model="name"></v-text-field>
+                        <v-textarea label="Description" v-model="description" rows="5"></v-textarea>
+                        <v-select
+                            label="Type"
+                            v-model="type"
+                            :items="options"
+                        ></v-select>
+                    </v-form>
+                    <v-row justify="end">
+                        <v-col cols="4">
+                            <v-btn flat block variant="tonal" color="primary" class="text-right" @click="createHandler()">Create</v-btn>
+                        </v-col>
+                    </v-row>
                 </v-col>
-            </v-row>
+            </v-card>  
         </v-col>
-    </v-card>
+    </v-row>
 </template>
 
 <script lang="ts">

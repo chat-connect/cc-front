@@ -1,21 +1,23 @@
 <template>
-    <v-col cols="12">
-        <v-card class="base_card" flat>
-            <v-container>
-                <h2>Join Room</h2>
-                <v-row>
-                    <v-col cols="9">
-                        <v-form>
-                            <v-text-field label="Room Key" v-model="roomKey"></v-text-field>
-                        </v-form>
-                    </v-col>
-                    <v-col cols="3">
-                        <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="createHandler()">Join</v-btn>
-                    </v-col>
-                </v-row>            
-            </v-container>
-        </v-card>        
-    </v-col>
+    <v-row>
+        <v-col cols="12">
+            <v-card class="base_card" flat>
+                <v-container>
+                    <h2>Join Room</h2>
+                    <v-row>
+                        <v-col cols="9">
+                            <v-form>
+                                <v-text-field label="Room Key" v-model="roomKey"></v-text-field>
+                            </v-form>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="createHandler()">Join</v-btn>
+                        </v-col>
+                    </v-row>            
+                </v-container>
+            </v-card>        
+        </v-col>            
+    </v-row>
 </template>
 
 <script lang="ts">
