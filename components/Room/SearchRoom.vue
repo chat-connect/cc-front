@@ -5,12 +5,7 @@
                 <v-col cols="12">
                     <h2>Semarch Roo</h2>
                     <v-form>
-                        <v-text-field label="Room Key" v-model="roomKey"></v-text-field>
-                        <v-select
-                            label="Type"
-                            v-model="status"
-                            :items="statusOptions"
-                        ></v-select>
+                        <v-text-field label="Name" v-model="name"></v-text-field>
                         <v-select
                             v-model="genre"
                             :items="genreOptions"
@@ -28,7 +23,7 @@
                     </v-form>
                     <v-row justify="end">
                         <v-col cols="4">
-                                <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="createHandler()">Join</v-btn> 
+                                <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="searchHandler()">Search</v-btn> 
                         </v-col>
                     </v-row>
                 </v-col>
@@ -36,10 +31,25 @@
         </v-col>            
     </v-row>
     <v-row>
-        <v-col cols="12">
+        <v-col cols="12" sm="4" v-for="(room, i) in searchList">
             <v-card class="base_card" flat>
-                <v-col cols="12">
-                    <h2>{{ "Room01" }}</h2>
+                <v-card-title>
+                    <h2>{{ room.name }}</h2>
+                </v-card-title>
+                <v-col>
+                    <v-row>
+                        <v-col cols="12">
+                            <h4>{{ room.genre }}</h4>
+                        </v-col>
+                        <v-col cols="12">
+                            <h4>{{ room.game }}</h4>
+                        </v-col>
+                    </v-row>
+                    <v-row justify="end">
+                        <v-col cols="6">
+                            <v-btn flat block variant="tonal" color="primary" class="text-right send_button" @click="joinHandler(room.room_key)">join</v-btn> 
+                        </v-col>                    
+                    </v-row>                    
                 </v-col>
             </v-card>
         </v-col>        
@@ -56,6 +66,7 @@ import ApiClient from '@/infra/api/apiClient';
 export default {
     data() {
         return {
+            name: "",
             roomKey: "",               
             userStore: useUserStore(),
             status:        "",
@@ -65,21 +76,23 @@ export default {
             genreOptions:  [
                 {
                     title: "All",
-                    value: "all"
+                    value: ""
                 }
             ],
             gameOptions:   [
                 {
                     title: "All",
-                    value: "all"
+                    value: ""
                 }
             ],
+            searchList: []
         };
     },
     mounted() {
         this.getGenreAndGameList();
     },
     methods: {
+        // GenreとGameを取得する
         async getGenreAndGameList() {
             const fetchGenre = new FetchGenre(ApiClient);
             const listGenreAndGame =  await fetchGenre.listGenreAndGame();
@@ -100,9 +113,19 @@ export default {
                 this.gameOptions.push(data);
             }
         },
-        async createHandler() {
+        async searchHandler() {
             const userkey : string = this.userStore.user.items.user_key
-            const roomKey: string = this.roomKey
+            
+            // ルーム一覧を取得
+            const fetchRoom = new FetchRoom(ApiClient);
+            const searchList = await fetchRoom.searchRoom(userkey, this.name, this.genre, this.game);
+            
+            this.searchList = searchList.items.list
+
+            console.log(this.searchList)
+        },
+        async joinHandler(roomKey: string) {
+            const userkey : string = this.userStore.user.items.user_key
 
             // ルーム参加
             const fetchRoom = new FetchRoom(ApiClient);

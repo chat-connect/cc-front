@@ -19,6 +19,15 @@ export class FetchRoom {
         return response
     }
 
+    // searchRoom ルーム検索
+    async searchRoom(userKey: string, name: string, genre: string, game: string): ListRoom {
+        const config = useRuntimeConfig();
+        const access_token = useCookie('access_token')
+        const response: ListRoom = await this.apiClient.get(config.public.GcWebUrl + "/api/room/" + userKey + "/search_room?name=" + name + "&genre=" + genre + "&game=" + game, access_token.value)
+        
+        return response
+    }
+
     // createRoom ルーム作成
     async createRoom(body: any, userKey: string): CreateRoom {
         const config = useRuntimeConfig();
