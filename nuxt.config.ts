@@ -4,10 +4,11 @@ export default defineNuxtConfig({
   target: "server",
   runtimeConfig: {
     public:{
-      GcAuthUrl: process.env.GC_AUTH_URL,
+      GcAuthUrl:   process.env.GC_AUTH_URL,
       GcServerUrl: process.env.GC_SERVER_URL,
       GcSocketUrl: process.env.GC_SOCKET_URL,
       GcImageUrl:  process.env.GC_IMAGE_URL,
+      GcGameUrl:   process.env.GC_GAME_URL,
       GcWebUrl:    process.env.GC_WEB_URL,
     }
   },

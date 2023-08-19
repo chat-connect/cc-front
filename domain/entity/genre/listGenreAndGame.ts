@@ -1,6 +1,6 @@
 export interface Genre {
     genre_key:   string;
-    tyupe:       string;
+    type:        string;
     name:        string;
     description: string;
 }
@@ -8,9 +8,7 @@ export interface Genre {
 export interface Game {
     game_key:    string;
     genre_key:   string;
-    tyupe:       string;
-    name:        string;
-    description: string;
+    game_title:  string;
 }
 
 export interface ListGenreAndGame {

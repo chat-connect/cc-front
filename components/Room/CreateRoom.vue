@@ -77,7 +77,7 @@ export default {
 
             for (const game of listGenreAndGame.items.list_game) {
                 const data = {
-                    title:  game.name,
+                    title:  game.game_title,
                     value: game.game_key
                 };
                 this.gameOptions.push(data);

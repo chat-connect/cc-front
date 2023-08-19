@@ -98,7 +98,7 @@ export default {
         // GenreとGameを取得する
         async getGenreAndGameList() {
             const fetchGenre = new FetchGenre(ApiClient);
-            const listGenreAndGame =  await fetchGenre.listGenreAndGame();
+            const listGenreAndGame = await fetchGenre.listGenreAndGame();
 
             for (const genre of listGenreAndGame.items.list_genre) {
                 const data = {
@@ -110,7 +110,7 @@ export default {
 
             for (const game of listGenreAndGame.items.list_game) {
                 const data = {
-                    title:  game.name,
+                    title:  game.game_title,
                     value: game.game_key
                 };
                 this.gameOptions.push(data);
