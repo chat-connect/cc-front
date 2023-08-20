@@ -2,20 +2,18 @@
     <v-container>
        <v-row align-content="center">
            <v-col cols="12" align-content="center">
-            ゲームスコア
+            <GameScore />
            </v-col>
        </v-row>
     </v-container>
 </template>
 
 <script lang="ts">
-import MyProfile from "@/components/Profile/MyProfile.vue";
-import ScoreBoard from "@/components/Profile/ScoreBoard.vue";
+import GameScore from "@/components/Game/GameScore.vue";
 
 export default {
     components: {
-        MyProfile,
-        ScoreBoard,
+        GameScore,
     },
 };
 </script>
