@@ -91,13 +91,14 @@ export default {
 }
 
 .user_icon {
-    width: 75px;
-    height: 75px;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
 }
 
 .user_name {
     font-weight: bold;
+    margin: 10px;
 }
 
 .carousel-slide {
