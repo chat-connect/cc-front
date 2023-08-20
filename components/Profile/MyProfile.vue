@@ -30,7 +30,9 @@
         </v-col>   
         <v-col cols="12" sm="4" v-for="item in gameItems">
             <v-card class="game_card" flat>
-                <img class="game_image" :src="item.gameImagePath">              
+                <router-link :to="item.to">
+                    <img class="game_image" :alt="item.gameTitle" :src="item.gameImagePath">                  
+                </router-link>
             </v-card>
         </v-col>          
     </v-row>
@@ -73,6 +75,7 @@ export default {
                     gameKey:       game.game_key,
                     gameTitle:     game.game_title,
                     gameImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${game.game_image_path}`,
+                    to:            `/game/${game.game_key}/score`
                 };
                 this.gameItems.push(data);
             }

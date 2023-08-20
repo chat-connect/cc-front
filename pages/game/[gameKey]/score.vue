@@ -1,0 +1,21 @@
+<template>
+    <v-container>
+       <v-row align-content="center">
+           <v-col cols="12" align-content="center">
+            ゲームスコア
+           </v-col>
+       </v-row>
+    </v-container>
+</template>
+
+<script lang="ts">
+import MyProfile from "@/components/Profile/MyProfile.vue";
+import ScoreBoard from "@/components/Profile/ScoreBoard.vue";
+
+export default {
+    components: {
+        MyProfile,
+        ScoreBoard,
+    },
+};
+</script>
