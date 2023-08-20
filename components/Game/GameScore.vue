@@ -1,29 +1,31 @@
 <template>
-    <v-row>   
-        <v-col cols="12" sm="8">
-            <v-card flat align-content="center">
-                <v-container>
-                    <v-row>
-                        <v-col cols="12" align-content="center">
-                            <div class="user_info">
-                                <img class="user_icon" :src="updateUserImage()" alt="UserIcon">
-                                <h2 class="user_name">{{ userStore.user.items.name }}</h2>
-                            </div>
-                        </v-col>
-                        <v-col cols="12" align-content="center">
-                            <div class="user_info">
-                                <h3 class="user_name">link</h3>
-                            </div>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-card>        
-        </v-col>     
+    <v-row class="cards-row" align="stretch">
         <v-col cols="12" sm="4">
             <v-card class="game_card" flat>
-                <img class="game_image" :alt="game.gameTitle" :src="game.gameImagePath">
+            <img class="game_image" :alt="game.gameTitle" :src="game.gameImagePath">
             </v-card>
-        </v-col>      
+        </v-col>
+        <v-col cols="12" sm="8">
+            <v-card class="chart_card" flat>
+            <div class="chart_container">
+                <LineChart />
+            </div>
+            </v-card>
+        </v-col>
+        <v-col cols="12" sm="4">
+            <v-card class="chart_card" flat>
+            <div class="chart_container">
+                <LineChart />
+            </div>
+            </v-card>
+        </v-col>
+        <v-col cols="12" sm="8">
+            <v-card class="chart_card" flat>
+            <div class="chart_container">
+                <LineChart />
+            </div>
+            </v-card>
+        </v-col>
     </v-row>
 </template>
 
@@ -32,7 +34,11 @@ import { useUserStore } from '@/store/user/user';
 import { FetchGame } from '@/domain/usecase/fetchGame';
 import ApiClient from '@/infra/api/apiClient';
 
+import LineChart from '@/components/Game/Chart/LineChart'
+
 export default {
+    name: 'App',
+  components: { LineChart },
     data() {
         return {
             game: {
@@ -102,13 +108,28 @@ export default {
 
 .game_card {
     height: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart_card {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+.chart_container {
+  flex: 1;
 }
 
 .game_title {
     color: rgb(163, 163, 163);
 }
+
 .game_image {
     width: 100%;
-    height: 100%;
+    flex-grow: 1;
+    object-fit: cover;
 }
 </style>
