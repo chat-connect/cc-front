@@ -94,6 +94,8 @@ export default {
     width: 65px;
     height: 65px;
     border-radius: 50%;
+    position: relative;
+    object-fit: cover;
 }
 
 .user_name {

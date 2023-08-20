@@ -280,6 +280,7 @@ export default {
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 .user_name {
