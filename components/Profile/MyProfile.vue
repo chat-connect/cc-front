@@ -105,7 +105,7 @@ export default {
 }
 
 .game_card {
-    height: 97%;
+    height: 96%;
 }
 
 .game_title {
