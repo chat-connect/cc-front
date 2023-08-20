@@ -30,7 +30,7 @@
         </v-col>   
         <v-col cols="12" sm="4" v-for="item in gameItems">
             <v-card class="game_card" flat>
-                <img class="game_image" :src="item.gameImagePath" alt="UserIcon">              
+                <img class="game_image" :src="item.gameImagePath">              
             </v-card>
         </v-col>          
     </v-row>
@@ -105,7 +105,7 @@ export default {
 }
 
 .game_card {
-    height: 96%;
+    height: 100%;
 }
 
 .game_title {
@@ -113,6 +113,6 @@ export default {
 }
 .game_image {
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 </style>
