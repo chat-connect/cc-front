@@ -13,11 +13,11 @@ services:
       dockerfile: .docker/web/Dockerfile
     volumes:
       - .:/web:cached
-      - nuxt_node_modules:/web/node_modules
+      - node_modules:/web/node_modules
     ports:
       - "3000:3000"
       - "24678:24678"
     tty: true
 
 volumes:
-  nuxt_node_modules:
+  node_modules:
