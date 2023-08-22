@@ -5,25 +5,32 @@
             <img class="game_image" :alt="game.gameTitle" :src="game.gameImagePath">
             </v-card>
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="4">
             <v-card class="chart_card" flat>
-            <div class="chart_container">
-                <LineChart />
-            </div>
+                <div class="chart_container">
+                    <ScoreChart />
+                </div>
             </v-card>
         </v-col>
         <v-col cols="12" sm="4">
             <v-card class="chart_card" flat>
-            <div class="chart_container">
-                <LineChart />
-            </div>
+                <div class="chart_container">
+                    <ScoreComboChart />
+                </div>
             </v-card>
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="4">
             <v-card class="chart_card" flat>
-            <div class="chart_container">
-                <LineChart />
-            </div>
+                <div class="chart_container">
+                    <PlayTimeChart />
+                </div>
+            </v-card>
+        </v-col>
+        <v-col cols="12" sm="4">
+            <v-card class="chart_card" flat>
+                <div class="chart_container">
+                    <RankChart />
+                </div>
             </v-card>
         </v-col>
     </v-row>
@@ -31,14 +38,23 @@
 
 <script lang="ts">
 import { useUserStore } from '@/store/user/user';
+import { useListGameScoreStore } from '@/store/game/listGameScore';
 import { FetchGame } from '@/domain/usecase/fetchGame';
 import ApiClient from '@/infra/api/apiClient';
 
-import LineChart from '@/components/Game/Chart/LineChart'
+import ScoreChart from '@/components/Game/Chart/Score/ScoreChart'
+import ScoreComboChart from '@/components/Game/Chart/ComboScore/ComboScoreChart'
+import PlayTimeChart from '@/components/Game/Chart/PlayTime/PlayTimeChart'
+import RankChart from '@/components/Game/Chart/Rank/RankChart'
 
 export default {
     name: 'App',
-  components: { LineChart },
+    components: {
+        ScoreChart,
+        ScoreComboChart,
+        PlayTimeChart,
+        RankChart
+    },
     data() {
         return {
             game: {
@@ -46,9 +62,8 @@ export default {
                 gameTitle:     "",
                 gameImagePath: "",
             },
-            gameSettng: {},
-            gameScoreItems: [],
             userStore: useUserStore(),
+            useListGameScoreStore: useListGameScoreStore(),
         };
     },
     mounted() {
@@ -80,8 +95,7 @@ export default {
                 gameImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${listGameScore.items.game_image_path}`,
             }
 
-            this.GameSetting = listGameScore.items.setting
-            this.GameeScoreItems = listGameScore.items.list
+            await this.useListGameScoreStore.update(listGameScore);
         }
     },
 };

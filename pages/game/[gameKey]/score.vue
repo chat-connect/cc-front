@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import GameScore from "@/components/Game/GameScore.vue";
+import GameScore from "@/components/Game/GameScore";
 
 export default {
     components: {

@@ -15,10 +15,14 @@ export interface GameScore {
 }
 
 export interface ListGameScore {
-    game_key:        string;
-    game_title:      string;
-    game_image_path: string;
-    setting:         Setting;
-    list:            GameScore[];
-    message:         string;
+    types:  string;
+    status: number;
+    items: {
+        game_key:        string;
+        game_title:      string;
+        game_image_path: string;
+        setting:         Setting;
+        list:            GameScore[];
+        message:         string;        
+    };
 }

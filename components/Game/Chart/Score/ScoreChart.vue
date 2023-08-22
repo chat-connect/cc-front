@@ -1,5 +1,5 @@
 <template>
-  <Line :data="data" :options="options" />
+    <Line :data="data" :options="options" />
 </template>
 
 <script lang="ts">
@@ -14,7 +14,7 @@ import {
     Legend
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
-import * as chartConfig from './lineChartConfig.js'
+import * as scoreChartConfig from './scoreChartConfig'
 
 ChartJS.register(
     CategoryScale,
@@ -32,7 +32,7 @@ export default {
         Line
     },
     data() {
-        return chartConfig
+        return scoreChartConfig
     }
 }
 </script>
