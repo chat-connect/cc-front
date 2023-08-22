@@ -55,7 +55,10 @@ export default {
             const fetchRoom = new FetchRoom(ApiClient);
             const listRoom = await fetchRoom.listRoom(user.value.items.user_key);
             const listRoomStore = useListRoomStore();
-            listRoomStore.update(listRoom);
+
+            try {
+                listRoomStore.update(listRoom);
+            } catch (error) {}
 
             this.$router.push('/');
         },
