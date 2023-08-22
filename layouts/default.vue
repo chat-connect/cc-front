@@ -193,6 +193,7 @@ import { useListChannelStore } from '@/store/channel/listChannel';
 import { useListOpenChatStore } from '@/store/openChat/listOpenChat';
 import { useListRoomChatStore } from '@/store/roomChat/listRoomChat';
 import { useListChannelChatStore } from '@/store/channelChat/listChannelChat';
+import { useListGameScoreStore } from '@/store/game/listGameScore';
 
 export default {
     data() {
@@ -203,6 +204,7 @@ export default {
             listOpenChatStore: useListOpenChatStore(),
             listRoomChatStore: useListRoomChatStore(),
             listChannelChatStore: useListChannelChatStore(),
+            listGameScoreStore: useListGameScoreStore(),
             drawer: true,
             channelDrawer: false,
             activeRoomKey: "",
@@ -337,11 +339,12 @@ export default {
 
             // storeを初期化
             this.userStore.delete();
-            this.listRoomStore.delete()
-            this.listChannelStore.delete()
-            this.listOpenChatStore.delete()
-            this.listRoomChatStore.delete()            
-            this.listChannelChatStore.delete()
+            this.listRoomStore.delete();
+            this.listChannelStore.delete();
+            this.listOpenChatStore.delete();
+            this.listRoomChatStore.delete();        
+            this.listChannelChatStore.delete();
+            this.listGameScoreStore.delete();
 
             useRouter().push('/login');
         }
