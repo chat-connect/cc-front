@@ -77,7 +77,7 @@ export default {
         async getGameScoreList() {
             const route = useRoute();
             const gameKey: string = route.params.gameKey;
-            const userKey = this.userStore.user.items.user_key
+            const userKey = this.userStore.user.items.user_key;
             
             const fetchGame = new FetchGame(ApiClient);
             const listGameScore = await fetchGame.listGameScore(userKey, gameKey);

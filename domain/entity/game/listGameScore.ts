@@ -7,9 +7,9 @@ export interface Setting {
 }
 
 export interface GameScore {
-    game_score:            string;
-    game_combo_score:      string;
-    game_rank:             string;
+    game_score:            number;
+    game_combo_score:      number;
+    game_rank:             number;
     game_play_time:        number;
     game_score_image_path: string;
 }
