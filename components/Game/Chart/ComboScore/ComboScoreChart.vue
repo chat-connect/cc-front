@@ -3,6 +3,7 @@
 </template>
 
 <script lang="ts">
+import { useListGameScoreStore } from '@/store/game/listGameScore';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 import { Line } from 'vue-chartjs'
 
@@ -18,10 +19,10 @@ export default {
                 labels: [],
                 datasets: [
                     {
-                        label: 'combo',
-                        backgroundColor: 'rgba(135,206,235,1)',
-                        borderColor: 'rgba(135,206,235,0.3)',
-                        data: []
+                        label: '',
+                        backgroundColor: '',
+                        borderColor: '',
+                        data: [],
                     }
                 ]
             },
@@ -36,21 +37,24 @@ export default {
     },
     methods: {
         getData() {
+            const store = useListGameScoreStore();
+            const gameScoreList = store.listGameScore.items.list;
+
+            var data = [];
+            for (const game of gameScoreList) {
+                data.push(game.game_combo_score);
+            }
+
             this.data = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: [1, 2 ,3, 4, 5, 6, 7, 8, 9, 10],
                 datasets: [
                     {
                         label: 'combo',
                         backgroundColor: 'rgba(135,206,235,1)',
                         borderColor: 'rgba(135,206,235,0.3)',
-                        data: [40, 39, 10, 40, 39, 80, 40]
+                        data: data
                     }
                 ]
-            }
-
-            this.options = {
-                responsive: true,
-                maintainAspectRatio: false
             }
         }
     }

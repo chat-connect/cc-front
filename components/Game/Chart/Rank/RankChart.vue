@@ -37,7 +37,7 @@ export default {
     methods: {
         getData() {
             this.data = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: [1, 2 ,3, 4, 5, 6, 7, 8, 9, 10],
                 datasets: [
                     {
                         label: 'rank',
@@ -46,12 +46,12 @@ export default {
                         data: [40, 39, 10, 40, 39, 80, 40]
                     }
                 ]
-            }
+            };
 
             this.options = {
                 responsive: true,
                 maintainAspectRatio: false
-            }
+            };
         }
     }
 }
