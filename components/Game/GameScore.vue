@@ -1,31 +1,42 @@
 <template>
     <v-row v-if="gameList" class="cards-row" align="stretch">
         <v-col cols="12" sm="4">
+            <v-card align-content="center" :style="{ height: gameImageHeight + 'px' }" flat>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" align-content="center">
+                            <div class="user_info">
+                                <img class="user_icon" :src="updateUserImage()" alt="UserIcon">
+                                <h2 class="user_name">{{ userStore.user.items.name }}</h2>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <v-list-subheader>{{ 100 }}Following</v-list-subheader>
+                                <v-list-subheader>{{ 125 }}Followers</v-list-subheader>
+                            </div>
+                        </v-col>
+                        <v-col cols="12" align-content="center">
+                            <div class="user_info">
+                                <h3 class="user_name">link</h3>
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <v-row justify="end">
+                        <v-col cols="4">
+                            <v-btn flat block variant="outlined" color="primary" to="/profile/edit">Edit</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card>        
+        </v-col> 
+        <v-col cols="12" sm="4">
             <v-card class="game_card" flat :style="{ height: gameImageHeight + 'px' }">
                 <img class="game_image" :alt="game.gameTitle" :src="game.gameImagePath" @load="adjustCardHeight">
             </v-card>
         </v-col>
-        <v-col cols="12" sm="8">
+        <v-col cols="12" sm="4">
             <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
-            <Swiper
-                :slidesPerView="3"
-                :loop="true"
-                :speed="3000"
-                :autoplay="{ delay: 2000 }"
-                :modules="[SwiperAutoplay, SwiperEffectCreative]"
-            >
-                <SwiperSlide v-for="item in items">
-                    <v-card flat style="margin: 0px 0px 0px 0px;">
-                        <v-card-item>
-                            <v-card-title class="headline">{{ item.title }}</v-card-title>
-                            <div style="height: 100px;">
-                                {{ item.content }}
-                            </div>
-                        </v-card-item>
-                    </v-card>
-                </SwiperSlide>
-            </Swiper>    
-        </v-card>
+                <ImageCarousel />
+            </v-card>
         </v-col>
         <v-col cols="12" sm="6">
             <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
@@ -64,10 +75,11 @@ import { useListGameScoreStore } from '@/store/game/listGameScore';
 import { FetchGame } from '@/domain/usecase/fetchGame';
 import ApiClient from '@/infra/api/apiClient';
 
-import ScoreChart from '@/components/Game/Chart/Score/ScoreChart'
-import ScoreComboChart from '@/components/Game/Chart/ComboScore/ComboScoreChart'
-import PlayTimeChart from '@/components/Game/Chart/PlayTime/PlayTimeChart'
-import RankChart from '@/components/Game/Chart/Rank/RankChart'
+import ScoreChart from '@/components/Game/Chart/Score/ScoreChart';
+import ScoreComboChart from '@/components/Game/Chart/ComboScore/ComboScoreChart';
+import PlayTimeChart from '@/components/Game/Chart/PlayTime/PlayTimeChart';
+import RankChart from '@/components/Game/Chart/Rank/RankChart';
+import ImageCarousel from '@/components/Game/Carousel/ImageCarousel';
 
 export default {
     name: 'App',
@@ -75,47 +87,11 @@ export default {
         ScoreChart,
         ScoreComboChart,
         PlayTimeChart,
-        RankChart
+        RankChart,
+        ImageCarousel
     },
     data() {
         return {
-            items: [
-                {
-                    title: 'title1',
-                    path: '/item1',
-                    content: 'content1'
-                },
-                {
-                    title: 'title2',
-                    path: '/item2',
-                    content: 'content2'
-                },
-                {
-                    title: 'title3',
-                    path: '/item3',
-                    content: 'content3'
-                },
-                {
-                    title: 'title4',
-                    path: '/item4',
-                    content: 'content4'
-                },    
-                {
-                    title: 'title5',
-                    path: '/item5',
-                    content: 'content5'
-                },
-                {
-                    title: 'title6',
-                    path: '/item6',
-                    content: 'content6'
-                },    
-                {
-                    title: 'title7',
-                    path: '/item7',
-                    content: 'content7'
-                }
-            ],
             gameImageHeight: 0,
             game: {
                 gameKey:       "",
@@ -132,10 +108,9 @@ export default {
     },
     methods: {
         adjustCardHeight(event) {
-        const imageHeight = event.target.height; // 読み込まれた画像の高さ
-        this.gameImageHeight = imageHeight; // データプロパティを更新
-        console.log(this.gameImageHeight)
-    },
+            const imageHeight = event.target.height;
+            this.gameImageHeight = imageHeight;
+        },
         updateUserImage() {
             const config = useRuntimeConfig();
             const userKey = this.userStore.user.items.user_key
