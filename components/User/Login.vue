@@ -22,9 +22,11 @@
 import { ref } from 'vue';
 import { FetchUser } from '@/domain/usecase/fetchUser';
 import { FetchRoom } from '@/domain/usecase/fetchRoom';
+import { FetchGame } from '@/domain/usecase/fetchGame';
 import { User } from '@/domain/entity/user';
 import { useUserStore } from '@/store/user/user';
 import { useListRoomStore } from '@/store/room/listRoom';
+import { useListGameUserStore } from '@/store/game/listGameUser';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {
@@ -56,11 +58,18 @@ export default {
             const listRoom = await fetchRoom.listRoom(user.value.items.user_key);
             const listRoomStore = useListRoomStore();
 
+            // ゲーム一覧を取得
+            const fetchGame = new FetchGame(ApiClient);
+            const listGameUser = await fetchGame.listGameUser(user.value.items.user_key);
+            const listGameUserStore = useListGameUserStore();
+
             try {
                 listRoomStore.update(listRoom);
-            } catch (error) {}
-
-            this.$router.push('/');
+                listGameUserStore.update(listGameUser);
+                this.$router.push('/');
+            } catch (error) {
+                this.$router.push('/');
+            }
         },
     },
 };

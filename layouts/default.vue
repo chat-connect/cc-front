@@ -11,19 +11,43 @@
             </div>
             <v-list>
                 <v-list-item
-                    v-for="(item, i) in items"
-                    :key="i"
-                    :value="item"
+                    key="profile"
+                    value="profile"
                     color="primary"
                     rounded="xl"
-                    :to="item.to"
+                    to="/profile/main"
                     @click.stop="drawChannel(false)"
                 >
                     <template v-slot:prepend>
-                        <v-icon :icon="item.icon"></v-icon>
+                        <v-icon icon="mdi-account"></v-icon>
                     </template>
-                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                    <v-list-item-title>{{ "Profile" }}</v-list-item-title>
                 </v-list-item>
+                <v-list-group
+                    color="primary"
+                    value="Chart"
+                >
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                        v-bind="props"
+                        title="Chart"
+                        rounded="xl"
+                        prepend-icon="mdi-chart-bar-stacked"
+                        @click.stop="drawChannel(false)"
+                        ></v-list-item>
+                    </template>
+                    <v-list-item
+                        v-for="(game, i) in gameListHandler()"
+                        :key="i"
+                        :title="game.title"
+                        :prepend-icon="game.icon"
+                        :value="game.title"
+                        color="primary"
+                        rounded="xl"
+                        :to="game.to"
+                        @click.stop="drawChannel(false)"
+                    ></v-list-item>
+                </v-list-group>
                 <v-list-group
                     color="primary"
                     value="Room"
@@ -76,6 +100,20 @@
                         @click.stop="drawChannel(false)"
                     ></v-list-item>
                 </v-list-group>
+                <v-list-item
+                    v-for="(item, i) in items"
+                    :key="i"
+                    :value="item"
+                    color="primary"
+                    rounded="xl"
+                    :to="item.to"
+                    @click.stop="drawChannel(false)"
+                >
+                    <template v-slot:prepend>
+                        <v-icon :icon="item.icon"></v-icon>
+                    </template>
+                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                </v-list-item>
                 <v-list-item
                     v-if="checkUser()"
                     to="/login"
@@ -194,6 +232,7 @@ import { useListOpenChatStore } from '@/store/openChat/listOpenChat';
 import { useListRoomChatStore } from '@/store/roomChat/listRoomChat';
 import { useListChannelChatStore } from '@/store/channelChat/listChannelChat';
 import { useListGameScoreStore } from '@/store/game/listGameScore';
+import { useListGameUserStore } from '@/store/game/listGameUser';
 
 export default {
     data() {
@@ -205,13 +244,12 @@ export default {
             listRoomChatStore: useListRoomChatStore(),
             listChannelChatStore: useListChannelChatStore(),
             listGameScoreStore: useListGameScoreStore(),
+            listGameUserStore: useListGameUserStore(),
             drawer: true,
             channelDrawer: false,
             activeRoomKey: "",
             activePath: "",
             items: [
-                { title: 'Profile', icon: 'mdi-account', to: '/profile/main' },
-                { title: 'chart', icon: 'mdi-chart-bar-stacked', to: '' },
                 { title: 'Timeline', icon: 'mdi-forum-outline', to: '/' },
                 { title: 'Message', icon: 'mdi-email-outline', to: '' },
             ],
@@ -326,6 +364,22 @@ export default {
             }
 
             return listRoom;
+        },
+        // 連携ゲーム一覧を表示
+        gameListHandler() {
+            const list = this.listGameUserStore.listGameUser.items.list
+            const listGame = [];
+
+            for (let i = 0; i < list.length; i++) {
+                listGame.push({
+                    gameKey: list[i].game_key,
+                    title: list[i].game_title,
+                    icon: 'mdi-gamepad',
+                    to: '/game/' + list[i].game_key + '/score', // scroll: 画面下部にスクロールさせる 
+                });
+            }
+
+            return listGame;
         },
         // ログアウト
         logoutHandler() {
