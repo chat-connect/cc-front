@@ -288,7 +288,10 @@ export default {
             const userKey = this.userStore.user.items.user_key
             const fetchChannel = new FetchChannel(ApiClient);
             const listChannel: ListChannel = await fetchChannel.listChannel(userKey, roomKey);
-            this.listChannelStore.update(listChannel);
+
+            try {
+                this.listChannelStore.update(listChannel);
+            } catch (error) {}
         },
         // textチャンネル一覧を表示
         textChannelListHandler() {
