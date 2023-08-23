@@ -7,6 +7,28 @@
         </v-col>
         <v-col cols="12" sm="8">
             <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
+            <Swiper
+                :slidesPerView="3"
+                :loop="true"
+                :speed="3000"
+                :autoplay="{ delay: 2000 }"
+                :modules="[SwiperAutoplay, SwiperEffectCreative]"
+            >
+                <SwiperSlide v-for="item in items">
+                    <v-card flat style="margin: 0px 0px 0px 0px;">
+                        <v-card-item>
+                            <v-card-title class="headline">{{ item.title }}</v-card-title>
+                            <div style="height: 100px;">
+                                {{ item.content }}
+                            </div>
+                        </v-card-item>
+                    </v-card>
+                </SwiperSlide>
+            </Swiper>    
+        </v-card>
+        </v-col>
+        <v-col cols="12" sm="6">
+            <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
                 <div class="chart_container">
                     <ScoreChart />
                 </div>
@@ -23,6 +45,13 @@
             <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
                 <div class="chart_container">
                     <PlayTimeChart />
+                </div>
+            </v-card>
+        </v-col>
+        <v-col cols="12" sm="6">
+            <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
+                <div class="chart_container">
+                    <RankChart />
                 </div>
             </v-card>
         </v-col>
@@ -50,6 +79,43 @@ export default {
     },
     data() {
         return {
+            items: [
+                {
+                    title: 'title1',
+                    path: '/item1',
+                    content: 'content1'
+                },
+                {
+                    title: 'title2',
+                    path: '/item2',
+                    content: 'content2'
+                },
+                {
+                    title: 'title3',
+                    path: '/item3',
+                    content: 'content3'
+                },
+                {
+                    title: 'title4',
+                    path: '/item4',
+                    content: 'content4'
+                },    
+                {
+                    title: 'title5',
+                    path: '/item5',
+                    content: 'content5'
+                },
+                {
+                    title: 'title6',
+                    path: '/item6',
+                    content: 'content6'
+                },    
+                {
+                    title: 'title7',
+                    path: '/item7',
+                    content: 'content7'
+                }
+            ],
             gameImageHeight: 0,
             game: {
                 gameKey:       "",
