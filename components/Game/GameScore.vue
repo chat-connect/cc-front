@@ -1,35 +1,28 @@
 <template>
-    <v-row class="cards-row" align="stretch">
+    <v-row v-if="gameList" class="cards-row" align="stretch">
         <v-col cols="12" sm="4">
             <v-card class="game_card" flat>
             <img class="game_image" :alt="game.gameTitle" :src="game.gameImagePath">
             </v-card>
         </v-col>
-        <v-col cols="12" sm="4">
+        <v-col cols="12" sm="8">
             <v-card class="chart_card" flat>
                 <div class="chart_container">
                     <ScoreChart />
                 </div>
             </v-card>
         </v-col>
-        <v-col cols="12" sm="4">
+        <v-col cols="12" sm="6">
             <v-card class="chart_card" flat>
                 <div class="chart_container">
                     <ScoreComboChart />
                 </div>
             </v-card>
         </v-col>
-        <v-col cols="12" sm="4">
+        <v-col cols="12" sm="6">
             <v-card class="chart_card" flat>
                 <div class="chart_container">
                     <PlayTimeChart />
-                </div>
-            </v-card>
-        </v-col>
-        <v-col cols="12" sm="4">
-            <v-card class="chart_card" flat>
-                <div class="chart_container">
-                    <RankChart />
                 </div>
             </v-card>
         </v-col>
@@ -64,6 +57,7 @@ export default {
             },
             userStore: useUserStore(),
             useListGameScoreStore: useListGameScoreStore(),
+            gameList: false,
         };
     },
     mounted() {
@@ -95,7 +89,12 @@ export default {
                 gameImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${listGameScore.items.game_image_path}`,
             }
 
-            await this.useListGameScoreStore.update(listGameScore);
+            try {
+                this.useListGameScoreStore.update(listGameScore);
+                this.gameList =true;
+            } catch (error) {
+                this.gameList =true;
+            }
         }
     }
 };

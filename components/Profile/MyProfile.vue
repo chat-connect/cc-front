@@ -79,7 +79,7 @@ export default {
                 };
                 this.gameItems.push(data);
             }
-        }
+        },
     },
 };
 </script>
