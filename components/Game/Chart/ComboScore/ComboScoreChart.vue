@@ -60,3 +60,11 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.chart_image {
+    width: 100%;
+    flex-grow: 1;
+    object-fit: cover;
+}
+</style>

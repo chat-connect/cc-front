@@ -1,26 +1,26 @@
 <template>
     <v-row v-if="gameList" class="cards-row" align="stretch">
         <v-col cols="12" sm="4">
-            <v-card class="game_card" flat>
-            <img class="game_image" :alt="game.gameTitle" :src="game.gameImagePath">
+            <v-card class="game_card" flat :style="{ height: gameImageHeight + 'px' }">
+                <img class="game_image" :alt="game.gameTitle" :src="game.gameImagePath" @load="adjustCardHeight">
             </v-card>
         </v-col>
         <v-col cols="12" sm="8">
-            <v-card class="chart_card" flat>
+            <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
                 <div class="chart_container">
                     <ScoreChart />
                 </div>
             </v-card>
         </v-col>
         <v-col cols="12" sm="6">
-            <v-card class="chart_card" flat>
+            <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
                 <div class="chart_container">
                     <ScoreComboChart />
                 </div>
             </v-card>
         </v-col>
         <v-col cols="12" sm="6">
-            <v-card class="chart_card" flat>
+            <v-card class="chart_card" :style="{ height: gameImageHeight + 'px' }" flat>
                 <div class="chart_container">
                     <PlayTimeChart />
                 </div>
@@ -50,6 +50,7 @@ export default {
     },
     data() {
         return {
+            gameImageHeight: 0,
             game: {
                 gameKey:       "",
                 gameTitle:     "",
@@ -64,6 +65,11 @@ export default {
         this.getGameScoreList();
     },
     methods: {
+        adjustCardHeight(event) {
+        const imageHeight = event.target.height; // 読み込まれた画像の高さ
+        this.gameImageHeight = imageHeight; // データプロパティを更新
+        console.log(this.gameImageHeight)
+    },
         updateUserImage() {
             const config = useRuntimeConfig();
             const userKey = this.userStore.user.items.user_key
