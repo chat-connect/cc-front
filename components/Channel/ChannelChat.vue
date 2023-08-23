@@ -52,9 +52,11 @@
                 <v-col cols="12">
                     <v-form class="form-container">
                         <v-textarea
+                            auto-grow
                             color="primary"
                             label="Message"
-                            class="align-end custom_textarea send_form"
+                            class="align-end send_form custom_textarea"
+                            ref="textarea"
                             rows="1"
                             v-model="content"
                         ></v-textarea>
@@ -89,6 +91,7 @@ export default {
         };
     },
     mounted() {
+        this.adjustTextareaHeight();
         this.listChannelChatHandler().then(() => {
             this.scrollChat();
         })
@@ -250,6 +253,11 @@ export default {
 
             return result
         },
+        adjustTextareaHeight() {
+            const textarea = this.$refs.textarea;
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        },
     }
 };
 </script>
@@ -320,10 +328,6 @@ export default {
     font-size: 30px;
 }
 
-.custom_textarea {
-    height: 30px;
-}
-
 .send_form {
     width: 50%;
 }
@@ -334,5 +338,12 @@ export default {
 
 .chat_image {
     width: 100%;
+}
+
+.custom_textarea {
+  width: 100%;
+  resize: none;
+  overflow-y: hidden;
+  box-sizing: border-box;
 }
 </style>
