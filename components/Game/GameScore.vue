@@ -97,7 +97,7 @@ export default {
 
             await this.useListGameScoreStore.update(listGameScore);
         }
-    },
+    }
 };
 </script>
 
