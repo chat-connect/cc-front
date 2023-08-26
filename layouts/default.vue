@@ -5,9 +5,9 @@
                 <img class="image_circle user_icon" :src="updateUserImage()" @click="draw(drawer)">
                 <v-app-bar-title class="font-weight-bold sidevar_name">{{ userStore.user.items.name }}</v-app-bar-title>
             </div>
-            <div style="display: flex; align-items: center;">
-                <v-list-subheader>{{ 100 }}Following</v-list-subheader>
-                <v-list-subheader>{{ 125 }}Followers</v-list-subheader>
+            <div style="display: flex; align-items: center;" >
+                <v-list-subheader>{{ following }}Following</v-list-subheader>
+                <v-list-subheader>{{ followers }}Followers</v-list-subheader>
             </div>
             <v-list>
                 <v-list-item
@@ -219,14 +219,17 @@
 import { ref } from 'vue';
 import ApiClient from '@/infra/api/apiClient';
 
-import { User } from '@/domain/entity/user/user';
 import { FetchUser } from '@/domain/usecase/fetchUser';
-import { useUserStore } from '@/store/user/user';
+import { FetchChannel } from '@/domain/usecase/fetchChannel';
+import { FetchFollow } from '@/domain/usecase/fetchFollow';
 
+import { useUserStore } from '@/store/user/user';
 import { useListRoomStore } from '@/store/room/listRoom';
 
 import { ListChannel } from "@/domain/entity/channel/listChannel"
-import { FetchChannel } from '@/domain/usecase/fetchChannel';
+import { User } from '@/domain/entity/user/user';
+import { CountFollowingAndFollowers } from '@/domain/entity/follow/countFollowingAndFollowers';
+
 import { useListChannelStore } from '@/store/channel/listChannel';
 import { useListOpenChatStore } from '@/store/openChat/listOpenChat';
 import { useListRoomChatStore } from '@/store/roomChat/listRoomChat';
@@ -245,6 +248,8 @@ export default {
             listChannelChatStore: useListChannelChatStore(),
             listGameScoreStore: useListGameScoreStore(),
             listGameUserStore: useListGameUserStore(),
+            following: 0,
+            followers: 0,
             drawer: true,
             channelDrawer: false,
             activeRoomKey: "",
@@ -270,6 +275,9 @@ export default {
                 userImage = `${config.public.GcImageUrl}/image/get?image_path=static/images/user/${userKey}.png`
             }
 
+            // フォロー数
+            this.getFollowCount();
+
             return userImage
         },
         // チャンネルメニュー表示
@@ -278,6 +286,17 @@ export default {
                 return "left"
             } else {
                 return "right"
+            }
+        },
+        // フォロー数とフォロワー数を取得する
+        async getFollowCount() {
+            const userKey = this.userStore.user.items.user_key
+            if (userKey != "") {
+                const fetchFollow = new FetchFollow(ApiClient);
+                const countFollowingAndFollowers: CountFollowingAndFollowers = await fetchFollow.countFollowingAndFollowers(userKey);
+
+                this.following = countFollowingAndFollowers.items.following_count;
+                this.followers = countFollowingAndFollowers.items.followers_count;                
             }
         },
         // チャンネル一覧を取得する
