@@ -51,7 +51,7 @@ export default {
             for (const user of roomUsers.items.list) {
                 var follow = false;
                 if (user.following_user_key != "") {
-                    follow = true
+                    follow = true;
                 }
 
                 var myAccount = false;
@@ -72,7 +72,7 @@ export default {
         },
         async createFollow(followingUserKey: string) {
             const body = {
-                following_user_key: followingUserKey
+                following_user_key: followingUserKey,
             }
 
             const userKey = this.userStore.user.items.user_key;
