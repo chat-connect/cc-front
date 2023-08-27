@@ -9,11 +9,11 @@
                         <v-row v-if="item.myAccount" class="justify-end">
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="pink-accent-3" variant="tonal">my account</v-btn>
                         </v-row>
-                        <v-row v-else-if="item.mutual" class="justify-end">
+                        <v-row v-else-if="item.follow" class="justify-end">
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">following</v-btn>
                         </v-row>
                         <v-row v-else class="justify-end">
-                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="grey-darken-1" variant="tonal">to follow</v-btn>
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="grey-darken-1" variant="tonal"  @click="createFollow(item.userKey)">to follow</v-btn>
                         </v-row>
                     </div>
                     <div class="content_separator"></div>
@@ -26,6 +26,7 @@
 <script lang="ts">
 import { useUserStore } from '@/store/user/user';
 import { FetchRoom } from '@/domain/usecase/fetchRoom';
+import { FetchFollow } from '@/domain/usecase/fetchFollow';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {
@@ -48,6 +49,11 @@ export default {
 
             const config = useRuntimeConfig();
             for (const user of roomUsers.items.list) {
+                var follow = false;
+                if (user.following_user_key != "") {
+                    follow = true
+                }
+
                 var myAccount = false;
                 if (user.status.user_key == userKey) {
                     myAccount = true;
@@ -57,12 +63,22 @@ export default {
                     userKey:       user.status.user_key,
                     name:          user.status.name,
                     userImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${user.status.image_path}`,
-                    mutual:         user.mutual,
+                    follow:         follow,
                     myAccount:      myAccount,
                 };
+
                 this.userItems.push(data);
             }
         },
+        async createFollow(followingUserKey: string) {
+            const body = {
+                following_user_key: followingUserKey
+            }
+
+            const userKey = this.userStore.user.items.user_key;
+            const fetchFollow = new FetchFollow(ApiClient);
+            await fetchFollow.createFollow(body, userKey);
+        }
     },
 };
 </script>
