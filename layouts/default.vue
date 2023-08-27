@@ -29,6 +29,40 @@
                 </v-list-item>
                 <v-list-group
                     color="primary"
+                    value="Search"
+                >
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                            v-bind="props"
+                            title="Search"
+                            rounded="xl"
+                            prepend-icon="mdi-magnify"
+                            @click.stop="drawChannel(false)"
+                        ></v-list-item>
+                    </template>
+                    <v-list-item
+                        key="user_search"
+                        title="User"
+                        prepend-icon="mdi-account"
+                        value="SearchUser"
+                        color="primary"
+                        rounded="xl"
+                        to="/search/searchUser"
+                        @click.stop="drawChannel(false)"
+                    ></v-list-item>
+                    <v-list-item
+                        key="room_search"
+                        title="Room"
+                        prepend-icon="mdi-comment-text-outline"
+                        value="SearchRoom"
+                        color="primary"
+                        rounded="xl"
+                        to="/search/searchRoom"
+                        @click.stop="drawChannel(false)"
+                    ></v-list-item>
+                </v-list-group>
+                <v-list-group
+                    color="primary"
                     value="Chart"
                 >
                     <template v-slot:activator="{ props }">
@@ -83,15 +117,6 @@
                         color="primary"
                         rounded="xl"
                         to="/room/join"
-                        @click.stop="drawChannel(false)"
-                    ></v-list-item>
-                    <v-list-item
-                        title="Search"
-                        prepend-icon="mdi-account-check"
-                        value="Search"
-                        color="primary"
-                        rounded="xl"
-                        to="/room/search"
                         @click.stop="drawChannel(false)"
                     ></v-list-item>
                     <v-list-item
