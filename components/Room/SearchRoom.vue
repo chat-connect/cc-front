@@ -45,7 +45,7 @@
                             <h4>Genre: {{ room.genre.name }}</h4>
                         </v-col>
                         <v-col cols="12">
-                            <h4>Game: {{ room.game.name }}</h4>
+                            <h4>Game: {{ room.game.game_title }}</h4>
                         </v-col>
                     </v-row>
                     <v-row justify="end">
@@ -124,8 +124,6 @@ export default {
             const searchList = await fetchRoom.searchRoom(userkey, this.name, this.genre, this.game);
             
             this.searchList = searchList.items.list
-
-            console.log(this.searchList)
         },
         async joinHandler(roomKey: string) {
             const userkey : string = this.userStore.user.items.user_key
