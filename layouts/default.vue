@@ -226,6 +226,14 @@
                     rounded="xl"
                     :to="'/channel/' + activeRoomKey + '/create'"
                 ></v-list-item>
+                <v-list-item
+                    title="User List"
+                    prepend-icon="mdi-account"
+                    value="UserList"
+                    color="primary"
+                    rounded="xl"
+                    :to="'/room/' + activeRoomKey + '/userList'"
+                ></v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-app-bar app flat>
