@@ -1,5 +1,6 @@
 import { ApiClient } from "@/infra/api/apiClient"
 import { ListRoom } from "@/domain/entity/room/listRoom"
+import { ListRoomUser } from "@/domain/entity/room/listRoomUser"
 import { CreateRoom } from "@/domain/entity/room/createRoom"
 import { JoinRoom } from "@/domain/entity/room/joinRoom"
 
@@ -15,6 +16,15 @@ export class FetchRoom {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token')
         const response: ListRoom = await this.apiClient.get(config.public.GcWebUrl + "/api/room/" + userKey + "/list_room", access_token.value)
+        
+        return response
+    }
+
+    // listRoomUser ルーム一覧
+    async listRoomUser(userKey: string, roomKey: string): ListRoomUser {
+        const config = useRuntimeConfig();
+        const access_token = useCookie('access_token')
+        const response: ListRoomUser = await this.apiClient.get(config.public.GcWebUrl + "/api/room/" + userKey + "/list_room_user/" + roomKey, access_token.value)
         
         return response
     }

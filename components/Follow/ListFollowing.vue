@@ -44,18 +44,11 @@ export default {
 
             const config = useRuntimeConfig();
             for (const following of listFollowing.items.list) {
-                var mutual: string = ""; 
-                if (following.mutual) {
-                    mutual = "followed";
-                } else {
-                    mutual = "";
-                }
-
                 const data = {
                     userKey:       following.status.user_key,
                     name:          following.status.name,
                     userImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${following.status.image_path}`,
-                    mutual:         mutual,
+                    mutual:         following.mutual,
                 };
                 this.followerItems.push(data);
             }

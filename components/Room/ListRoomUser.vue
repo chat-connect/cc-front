@@ -2,11 +2,14 @@
     <v-card flat align-content="center">
         <v-container>
             <v-row>
-                <v-col cols="12" v-for="item in followerItems" :key="item.id">
+                <v-col cols="12" v-for="item in userItems" :key="item.id">
                     <div class="user_info">
                         <img class="user_icon" :src="item.userImagePath" alt="UserIcon">
                         <div class="user_name">{{ item.name }}</div>
-                        <v-row v-if="item.mutual" class="justify-end">
+                        <v-row v-if="item.myAccount" class="justify-end">
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="pink-accent-3" variant="tonal">my account</v-btn>
+                        </v-row>
+                        <v-row v-else-if="item.mutual" class="justify-end">
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">following</v-btn>
                         </v-row>
                         <v-row v-else class="justify-end">
@@ -22,13 +25,13 @@
 
 <script lang="ts">
 import { useUserStore } from '@/store/user/user';
-import { FetchFollow } from '@/domain/usecase/fetchFollow';
+import { FetchRoom } from '@/domain/usecase/fetchRoom';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {
     data() {
         return {
-            followerItems: [],
+            userItems: [],
             userStore: useUserStore(),
         };
     },
@@ -38,19 +41,26 @@ export default {
     methods: {
         async listFollowers() {
             const userKey = this.userStore.user.items.user_key;
-            const fetchFollow = new FetchFollow(ApiClient);
-            const listFollowers = await fetchFollow.listFollowers(userKey);
+            const route = useRoute();
+            const roomKey = route.params.roomKey;
+            const fetchRoom = new FetchRoom(ApiClient);
+            const roomUsers = await fetchRoom.listRoomUser(userKey, roomKey);
 
             const config = useRuntimeConfig();
-            for (const followers of listFollowers.items.list) {
-                var mutual: string = ""; 
+            for (const user of roomUsers.items.list) {
+                var myAccount = false;
+                if (user.status.user_key == userKey) {
+                    myAccount = true;
+                }
+
                 const data = {
-                    followKey:     followers.status.user_key,
-                    name:          followers.status.name,
-                    userImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${followers.status.image_path}`,
-                    mutual:         followers.mutual,
+                    userKey:       user.status.user_key,
+                    name:          user.status.name,
+                    userImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${user.status.image_path}`,
+                    mutual:         user.mutual,
+                    myAccount:      myAccount,
                 };
-                this.followerItems.push(data);
+                this.userItems.push(data);
             }
         },
     },
