@@ -5,9 +5,13 @@
                 <img class="image_circle user_icon" :src="updateUserImage()" @click="draw(drawer)">
                 <v-app-bar-title class="font-weight-bold sidevar_name">{{ userStore.user.items.name }}</v-app-bar-title>
             </div>
-            <div style="display: flex; align-items: center;" >
-                <v-list-subheader>{{ following }}Following</v-list-subheader>
-                <v-list-subheader>{{ followers }}Followers</v-list-subheader>
+            <div style="display: flex; align-items: center;">
+                <router-link to="/follow/following" class="router-link">
+                    <v-list-subheader>{{ following }} Following</v-list-subheader>
+                </router-link>
+                <router-link to="/follow/followers" class="router-link">
+                    <v-list-subheader>{{ followers }} Followers</v-list-subheader>
+                </router-link>
             </div>
             <v-list>
                 <v-list-item
@@ -473,5 +477,8 @@ v-list-item.login {
 
 .navbar {
     box-shadow: none !important;
+}
+.router-link {
+  text-decoration: none;
 }
 </style>
