@@ -207,16 +207,18 @@
                         prepend-icon="mdi-microphone-settings"
                         ></v-list-item>
                     </template>
-                    <v-list-item
-                        v-for="(channel, i) in voiceChannelListHandler()"
-                        :key="i"
-                        :title="channel.title"
-                        :prepend-icon="channel.icon"
-                        :value="channel.title"
-                        color="primary"
-                        rounded="xl"
-                        :to="channel.to"
-                    ></v-list-item>
+                    <!--
+                        <v-list-item
+                            v-for="(channel, i) in voiceChannelListHandler()"
+                            :key="i"
+                            :title="channel.title"
+                            :prepend-icon="channel.icon"
+                            :value="channel.title"
+                            color="primary"
+                            rounded="xl"
+                            :to="channel.to"
+                        ></v-list-item>                        
+                    -->
                 </v-list-group>
                 <v-list-item
                     title="New"
