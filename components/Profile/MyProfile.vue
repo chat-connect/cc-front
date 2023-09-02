@@ -79,15 +79,18 @@ export default {
             const fetchGame = new FetchGame(ApiClient);
             const listGameUser = await fetchGame.listGameUser(userKey);
 
-            const config = useRuntimeConfig();
-            for (const game of listGameUser.items.list) {
-                const data = {
-                    gameKey:       game.game_key,
-                    gameTitle:     game.game_title,
-                    gameImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${game.game_image_path}`,
-                    to:            `/game/${game.game_key}/score`
-                };
-                this.gameItems.push(data);
+            if (listGameUser.items.list != null) {
+                const config = useRuntimeConfig();
+                for (const game of listGameUser.items.list) {
+                    const data = {
+                        gameKey:       game.game_key,
+                        gameTitle:     game.game_title,
+                        gameImagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${game.game_image_path}`,
+                        to:            `/game/${game.game_key}/score`
+                    };
+                    
+                    this.gameItems.push(data);
+                }                
             }
         },
         async getFollowCount() {
