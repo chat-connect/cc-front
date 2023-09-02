@@ -10,7 +10,7 @@
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="pink-accent-3" variant="tonal">my account</v-btn>
                         </v-row>
                         <v-row v-else-if="item.follow" class="justify-end">
-                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">{{ item.follow ? 'following' : 'to follow' }}</v-btn>
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal" @click="deleteFollow(item.userKey)">{{ item.follow ? 'following' : 'to follow' }}</v-btn>
                         </v-row>
                         <v-row v-else class="justify-end">
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="grey-darken-1" variant="tonal"  @click="createFollow(item.userKey)">{{ item.follow ? 'following' : 'to follow' }}</v-btn>
@@ -82,6 +82,13 @@ export default {
             for (let i = 0; i < this.userItems.length; i++) {
                 if (this.userItems[i].userKey === followingUserKey) {
                 this.userItems[i].follow = true;
+                }
+            }
+        },
+        async deleteFollow(followingUserKey: string) {
+            for (let i = 0; i < this.userItems.length; i++) {
+                if (this.userItems[i].userKey === followingUserKey) {
+                this.userItems[i].follow = false;
                 }
             }
         }
