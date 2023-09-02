@@ -43,7 +43,6 @@ export default {
 
             const config = useRuntimeConfig();
             for (const followers of listFollowers.items.list) {
-                var mutual: string = ""; 
                 const data = {
                     followKey:     followers.status.user_key,
                     name:          followers.status.name,

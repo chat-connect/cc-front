@@ -8,10 +8,10 @@
                         <div class="user_name">{{ item.name }}</div>
                         <v-row v-if="item.mutual" class="justify-end">
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="grey-darken-1" variant="tonal">followed</v-btn>
-                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">following</v-btn>
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal" @click="deleteFollow(item.userKey)">following</v-btn>
                         </v-row>
                         <v-row v-else class="justify-end">
-                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">following</v-btn>
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal" @click="deleteFollow(item.userKey)">following</v-btn>
                         </v-row>
                     </div>
                     <div class="content_separator"></div>
@@ -53,6 +53,21 @@ export default {
                 this.followerItems.push(data);
             }
         },
+        async deleteFollow(followingUserKey: string) {
+            const body = {
+                following_user_key: followingUserKey,
+            }
+
+            const userKey = this.userStore.user.items.user_key;
+            const fetchFollow = new FetchFollow(ApiClient);
+            await fetchFollow.deleteFollow(body, userKey);
+
+            for (let i = 0; i < this.followerItems.length; i++) {
+                if (this.followerItems[i].userKey === followingUserKey) {
+                    this.followerItems.splice(i, 1)
+                }
+            }
+        }
     },
 };
 </script>

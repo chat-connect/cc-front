@@ -81,7 +81,7 @@ export default {
 
             for (let i = 0; i < this.userItems.length; i++) {
                 if (this.userItems[i].userKey === followingUserKey) {
-                this.userItems[i].follow = true;
+                    this.userItems[i].follow = true;
                 }
             }
         },
@@ -96,7 +96,7 @@ export default {
 
             for (let i = 0; i < this.userItems.length; i++) {
                 if (this.userItems[i].userKey === followingUserKey) {
-                this.userItems[i].follow = false;
+                    this.userItems[i].follow = false;
                 }
             }
         }
