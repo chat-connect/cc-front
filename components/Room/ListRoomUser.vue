@@ -10,10 +10,10 @@
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="pink-accent-3" variant="tonal">my account</v-btn>
                         </v-row>
                         <v-row v-else-if="item.follow" class="justify-end">
-                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">following</v-btn>
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">{{ item.follow ? 'following' : 'to follow' }}</v-btn>
                         </v-row>
                         <v-row v-else class="justify-end">
-                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="grey-darken-1" variant="tonal"  @click="createFollow(item.userKey)">to follow</v-btn>
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="grey-darken-1" variant="tonal"  @click="createFollow(item.userKey)">{{ item.follow ? 'following' : 'to follow' }}</v-btn>
                         </v-row>
                     </div>
                     <div class="content_separator"></div>
@@ -78,6 +78,12 @@ export default {
             const userKey = this.userStore.user.items.user_key;
             const fetchFollow = new FetchFollow(ApiClient);
             await fetchFollow.createFollow(body, userKey);
+
+            for (let i = 0; i < this.userItems.length; i++) {
+                if (this.userItems[i].userKey === followingUserKey) {
+                this.userItems[i].follow = true;
+                }
+            }
         }
     },
 };
