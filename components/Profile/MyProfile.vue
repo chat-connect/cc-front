@@ -10,13 +10,17 @@
                                 <h2 class="user_name">{{ userStore.user.items.name }}</h2>
                             </div>
                             <div style="display: flex; align-items: center;">
-                                <v-list-subheader>{{ 100 }}Following</v-list-subheader>
-                                <v-list-subheader>{{ 125 }}Followers</v-list-subheader>
+                                <router-link to="/follow/following" class="router-link">
+                                    <v-list-subheader>{{ following }} Following</v-list-subheader>
+                                </router-link>
+                                <router-link to="/follow/followers" class="router-link">
+                                    <v-list-subheader>{{ followers }} Followers</v-list-subheader>
+                                </router-link>
                             </div>
                         </v-col>
                         <v-col cols="12" align-content="center">
                             <div class="user_info">
-                                <h3 class="user_name">link</h3>
+                                <h3 class="user_name">Profile</h3>
                             </div>
                         </v-col>
                     </v-row>
@@ -41,11 +45,14 @@
 <script lang="ts">
 import { useUserStore } from '@/store/user/user';
 import { FetchGame } from '@/domain/usecase/fetchGame';
+import { FetchFollow } from '@/domain/usecase/fetchFollow';
 import ApiClient from '@/infra/api/apiClient';
 
 export default {
     data() {
         return {
+            following: 0,
+            followers: 0,
             gameItems: [],
             userStore: useUserStore(),
         };
@@ -61,6 +68,9 @@ export default {
             if (userKey != "") {
                 userImage = `${config.public.GcImageUrl}/image/get?image_path=static/images/user/${userKey}.png`
             }
+
+            // フォロー数
+            this.getFollowCount();
 
             return userImage
         },
@@ -78,6 +88,16 @@ export default {
                     to:            `/game/${game.game_key}/score`
                 };
                 this.gameItems.push(data);
+            }
+        },
+        async getFollowCount() {
+            const userKey = this.userStore.user.items.user_key
+            if (userKey != "") {
+                const fetchFollow = new FetchFollow(ApiClient);
+                const countFollowingAndFollowers: CountFollowingAndFollowers = await fetchFollow.countFollowingAndFollowers(userKey);
+
+                this.following = countFollowingAndFollowers.items.following_count;
+                this.followers = countFollowingAndFollowers.items.followers_count;                
             }
         },
     },
