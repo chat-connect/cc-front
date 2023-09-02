@@ -1,4 +1,5 @@
 import { CreateFollow } from '@/domain/entity/follow/createFollow';
+import { DeleteFollow } from '@/domain/entity/follow/deleteFollow';
 import { ListFollowing } from '@/domain/entity/follow/listFollowing';
 import { ListFollowers } from '@/domain/entity/follow/listFollowers';
 import { CountFollowingAndFollowers } from '@/domain/entity/follow/countFollowingAndFollowers';
@@ -15,6 +16,14 @@ export class FetchFollow {
         const config = useRuntimeConfig();
         const access_token = useCookie('access_token');
         const response: CreateFollow = await this.apiClient.post(config.public.GcWebUrl + "/api/follow/" + userKey + "/create_follow", body, access_token.value)
+        
+        return response
+    }
+
+    async deleteFollow(body: any, userKey: string): DeleteFollow {
+        const config = useRuntimeConfig();
+        const access_token = useCookie('access_token');
+        const response: DeleteFollow = await this.apiClient.put(config.public.GcWebUrl + "/api/follow/" + userKey + "/delete_follow", body, access_token.value)
         
         return response
     }

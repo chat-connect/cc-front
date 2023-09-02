@@ -86,6 +86,14 @@ export default {
             }
         },
         async deleteFollow(followingUserKey: string) {
+            const body = {
+                following_user_key: followingUserKey,
+            }
+
+            const userKey = this.userStore.user.items.user_key;
+            const fetchFollow = new FetchFollow(ApiClient);
+            await fetchFollow.deleteFollow(body, userKey);
+
             for (let i = 0; i < this.userItems.length; i++) {
                 if (this.userItems[i].userKey === followingUserKey) {
                 this.userItems[i].follow = false;
