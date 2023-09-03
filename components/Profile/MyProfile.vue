@@ -10,17 +10,17 @@
                                 <h2 class="user_name">{{ userStore.user.items.name }}</h2>
                             </div>
                             <div style="display: flex; align-items: center;">
-                                <router-link to="/follow/following" class="router-link">
+                                <router-link to="/follow/following" class="router-link link">
                                     <v-list-subheader>{{ following }} Following</v-list-subheader>
                                 </router-link>
-                                <router-link to="/follow/followers" class="router-link">
-                                    <v-list-subheader>{{ followers }} Followers</v-list-subheader>
+                                <router-link to="/follow/followers" class="router-link link">
+                                    <v-list-subheader class="link">{{ followers }} Followers</v-list-subheader>
                                 </router-link>
                             </div>
                         </v-col>
                         <v-col cols="12" align-content="center">
                             <div class="user_info">
-                                <h3 class="user_name">Profile</h3>
+                                好きなゲーム：〇〇〇, ×××<br>好きなジャンル：音ゲー, FPS<br>楽しくGame Life!!
                             </div>
                         </v-col>
                     </v-row>
@@ -108,6 +108,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.link {
+  text-decoration: none;
+}
+
 .user_info {
     display: flex;
     align-items: center;

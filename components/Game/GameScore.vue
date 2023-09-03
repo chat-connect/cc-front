@@ -10,13 +10,12 @@
                                 <h2 class="user_name">{{ userStore.user.items.name }}</h2>
                             </div>
                             <div style="display: flex; align-items: center;">
-                                <v-list-subheader>{{ 100 }}Following</v-list-subheader>
-                                <v-list-subheader>{{ 125 }}Followers</v-list-subheader>
-                            </div>
-                        </v-col>
-                        <v-col cols="12" align-content="center">
-                            <div class="user_info">
-                                <h3 class="user_name">link</h3>
+                                <router-link to="/follow/following" class="router-link link">
+                                    <v-list-subheader>{{ following }} Following</v-list-subheader>
+                                </router-link>
+                                <router-link to="/follow/followers" class="router-link link">
+                                    <v-list-subheader class="link">{{ followers }} Followers</v-list-subheader>
+                                </router-link>
                             </div>
                         </v-col>
                     </v-row>
@@ -73,6 +72,7 @@
 import { useUserStore } from '@/store/user/user';
 import { useListGameScoreStore } from '@/store/game/listGameScore';
 import { FetchGame } from '@/domain/usecase/fetchGame';
+import { FetchFollow } from '@/domain/usecase/fetchFollow';
 import ApiClient from '@/infra/api/apiClient';
 
 import ScoreChart from '@/components/Game/Chart/Score/ScoreChart';
@@ -92,6 +92,8 @@ export default {
     },
     data() {
         return {
+            following: 0,
+            followers: 0,
             gameImageHeight: 0,
             game: {
                 gameKey:       "",
@@ -119,6 +121,8 @@ export default {
                 userImage = `${config.public.GcImageUrl}/image/get?image_path=static/images/user/${userKey}.png`
             }
 
+            this.getFollowCount();
+
             return userImage
         },
         async getGameScoreList() {
@@ -142,12 +146,26 @@ export default {
             } catch (error) {
                 this.gameList =true;
             }
+        },
+        async getFollowCount() {
+            const userKey = this.userStore.user.items.user_key
+            if (userKey != "") {
+                const fetchFollow = new FetchFollow(ApiClient);
+                const countFollowingAndFollowers: CountFollowingAndFollowers = await fetchFollow.countFollowingAndFollowers(userKey);
+
+                this.following = countFollowingAndFollowers.items.following_count;
+                this.followers = countFollowingAndFollowers.items.followers_count;                
+            }
         }
     }
 };
 </script>
 
 <style lang="scss" scoped>
+.link {
+  text-decoration: none;
+}
+
 .user_info {
     display: flex;
     align-items: center;
