@@ -23,8 +23,11 @@
                     <div class="user_info">
                         <img class="user_icon" :src="item.imagePath" alt="UserIcon">
                         <div class="user_name">{{ item.name }}</div>
-                        <v-row class="justify-end">
+                        <v-row v-if="item.following" class="justify-end">
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">following</v-btn>
+                        </v-row>
+                        <v-row v-else class="justify-end">
+                            <v-btn class="follow_status" rounded flat style="text-transform: none" color="grey-darken-1" variant="tonal" @click="createFollow(item.userKey)">to follow</v-btn>
                         </v-row>
                     </div>
                     <div class="content_separator"></div>
@@ -36,6 +39,7 @@
 
 <script lang="ts">
 import { FetchUser } from '@/domain/usecase/fetchUser';
+import { FetchFollow } from '@/domain/usecase/fetchFollow';
 import { useUserStore } from '@/store/user/user';
 import ApiClient from '@/infra/api/apiClient';
 
@@ -62,12 +66,28 @@ export default {
             this.userItems = []
             for (const user of userList.items.list) {
                 const data = {
-                    userKey:       user.user_key,
-                    name:          user.name,
+                    userKey:   user.user_key,
+                    name:      user.name,
                     imagePath: `${config.public.GcImageUrl}/image/get?image_path=static/images${user.image_path}`,
+                    following: user.following,
                 };
 
                 this.userItems.push(data);
+            }
+        },
+        async createFollow(followingUserKey: string) {
+            const body = {
+                following_user_key: followingUserKey,
+            }
+
+            const userKey = this.userStore.user.items.user_key;
+            const fetchFollow = new FetchFollow(ApiClient);
+            await fetchFollow.createFollow(body, userKey);
+
+            for (let i = 0; i < this.userItems.length; i++) {
+                if (this.userItems[i].userKey === followingUserKey) {
+                    this.userItems[i].following = true;
+                }
             }
         },
     },

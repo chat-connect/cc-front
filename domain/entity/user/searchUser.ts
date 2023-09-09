@@ -2,6 +2,7 @@ export interface SearchUserContent {
     user_key:   string;
     name:       string;
     image_path: string;
+    following:  boolean;
 }
 
 export interface SearchUser {
