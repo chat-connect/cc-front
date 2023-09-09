@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card class="base_card" flat>
                 <v-col cols="12">
-                    <h2>User Room</h2>
+                    <h2>Search User</h2>
                     <v-form>
                         <v-text-field label="Name" v-model="name"></v-text-field>
                     </v-form>
