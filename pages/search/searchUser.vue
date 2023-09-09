@@ -2,18 +2,18 @@
     <v-container>
         <v-row align-content="center">
             <v-col align-content="center">
-                <SearchRoom />
+                <SearchUser />
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script lang="ts">
-import SearchRoom from "@/components/Room/SearchRoom.vue";
+import SearchUser from "@/components/User/SearchUser.vue";
 
 export default {
   components: {
-    SearchRoom,
+    SearchUser,
   },
 };
 </script>
