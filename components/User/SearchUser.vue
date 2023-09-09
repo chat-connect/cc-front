@@ -27,6 +27,7 @@
                             <v-btn class="follow_status" rounded flat style="text-transform: none" color="primary" variant="tonal">following</v-btn>
                         </v-row>
                     </div>
+                    <div class="content_separator"></div>
                 </v-col>
             </v-card>               
         </v-col>
@@ -80,6 +81,13 @@ export default {
 
 .follow_status {
     margin: 5px;
+}
+
+.content_separator {
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 10px 0;
 }
 
 .user_mutual {
