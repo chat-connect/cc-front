@@ -34,8 +34,8 @@ jobs:
         env:
           REPOSITORY_URL: ${{ secrets.ECR_REPOSITORY_URL }}
         run: |
-          docker-compose -f docker-compose.yml build nginx
-          docker tag gc-web:latest $REPOSITORY_URL:$IMAGE_TAG
+          docker-compose -f docker-compose.local.yml build web
+          docker tag gc-web_web:latest $REPOSITORY_URL:$IMAGE_TAG
           docker push $REPOSITORY_URL:$IMAGE_TAG
 
       - name: Deploy to ECS Fargate
