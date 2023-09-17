@@ -6,7 +6,7 @@ services:
     env_file:
       - .env.local
     build:
-      target: development
+      target: production
       context: .
       dockerfile: .docker/web/Dockerfile
     volumes:
