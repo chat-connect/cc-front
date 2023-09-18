@@ -20,13 +20,13 @@
                         </v-col>
                         <v-col cols="12" align-content="center">
                             <div class="user_info">
-                                好きなゲーム：〇〇〇, ×××<br>好きなジャンル：音ゲー, FPS<br>楽しくGame Life!!
+                                {{ userStore.user.items.description }}
                             </div>
                         </v-col>
                     </v-row>
                     <v-row justify="end">
                         <v-col cols="4">
-                            <v-btn flat block variant="outlined" color="primary" to="/profile/edit">Edit</v-btn>
+                            <v-btn flat block variant="outlined" color="primary" to="/profile/editProfile">Edit</v-btn>
                         </v-col>
                     </v-row>
                 </v-container>
