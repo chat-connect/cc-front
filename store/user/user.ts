@@ -8,12 +8,13 @@ export const useUserStore = defineStore("user", {
                 types: "",
                 status: 0,
                 items: {
-                    user_key:   "",
-                    name:       "",
-                    email:      "",
-                    token:      "",
-                    image_path: "",
-                    message:    "",                    
+                    user_key:    "",
+                    name:        "",
+                    email:       "",
+                    token:       "",
+                    image_path:  "",
+                    description: "",
+                    message:     "",                    
                 }
             },
         }
@@ -30,12 +31,13 @@ export const useUserStore = defineStore("user", {
                 types:  user.types,
                 status: user.status,
                 items: {
-                    user_key:   user.items.user_key,
-                    name:       user.items.name,
-                    email:      user.items.email,
-                    token:      "",
-                    image_path: user.items.image_path,
-                    message:    user.items.message,                    
+                    user_key:    user.items.user_key,
+                    name:        user.items.name,
+                    email:       user.items.email,
+                    token:       "",
+                    image_path:  user.items.image_path,
+                    description: user.items.description,
+                    message:     user.items.message,                    
                 }
             }
         },
@@ -44,12 +46,13 @@ export const useUserStore = defineStore("user", {
                 types: "",
                 status: 0,
                 items: {
-                    user_key:   "",
-                    name:       "",
-                    email:      "",
-                    token:      "",
-                    image_path: "",
-                    message:    "",                    
+                    user_key:    "",
+                    name:        "",
+                    email:       "",
+                    token:       "",
+                    image_path:  "",
+                    description: "",
+                    message:     "",                    
                 }
             };
         },
