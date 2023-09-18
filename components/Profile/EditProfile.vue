@@ -6,7 +6,7 @@
                 <v-text-field label="email" v-model="email"></v-text-field>
                 <v-text-field label="username" v-model="name"></v-text-field>
                 <v-text-field label="description" v-model="description"></v-text-field>
-                <v-file-input label="Upload Profile Picture" v-model="userImage"></v-file-input>
+                <v-file-input label="Upload Profile Picture" v-model="userImageFile"></v-file-input>
             </v-form>
             <v-row justify="end">
                 <v-col cols="4">
@@ -18,9 +18,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
 import { FetchUser } from '@/domain/usecase/fetchUser';
-import { User } from '@/domain/entity/user/user';
 import ApiClient from '@/infra/api/apiClient';
 import { useUserStore } from '@/store/user/user';
 
@@ -30,7 +28,7 @@ export default {
             email: '',
             name: '',
             description: '',
-            userImage: null as File | null,
+            userImageFile: null as File | null,
             userStore: useUserStore(),
         };
     },
@@ -52,8 +50,8 @@ export default {
         },
         async updateHandler() {
             var userImage = null
-            if (!this.userImage == null) {
-                const encodeImage = await this.encodeImage(this.userImage);
+            if (this.userImageFile != null) {
+                const encodeImage = await this.encodeImage(this.userImageFile);
                 userImage = encodeImage.replace(/^data:image\/\w+;base64,/, '');
             }
 
@@ -67,7 +65,7 @@ export default {
 
             const fetchUser = new FetchUser(ApiClient);
             const user = await fetchUser.updateUser(userKey, request);
-
+            
             this.userStore.update(user);
             this.$router.push('/profile/main');
         },
