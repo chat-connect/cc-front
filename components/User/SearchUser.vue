@@ -60,7 +60,6 @@ export default {
             const fetchUser = new FetchUser(ApiClient);
             const userList = await fetchUser.searchUser(userkey, this.name);
 
-            console.log(userList)
             const config = useRuntimeConfig();
 
             this.userItems = []
